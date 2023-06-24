@@ -107,7 +107,7 @@
 		</div>
 
 		<div class="col-span-1 md:col-span-2">
-			<button type="submit" disabled={loading} class="btn btn-block">
+			<button type="submit" disabled={loading} class="btn btn-block btn-primary">
 				{#if loading}
 					<span class="loading loading-spinner" />
 					loading
@@ -118,9 +118,14 @@
 		</div>
 	</form>
 
-	<form action="?/signout" method="post" use:enhance={handleSignOut}>
+	<form
+		action="?/signout"
+		method="post"
+		use:enhance={handleSignOut}
+		class="grid grid-cols-1 gap-3 w-full max-w-2xl px-3"
+	>
 		<div>
-			<button disabled={loading} class="btn btn-block">Sign Out</button>
+			<button disabled={loading} class="btn btn-block btn-secondary">Sign Out</button>
 		</div>
 	</form>
 </div>

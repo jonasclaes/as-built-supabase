@@ -12,7 +12,7 @@
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3 pt-16 justify-center h-full">
 	<h1 class="text-3xl md:text-5xl text-center font-bold">AS-BUILT</h1>
 	<h2 class="text-xl md:text-3xl text-center">Login</h2>
-	<div class="card bg-neutral">
+	<div class="card bg-base-200">
 		<div class="card-body">
 			<Auth
 				supabaseClient={data.supabase}

@@ -16,7 +16,7 @@
 	}
 
 	.supabase-auth-label {
-		@apply label;
+		@apply label label-text;
 	}
 
 	.supabase-auth-message {
