@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.supabase-auth-container {
+		@apply flex flex-col gap-3;
+	}
+
+	.supabase-auth-input {
+		@apply input input-bordered w-full;
+	}
+
+	.supabase-auth-button {
+		@apply btn btn-primary;
+	}
+
+	.supabase-auth-label {
+		@apply label;
+	}
+
+	.supabase-auth-message {
+		@apply text-center;
+	}
+}
