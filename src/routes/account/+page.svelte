@@ -32,7 +32,13 @@
 </script>
 
 <div class="flex flex-col gap-3 items-center">
-	<form action="?/update" method="post" use:enhance={handleSubmit} bind:this={profileForm} class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full md:w-2/3 max-w-4xl px-3">
+	<form
+		action="?/update"
+		method="post"
+		use:enhance={handleSubmit}
+		bind:this={profileForm}
+		class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full md:w-2/3 max-w-4xl px-3"
+	>
 		<div class="form-control w-full">
 			<label class="label" for="email">
 				<span class="label-text">Email</span>

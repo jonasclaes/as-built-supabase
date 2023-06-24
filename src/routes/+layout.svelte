@@ -22,10 +22,14 @@
 
 <div>
 	{#if session}
-		<Header />
+		<Header>
+			<main>
+				<slot />
+			</main>
+		</Header>
+	{:else}
+		<main>
+			<slot />
+		</main>
 	{/if}
-
-	<main>
-		<slot />
-	</main>
 </div>
