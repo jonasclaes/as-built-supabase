@@ -10,11 +10,17 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
 
 	const { data: profile } = await supabase
 		.from('profiles')
-		.select(`username, full_name, website`)
+		.select(`username, full_name, website, organization`)
 		.eq('id', session.user.id)
 		.single();
 
-	return { session, profile };
+	const { data: organization } = await supabase
+		.from('organizations')
+		.select(`name`)
+		.eq('id', profile?.organization)
+		.single();
+
+	return { session, profile, organization };
 }) satisfies PageServerLoad;
 
 export const actions = {

@@ -6,14 +6,15 @@
 	export let data: PageData;
 	export let form: Record<string, any>;
 
-	let { session, supabase, profile } = data;
-	$: ({ session, supabase, profile } = data);
+	let { session, supabase, profile, organization } = data;
+	$: ({ session, supabase, profile, organization } = data);
 
 	let profileForm: HTMLFormElement;
 	let loading = false;
 	let fullName: string = profile?.full_name ?? '';
 	let username: string = profile?.username ?? '';
 	let website: string = profile?.website ?? '';
+	let organizationName: string = organization?.name ?? '';
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
@@ -72,6 +73,23 @@
 			</label>
 		</div>
 
+		<div class="form-control w-full col-span-full">
+			<label class="label" for="organizationName">
+				<span class="label-text">Organization name</span>
+			</label>
+			<input
+				type="text"
+				placeholder="Your organization name"
+				id="organizationName"
+				class="input input-bordered w-full"
+				value={organizationName}
+				disabled
+			/>
+			<label class="label" for="organizationName">
+				<span class="label-text-alt">Your organization name.</span>
+			</label>
+		</div>
+
 		<div class="form-control w-full">
 			<label class="label" for="username">
 				<span class="label-text">Username</span>
@@ -106,7 +124,7 @@
 			</label>
 		</div>
 
-		<div class="col-span-1 md:col-span-2">
+		<div class="col-span-full">
 			<button type="submit" disabled={loading} class="btn btn-block btn-primary">
 				{#if loading}
 					<span class="loading loading-spinner" />
