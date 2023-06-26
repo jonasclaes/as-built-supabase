@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Header from './Header.svelte';
+	import Header from '../components/Header.svelte';
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { invalidate } from '$app/navigation';
@@ -23,7 +23,7 @@
 <div>
 	{#if session}
 		<Header>
-			<main>
+			<main class="grow">
 				<slot />
 			</main>
 		</Header>

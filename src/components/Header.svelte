@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Footer from './Footer.svelte';
 
 	interface NavbarItem {
 		text: string;
@@ -21,8 +22,7 @@
 <header>
 	<div class="drawer">
 		<input id="nav-drawer" type="checkbox" class="drawer-toggle" />
-		<div class="drawer-content flex flex-col">
-			<!-- Navbar -->
+		<div class="drawer-content flex flex-col min-h-screen">
 			<div class="navbar bg-base-300">
 				<div class="navbar-start">
 					<div class="flex-none lg:hidden">
@@ -48,7 +48,6 @@
 				<div class="navbar-end">
 					<div class="flex-none hidden lg:block">
 						<ul class="menu menu-horizontal">
-							<!-- Navbar menu content here -->
 							{#each navbarItems as navbarItem}
 								<li><a href={navbarItem.href}>{navbarItem.text}</a></li>
 							{/each}
@@ -56,13 +55,12 @@
 					</div>
 				</div>
 			</div>
-			<!-- Page content here -->
 			<slot />
+			<Footer />
 		</div>
 		<div class="drawer-side">
 			<label for="nav-drawer" class="drawer-overlay" />
 			<ul class="menu p-4 w-80 h-full bg-base-200">
-				<!-- Sidebar content here -->
 				{#each navbarItems as navbarItem}
 					<li><a href={navbarItem.href}>{navbarItem.text}</a></li>
 				{/each}
