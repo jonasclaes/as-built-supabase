@@ -32,13 +32,13 @@
 	};
 </script>
 
-<div class="flex flex-col gap-3 items-center">
+<div class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
 	<form
 		action="?/update"
 		method="post"
 		use:enhance={handleSubmit}
 		bind:this={profileForm}
-		class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl px-3"
+		class="grid grid-cols-1 md:grid-cols-2 gap-3"
 	>
 		<div class="form-control w-full">
 			<label class="label" for="email">
@@ -140,7 +140,7 @@
 		action="?/signout"
 		method="post"
 		use:enhance={handleSignOut}
-		class="grid grid-cols-1 gap-3 w-full max-w-2xl px-3"
+		class="grid grid-cols-1 gap-3"
 	>
 		<div>
 			<button disabled={loading} class="btn btn-block btn-secondary">Sign Out</button>
