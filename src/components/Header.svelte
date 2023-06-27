@@ -2,6 +2,8 @@
 	import { page } from '$app/stores';
 	import Footer from './Footer.svelte';
 
+	let drawerOpen = false;
+
 	interface NavbarItem {
 		text: string;
 		href: string;
@@ -21,7 +23,7 @@
 
 <header>
 	<div class="drawer">
-		<input id="nav-drawer" type="checkbox" class="drawer-toggle" />
+		<input id="nav-drawer" type="checkbox" class="drawer-toggle" bind:checked={drawerOpen} />
 		<div class="drawer-content flex flex-col min-h-screen">
 			<div class="navbar bg-base-300">
 				<div class="navbar-start">
@@ -58,11 +60,18 @@
 			<slot />
 			<Footer />
 		</div>
-		<div class="drawer-side">
+		<div class="drawer-side z-50">
 			<label for="nav-drawer" class="drawer-overlay" />
 			<ul class="menu p-4 w-80 h-full bg-base-200">
 				{#each navbarItems as navbarItem}
-					<li><a href={navbarItem.href}>{navbarItem.text}</a></li>
+					<li>
+						<a
+							href={navbarItem.href}
+							on:click={() => {
+								drawerOpen = false;
+							}}>{navbarItem.text}</a
+						>
+					</li>
 				{/each}
 			</ul>
 		</div>
