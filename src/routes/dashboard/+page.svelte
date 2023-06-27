@@ -34,36 +34,48 @@
 		</div>
 	</div>
 	<div class="divider" />
-	<h2 class="text-3xl">Projects</h2>
-	<div class="overflow-x-auto overflow-y-auto">
-		<table class="table table-pin-rows">
-			<thead>
-				<tr>
-					<th>Code</th>
-					<th>Name</th>
-					<th />
-				</tr>
-			</thead>
-			<tbody>
-				{#each projects ?? [] as project}
-					<tr class="hover">
-						<td>
-							<div class="flex items-center">
-								<div>
-									<div class="font-bold">{project.code}</div>
-									<div class="text-sm opacity-50">// TODO</div>
-								</div>
-							</div>
-						</td>
-						<td>
-							{project.name}
-						</td>
-						<th>
-							<a href="/project/{project.id}" class="btn btn-ghost btn-xs">Details</a>
-						</th>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
+	<div class="flex flex-col md:flex-row gap-3 justify-between">
+		<h2 class="text-3xl">Projects</h2>
+		<a href="/project" class="btn btn-primary">New project</a>
 	</div>
+	{#if projects && projects.length > 0}
+		<div class="overflow-x-auto overflow-y-auto">
+			<table class="table table-pin-rows">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Name</th>
+						<th />
+					</tr>
+				</thead>
+				<tbody>
+					{#each projects as project}
+						<tr class="hover">
+							<td>
+								<div class="flex items-center">
+									<div>
+										<div class="font-bold">{project.code}</div>
+										<div class="text-sm opacity-50">// TODO</div>
+									</div>
+								</div>
+							</td>
+							<td>
+								{project.name}
+							</td>
+							<th>
+								<a href="/project/{project.id}" class="btn btn-ghost btn-xs">Details</a>
+							</th>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{:else}
+		<p class="text-center text-base-content text-opacity-50">
+			You don't have any projects yet. Why don't you <a
+				href="/project"
+				class="text-primary underline hover:text-primary-focus">create</a
+			> one now?
+		</p>
+	{/if}
 </section>
