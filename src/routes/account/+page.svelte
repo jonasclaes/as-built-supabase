@@ -136,12 +136,7 @@
 		</div>
 	</form>
 
-	<form
-		action="?/signout"
-		method="post"
-		use:enhance={handleSignOut}
-		class="grid grid-cols-1 gap-3"
-	>
+	<form action="?/signout" method="post" use:enhance={handleSignOut} class="grid grid-cols-1 gap-3">
 		<div>
 			<button disabled={loading} class="btn btn-block btn-secondary">Sign Out</button>
 		</div>
