@@ -19,15 +19,5 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
 		.select(`id, code, name`)
 		.eq('organization', profile?.organization);
 
-	if (projects) {
-		const firstProject = projects.at(0);
-
-		if (firstProject) {
-			for (let index = 0; index < 20; index++) {
-				projects.push(firstProject);
-			}
-		}
-	}
-
 	return { session, projects };
 }) satisfies PageServerLoad;
