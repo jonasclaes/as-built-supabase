@@ -32,5 +32,6 @@
 				additionalData={{}}
 			/>
 		</div>
+		<div>You will be redirected to {data.url}</div>
 	</div>
 </section>
