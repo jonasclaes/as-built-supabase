@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Button from '../../components/daisyui/Button.svelte';
 	import type { ActionData, SubmitFunction } from './$types';
 
 	export let form: ActionData;
@@ -85,14 +86,14 @@
 		</div>
 
 		<div class="col-span-full">
-			<button type="submit" disabled={loading} class="btn btn-block btn-primary">
+			<Button disabled={loading} primary block type="submit">
 				{#if loading}
 					<span class="loading loading-spinner" />
 					loading
 				{:else}
 					Create
-				{/if}</button
-			>
+				{/if}
+			</Button>
 		</div>
 	</form>
 </section>
