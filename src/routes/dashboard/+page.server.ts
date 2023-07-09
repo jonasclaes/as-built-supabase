@@ -19,5 +19,10 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
 		.select(`id, code, name`)
 		.eq('organization', profile?.organization);
 
-	return { session, projects };
+	const { data: clients } = await supabase
+		.from('clients')
+		.select(`id, name`)
+		.eq('organization', profile?.organization);
+
+	return { session, projects, clients };
 }) satisfies PageServerLoad;
