@@ -7,33 +7,32 @@
 	import { combineClasses } from '$lib/combineClasses';
 	import { prefixClass } from '$lib/prefix';
 
-	export let primary: boolean = false;
-	export let neutral: boolean = false;
-	export let secondary: boolean = false;
-	export let accent: boolean = false;
-	export let ghost: boolean = false;
-	export let link: boolean = false;
-	export let info: boolean = false;
-	export let success: boolean = false;
-	export let warning: boolean = false;
-	export let error: boolean = false;
-	export let block: boolean = false;
-	export let wide: boolean = false;
-	export let outline: boolean = false;
+	export let primary = false;
+	export let neutral = false;
+	export let secondary = false;
+	export let accent = false;
+	export let ghost = false;
+	export let link = false;
+	export let info = false;
+	export let success = false;
+	export let warning = false;
+	export let error = false;
+	export let block = false;
+	export let wide = false;
+	export let outline = false;
 	export let size: ButtonSize | null = null;
-	export let glass: boolean = false;
-	export let square: boolean = false;
-	export let circle: boolean = false;
+	export let glass = false;
+	export let square = false;
+	export let circle = false;
 	export let type: HTMLButtonElement['type'] | null = null;
-	export let disabled: HTMLButtonElement['disabled'] | null = null;
-	let _classes: string = '';
-	export { _classes as class };
+	export let disabled: boolean | null = null;
+	export let buttonClasses = '';
 </script>
 
 <button
 	class={combineClasses(
 		'btn',
-		_classes,
+		buttonClasses,
 		applyClassIf(size !== null, prefixClass('btn-', size)),
 		applyClassIf(neutral, 'btn-neutral'),
 		applyClassIf(primary, 'btn-primary'),
