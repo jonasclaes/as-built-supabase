@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { ActionData, PageData } from './$types';
-	import { stringify } from 'postcss';
+	import type { ActionData } from './$types';
 
-	export let data: PageData;
 	export let form: ActionData;
 
 	let loading = false;

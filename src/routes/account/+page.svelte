@@ -4,10 +4,10 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	export let form: Record<string, any>;
+	export let form: Record<string, string>;
 
-	let { session, supabase, profile, organization } = data;
-	$: ({ session, supabase, profile, organization } = data);
+	let { session, profile, organization } = data;
+	$: ({ session, profile, organization } = data);
 
 	let profileForm: HTMLFormElement;
 	let loading = false;
