@@ -18,12 +18,12 @@
 	export let warning: boolean = false;
 	export let error: boolean = false;
 	export let block: boolean = false;
-    export let wide: boolean = false;
+	export let wide: boolean = false;
 	export let outline: boolean = false;
 	export let size: ButtonSize | null = null;
-    export let glass: boolean = false;
-    export let square: boolean = false;
-    export let circle: boolean = false;
+	export let glass: boolean = false;
+	export let square: boolean = false;
+	export let circle: boolean = false;
 	export let type: HTMLButtonElement['type'] | null = null;
 	export let disabled: HTMLButtonElement['disabled'] | null = null;
 	let _classes: string = '';
@@ -46,11 +46,11 @@
 		applyClassIf(warning, 'btn-warning'),
 		applyClassIf(error, 'btn-error'),
 		applyClassIf(block, 'btn-block'),
-        applyClassIf(wide, 'btn-wide'),
+		applyClassIf(wide, 'btn-wide'),
 		applyClassIf(outline, 'btn-outline'),
-        applyClassIf(glass, 'glass'),
-        applyClassIf(square, 'btn-square'),
-        applyClassIf(circle, 'btn-circle'),
+		applyClassIf(glass, 'glass'),
+		applyClassIf(square, 'btn-square'),
+		applyClassIf(circle, 'btn-circle')
 	)}
 	{type}
 	{disabled}
