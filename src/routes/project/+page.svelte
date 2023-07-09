@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '../../components/daisyui/Button.svelte';
+	import Input from '../../components/daisyui/Input.svelte';
 	import type { ActionData, SubmitFunction } from './$types';
 
 	export let form: ActionData;
@@ -47,53 +48,37 @@
 				</div>
 			</div>
 		{/if}
-		<div class="form-control w-full">
-			<label class="label" for="code">
-				<span class="label-text">Project code</span>
-			</label>
-			<input
-				type="text"
-				name="code"
-				placeholder="Project code"
-				id="code"
-				class="input input-bordered w-full"
-				value={form?.code ?? ''}
-				disabled={loading}
-				required
-			/>
-			<label class="label" for="code">
-				<span class="label-text-alt">Enter a project code here.</span>
-			</label>
-		</div>
 
-		<div class="form-control w-full md:col-span-3">
-			<label class="label" for="name">
-				<span class="label-text">Project name</span>
-			</label>
-			<input
-				type="text"
-				name="name"
-				placeholder="Project name"
-				id="name"
-				class="input input-bordered w-full"
-				value={form?.name ?? ''}
-				disabled={loading}
-				required
-			/>
-			<label class="label" for="name">
-				<span class="label-text-alt">Enter a project name here.</span>
-			</label>
-		</div>
+		<Input
+			name="code"
+			label="Project code"
+			placeholder="Project code"
+			helpText="Enter a project code here."
+			disabled={loading}
+			required
+			value={form?.code ?? ''}
+			bordered
+		/>
 
-		<div class="col-span-full">
-			<Button disabled={loading} primary block type="submit">
-				{#if loading}
-					<span class="loading loading-spinner" />
-					loading
-				{:else}
-					Create
-				{/if}
-			</Button>
-		</div>
+		<Input
+			formControlClasses="md:col-span-3"
+			name="name"
+			label="Project name"
+			placeholder="Project name"
+			helpText="Enter a project name here."
+			disabled={loading}
+			required
+			value={form?.name ?? ''}
+			bordered
+		/>
+
+		<Button disabled={loading} primary block type="submit" buttonClasses="col-span-full">
+			{#if loading}
+				<span class="loading loading-spinner" />
+				loading
+			{:else}
+				Create
+			{/if}
+		</Button>
 	</form>
 </section>
