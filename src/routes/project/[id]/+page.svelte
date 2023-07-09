@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Button from '$lib/components/daisyui/Button.svelte';
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { ActionData, PageData } from './$types';
+	import type { ActionData, PageData, SubmitFunction } from './$types';
 
 	export let data: PageData;
 	export let form: ActionData;
