@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import type { ActionData } from './$types';
+	import type { ActionData, SubmitFunction } from './$types';
 
 	export let form: ActionData;
 

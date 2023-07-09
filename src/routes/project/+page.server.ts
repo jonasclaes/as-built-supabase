@@ -1,5 +1,5 @@
-import { fail, redirect, type Actions } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { fail, redirect } from '@sveltejs/kit';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals: { supabase, getSession } }) => {
 	const session = await getSession();
@@ -22,7 +22,7 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
 	return { session, projects };
 }) satisfies PageServerLoad;
 
-export const actions: Actions = {
+export const actions = {
 	create: async ({ request, locals: { supabase, getSession } }) => {
 		const formData = await request.formData();
 		const code = formData.get('code') as string;
@@ -64,4 +64,4 @@ export const actions: Actions = {
 
 		throw redirect(303, `/project/${project.id}`);
 	}
-};
+} satisfies Actions;
