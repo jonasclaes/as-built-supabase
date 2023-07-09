@@ -2,6 +2,7 @@
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import type { ActionData, PageData } from './$types';
 	import { enhance } from '$app/forms';
+	import Button from '../../../components/daisyui/Button.svelte';
 
 	export let data: PageData;
 	export let form: ActionData;
@@ -50,14 +51,14 @@
 		<input type="text" name="id" hidden required value={data.project?.id} />
 
 		<div class="col-span-full">
-			<button type="submit" disabled={loading} class="btn btn-block btn-error">
+			<Button disabled={loading} warning block type="submit">
 				{#if loading}
 					<span class="loading loading-spinner" />
 					loading
 				{:else}
 					Delete
-				{/if}</button
-			>
+				{/if}
+			</Button>
 		</div>
 	</form>
 </section>
