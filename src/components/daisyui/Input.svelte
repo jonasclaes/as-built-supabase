@@ -28,9 +28,7 @@
 
 <script lang="ts">
 	import { applyClassIf } from '$lib/applyClassIf';
-
 	import { combineClasses } from '$lib/combineClasses';
-	import { prefixClass } from '$lib/prefix';
 
 	export let formControlClasses = '';
 	export let inputClasses = '';
@@ -78,7 +76,10 @@
 			applyClassIf(success, 'input-success'),
 			applyClassIf(warning, 'input-warning'),
 			applyClassIf(error, 'input-error'),
-			applyClassIf(size !== null, prefixClass('input-', size))
+			applyClassIf(size === 'xs', 'input-xs'),
+			applyClassIf(size === 'sm', 'input-sm'),
+			applyClassIf(size === 'md', 'input-md'),
+			applyClassIf(size === 'lg', 'input-lg')
 		)}
 		{value}
 		{disabled}

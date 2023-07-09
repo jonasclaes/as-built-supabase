@@ -5,7 +5,6 @@
 <script lang="ts">
 	import { applyClassIf } from '$lib/applyClassIf';
 	import { combineClasses } from '$lib/combineClasses';
-	import { prefixClass } from '$lib/prefix';
 
 	export let primary = false;
 	export let neutral = false;
@@ -33,7 +32,10 @@
 	class={combineClasses(
 		'btn',
 		buttonClasses,
-		applyClassIf(size !== null, prefixClass('btn-', size)),
+		applyClassIf(size === 'xs', 'btn-xs'),
+		applyClassIf(size === 'sm', 'btn-sm'),
+		applyClassIf(size === 'md', 'btn-md'),
+		applyClassIf(size === 'lg', 'btn-lg'),
 		applyClassIf(neutral, 'btn-neutral'),
 		applyClassIf(primary, 'btn-primary'),
 		applyClassIf(secondary, 'btn-secondary'),
