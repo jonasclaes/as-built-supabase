@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/capitalize';
-	import Alert from '../../components/daisyui/Alert.svelte';
-	import Button from '../../components/daisyui/Button.svelte';
-	import Input from '../../components/daisyui/Input.svelte';
+	import Alert from '$lib/components/daisyui/Alert.svelte';
+	import Button from '$lib/components/daisyui/Button.svelte';
+	import Input from '$lib/components/daisyui/Input.svelte';
 	import type { ActionData, SubmitFunction } from './$types';
 
 	export let form: ActionData;
