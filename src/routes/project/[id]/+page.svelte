@@ -14,14 +14,15 @@
 	export let form: ActionData;
 
 	let loading = false;
-
+	let code: string = project?.code ?? '';
+	let name: string = project?.name ?? '';
 	let clientName: string = client?.name ?? '';
 
 	const handleUpdate: SubmitFunction = () => {
 		loading = true;
 		return async ({ update }) => {
 			loading = false;
-			await update();
+			await update({ reset: false });
 		};
 	};
 
@@ -29,7 +30,7 @@
 		loading = true;
 		return async ({ update }) => {
 			loading = false;
-			await update();
+			await update({ reset: false });
 		};
 	};
 </script>
@@ -44,12 +45,39 @@
 			<span>Error! {capitalize(form.error.message)}</span>
 		</Alert>
 	{/if}
-	<form action="?/update" method="post" use:enhance={handleUpdate}>
+	<form
+		action="?/update"
+		method="post"
+		use:enhance={handleUpdate}
+		class="grid grid-cols-1 md:grid-cols-4 gap-3"
+	>
+		<Input
+			name="code"
+			label="Project code"
+			placeholder="Project code"
+			helpText="Enter a project code here."
+			disabled={loading}
+			required
+			value={form?.code ?? code}
+			bordered
+		/>
+
+		<Input
+			formControlClasses="col-span-3"
+			name="name"
+			label="Project name"
+			placeholder="Project name"
+			helpText="Enter a project name here."
+			disabled={loading}
+			required
+			value={form?.name ?? name}
+			bordered
+		/>
+
 		<Input
 			formControlClasses="col-span-full"
 			name="clientName"
 			label="Client"
-			type="text"
 			placeholder="Client"
 			helpText="Choose a client here."
 			disabled={loading}
@@ -59,7 +87,7 @@
 		/>
 
 		<datalist id="clientList">
-			{#each clients || [] as client}
+			{#each clients || [] as client (client.id)}
 				<option value={client.name} />
 			{/each}
 		</datalist>
