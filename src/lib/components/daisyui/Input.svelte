@@ -35,6 +35,7 @@
 	export let name: string;
 	export let label: string | null = null;
 	export let type: InputType = 'text';
+	export let list: string | null = null;
 	export let placeholder: string | null = null;
 	export let disabled: boolean | null = null;
 	export let required: boolean | null = null;
@@ -63,6 +64,7 @@
 		{name}
 		{placeholder}
 		id={name}
+		{list}
 		class={combineClasses(
 			'input',
 			'w-full',

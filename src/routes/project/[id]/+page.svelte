@@ -1,12 +1,29 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { capitalize } from '$lib/capitalize';
+	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Button from '$lib/components/daisyui/Button.svelte';
+	import Input from '$lib/components/daisyui/Input.svelte';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
 
 	export let data: PageData;
+
+	let { project, client, clients } = data;
+	$: ({ project, client, clients } = data);
+
 	export let form: ActionData;
 
 	let loading = false;
+
+	let clientName: string = client?.name ?? '';
+
+	const handleUpdate: SubmitFunction = () => {
+		loading = true;
+		return async ({ update }) => {
+			loading = false;
+			await update();
+		};
+	};
 
 	const handleDelete: SubmitFunction = () => {
 		loading = true;
@@ -18,46 +35,57 @@
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
-	<h1 class="text-3xl">{data.project?.name}</h1>
+	<div>
+		<h1 class="text-3xl">{project?.name}</h1>
+		<p class="text-base-content text-opacity-50">{project?.code}</p>
+	</div>
+	{#if form?.error}
+		<Alert type="error" alertClasses="col-span-full">
+			<span>Error! {capitalize(form.error.message)}</span>
+		</Alert>
+	{/if}
+	<form action="?/update" method="post" use:enhance={handleUpdate}>
+		<Input
+			formControlClasses="col-span-full"
+			name="clientName"
+			label="Client"
+			type="text"
+			placeholder="Client"
+			helpText="Choose a client here."
+			disabled={loading}
+			value={form?.clientName ?? clientName}
+			bordered
+			list="clientList"
+		/>
+
+		<datalist id="clientList">
+			{#each clients || [] as client}
+				<option value={client.name} />
+			{/each}
+		</datalist>
+
+		<Button disabled={loading} primary block type="submit" buttonClasses="col-span-full">
+			{#if loading}
+				<span class="loading loading-spinner" />
+				loading
+			{:else}
+				Update
+			{/if}
+		</Button>
+	</form>
 	<form
 		action="?/delete"
 		method="post"
 		use:enhance={handleDelete}
 		class="grid grid-cols-1 md:grid-cols-4 gap-3"
 	>
-		{#if form?.error}
-			<div class="col-span-full">
-				<div class="alert alert-error">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="stroke-current shrink-0 h-6 w-6"
-						fill="none"
-						viewBox="0 0 24 24"
-						><path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-						/></svg
-					>
-					<span
-						>Error! {form.error.message.charAt(0).toUpperCase() + form.error.message.slice(1)}</span
-					>
-				</div>
-			</div>
-		{/if}
-
-		<input type="text" name="id" hidden required value={data.project?.id} />
-
-		<div class="col-span-full">
-			<Button disabled={loading} warning block type="submit">
-				{#if loading}
-					<span class="loading loading-spinner" />
-					loading
-				{:else}
-					Delete
-				{/if}
-			</Button>
-		</div>
+		<Button disabled={loading} accent block type="submit" buttonClasses="col-span-full">
+			{#if loading}
+				<span class="loading loading-spinner" />
+				loading
+			{:else}
+				Delete
+			{/if}
+		</Button>
 	</form>
 </section>

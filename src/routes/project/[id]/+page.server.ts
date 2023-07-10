@@ -1,4 +1,4 @@
-import { redirect, type Actions, fail } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params, locals: { supabase, getSession } }) => {
@@ -10,17 +10,57 @@ export const load = (async ({ params, locals: { supabase, getSession } }) => {
 
 	const { data: project } = await supabase
 		.from('projects')
-		.select(`id, code, name`)
+		.select(`id, code, name, client`)
 		.eq('id', params.id)
 		.single();
 
-	return { session, project };
+	const { data: client } = await supabase
+		.from('clients')
+		.select(`name`)
+		.eq('id', project?.client)
+		.single();
+
+	const { data: clients } = await supabase.from('clients').select(`id, code, name`);
+
+	return { session, project, client, clients };
 }) satisfies PageServerLoad;
 
 export const actions = {
-	delete: async ({ request, locals: { supabase } }) => {
+	update: async ({ params, request, locals: { supabase, getSession } }) => {
+		const id = params.id as string;
 		const formData = await request.formData();
-		const id = formData.get('id') as string;
+		const clientName = formData.get('clientName') as string;
+
+		const session = await getSession();
+
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
+		const { data: client } = await supabase
+			.from('clients')
+			.select(`id`)
+			.eq('name', clientName)
+			.single();
+
+		const { error } = await supabase
+			.from('projects')
+			.update({
+				client: client?.id ?? null
+			})
+			.eq('id', id);
+
+		if (error) {
+			return fail(500, {
+				clientName,
+				error
+			});
+		}
+
+		return { clientName };
+	},
+	delete: async ({ params, locals: { supabase } }) => {
+		const id = params.id as string;
 
 		const { error } = await supabase.from('projects').delete().eq('id', id);
 

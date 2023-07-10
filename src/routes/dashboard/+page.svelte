@@ -5,6 +5,12 @@
 
 	let { projects, clients } = data;
 	$: ({ projects, clients } = data);
+
+	const getClientNameByClientId = (clientId: string | null): string => {
+		if (!clients || clients.length === 0) return '';
+		if (!clientId) return 'No client assigned';
+		return clients.find((client) => client.id === clientId)?.name ?? 'Client not found';
+	};
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
@@ -55,7 +61,9 @@
 								<div class="flex items-center">
 									<div>
 										<div class="font-bold">{project.code}</div>
-										<div class="text-sm opacity-50">// TODO</div>
+										<div class="text-sm opacity-50">
+											{getClientNameByClientId(project.client)}
+										</div>
 									</div>
 								</div>
 							</td>

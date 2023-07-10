@@ -4,7 +4,12 @@
 	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/Input.svelte';
-	import type { ActionData, SubmitFunction } from './$types';
+	import type { ActionData, PageData, SubmitFunction } from './$types';
+
+	export let data: PageData;
+
+	let { clients } = data;
+	$: ({ clients } = data);
 
 	export let form: ActionData;
 
@@ -57,6 +62,25 @@
 			value={form?.name ?? ''}
 			bordered
 		/>
+
+		<Input
+			formControlClasses="col-span-full"
+			name="clientName"
+			label="Client"
+			type="text"
+			placeholder="Client"
+			helpText="Choose a client here."
+			disabled={loading}
+			value={form?.clientName ?? ''}
+			bordered
+			list="clientList"
+		/>
+
+		<datalist id="clientList">
+			{#each clients || [] as client}
+				<option value={client.name} />
+			{/each}
+		</datalist>
 
 		<Button disabled={loading} primary block type="submit" buttonClasses="col-span-full">
 			{#if loading}

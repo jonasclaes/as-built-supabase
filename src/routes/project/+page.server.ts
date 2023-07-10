@@ -8,18 +8,9 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
 		throw redirect(303, '/');
 	}
 
-	const { data: profile } = await supabase
-		.from('profiles')
-		.select(`username, full_name, website, organization`)
-		.eq('id', session.user.id)
-		.single();
+	const { data: clients } = await supabase.from('clients').select(`id, code, name`);
 
-	const { data: projects } = await supabase
-		.from('projects')
-		.select(`id, code, name`)
-		.eq('organization', profile?.organization);
-
-	return { session, projects };
+	return { session, clients };
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -27,6 +18,7 @@ export const actions = {
 		const formData = await request.formData();
 		const code = formData.get('code') as string;
 		const name = formData.get('name') as string;
+		const clientName = formData.get('clientName') as string;
 
 		const session = await getSession();
 
@@ -36,11 +28,18 @@ export const actions = {
 			.eq('id', session?.user.id)
 			.single();
 
+		const { data: client } = await supabase
+			.from('clients')
+			.select(`id`)
+			.eq('name', clientName)
+			.single();
+
 		const { error, data: project } = await supabase
 			.from('projects')
 			.insert({
 				code,
 				name,
+				client: client?.id ?? null,
 				organization: profile?.organization
 			})
 			.select(`id`)
@@ -50,6 +49,7 @@ export const actions = {
 			return fail(500, {
 				code,
 				name,
+				clientName,
 				error
 			});
 		}
@@ -58,6 +58,7 @@ export const actions = {
 			return fail(500, {
 				code,
 				name,
+				clientName,
 				error: new Error('Unknown error')
 			});
 		}
