@@ -104,7 +104,12 @@
 					{#each clients as client}
 						<tr class="hover">
 							<td>
-								{client.name}
+								<div class="flex items-center">
+									<div>
+										<div class="font-bold">{client.name}</div>
+										<div class="text-sm opacity-50">{client.code}</div>
+									</div>
+								</div>
 							</td>
 							<th>
 								<a href="/client/{client.id}" class="btn btn-ghost btn-xs">Details</a>
