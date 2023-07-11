@@ -34,17 +34,13 @@ export const actions = {
 			throw redirect(303, '/');
 		}
 
-		const data = await supabase
+		const { error } = await supabase
 			.from('clients')
 			.update({
 				code,
 				name
 			})
 			.eq('id', id);
-
-		const { error } = data;
-
-		console.log(data);
 
 		if (error) {
 			return fail(500, {
