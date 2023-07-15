@@ -8,14 +8,17 @@
 
 	export let data: PageData;
 
-	let { project, client, clients } = data;
-	$: ({ project, client, clients } = data);
+	let { project, client, clients, revisions } = data;
+	$: ({ project, client, clients, revisions } = data);
 
 	export let form: ActionData;
 
+	let projectForm: HTMLFormElement;
+	let deleteForm: HTMLFormElement;
+
 	let loading = false;
-	let code: string = project?.code ?? '';
-	let name: string = project?.name ?? '';
+	let code: string = project.code ?? '';
+	let name: string = project.name ?? '';
 	let clientName: string = client?.name ?? '';
 
 	const handleUpdate: SubmitFunction = () => {
@@ -37,8 +40,8 @@
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
 	<div>
-		<h1 class="text-3xl">{project?.name}</h1>
-		<p class="text-base-content text-opacity-50">{project?.code}</p>
+		<h1 class="text-3xl">{project.name}</h1>
+		<p class="text-base-content text-opacity-50">{project.code}</p>
 	</div>
 	{#if form?.error}
 		<Alert type="error" alertClasses="col-span-full">
@@ -49,6 +52,7 @@
 		action="?/update"
 		method="post"
 		use:enhance={handleUpdate}
+		bind:this={projectForm}
 		class="grid grid-cols-1 md:grid-cols-4 gap-3"
 	>
 		<Input
@@ -63,7 +67,7 @@
 		/>
 
 		<Input
-			formControlClasses="col-span-3"
+			formControlClasses="md:col-span-3"
 			name="name"
 			label="Project name"
 			placeholder="Project name"
@@ -87,33 +91,85 @@
 		/>
 
 		<datalist id="clientList">
-			{#each clients || [] as client (client.id)}
+			{#each clients as client (client.id)}
 				<option value={client.name} />
 			{/each}
 		</datalist>
-
-		<Button disabled={loading} primary block type="submit" buttonClasses="col-span-full">
-			{#if loading}
-				<span class="loading loading-spinner" />
-				loading
-			{:else}
-				Update
-			{/if}
-		</Button>
 	</form>
 	<form
 		action="?/delete"
 		method="post"
 		use:enhance={handleDelete}
+		bind:this={deleteForm}
 		class="grid grid-cols-1 md:grid-cols-4 gap-3"
-	>
-		<Button disabled={loading} accent block type="submit" buttonClasses="col-span-full">
+	/>
+	<div class="grid grid-cols-3 gap-3">
+		<Button
+			disabled={loading}
+			primary
+			type="submit"
+			buttonClasses=""
+			on:click={() => projectForm.submit()}
+		>
 			{#if loading}
 				<span class="loading loading-spinner" />
-				loading
+				Loading
+			{:else}
+				Save project
+			{/if}
+		</Button>
+		<Button href="/project/{project.id}/revision" primary buttonClasses="">New revision</Button>
+		<Button
+			disabled={loading}
+			accent
+			type="submit"
+			buttonClasses=""
+			on:click={() => deleteForm.submit()}
+		>
+			{#if loading}
+				<span class="loading loading-spinner" />
+				Loading
 			{:else}
 				Delete
 			{/if}
 		</Button>
-	</form>
+	</div>
+	<h2 class="text-xl">Revisions</h2>
+	{#if revisions && revisions.length > 0}
+		<div class="overflow-x-auto overflow-y-auto">
+			<table class="table table-pin-rows">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th>Created at</th>
+						<th />
+					</tr>
+				</thead>
+				<tbody>
+					{#each revisions as revision}
+						<tr class="hover">
+							<td class="font-bold">
+								{revision.code}
+							</td>
+							<td>
+								{new Date(revision.created_at).toLocaleString()}
+							</td>
+							<th>
+								<a href="/project/{project.id}/revision/{revision.id}" class="btn btn-ghost btn-xs"
+									>Details</a
+								>
+							</th>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{:else}
+		<p class="text-center text-base-content text-opacity-50">
+			You don't have any revisions yet. Why don't you <a
+				href="/project/{project.id}/revision"
+				class="text-primary underline hover:text-primary-focus">create</a
+			> one now?
+		</p>
+	{/if}
 </section>

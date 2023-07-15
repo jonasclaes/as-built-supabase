@@ -26,10 +26,9 @@
 	export let type: HTMLButtonElement['type'] | null = null;
 	export let disabled: boolean | null = null;
 	export let buttonClasses = '';
-</script>
+	export let href: string | null = null;
 
-<button
-	class={combineClasses(
+	let _class = combineClasses(
 		'btn',
 		buttonClasses,
 		applyClassIf(size === 'xs', 'btn-xs'),
@@ -52,9 +51,15 @@
 		applyClassIf(glass, 'glass'),
 		applyClassIf(square, 'btn-square'),
 		applyClassIf(circle, 'btn-circle')
-	)}
-	{type}
-	{disabled}
->
-	<slot />
-</button>
+	);
+</script>
+
+{#if href}
+	<a class={_class} {href} role="button" on:click>
+		<slot />
+	</a>
+{:else}
+	<button class={_class} {type} {disabled} on:click>
+		<slot />
+	</button>
+{/if}

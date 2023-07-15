@@ -8,7 +8,7 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
 		throw redirect(303, '/');
 	}
 
-	const { data: clients } = await supabase.from('clients').select(`id, code, name`);
+	const { data: clients } = await supabase.from('clients').select(`id, code, name`).order('name');
 
 	return { session, clients };
 }) satisfies PageServerLoad;
