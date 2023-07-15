@@ -113,9 +113,9 @@
 		>
 			{#if loading}
 				<span class="loading loading-spinner" />
-				loading
+				Loading
 			{:else}
-				Update
+				Save project
 			{/if}
 		</Button>
 		<Button href="/" primary buttonClasses="">New revision</Button>
@@ -128,7 +128,7 @@
 		>
 			{#if loading}
 				<span class="loading loading-spinner" />
-				loading
+				Loading
 			{:else}
 				Delete
 			{/if}
