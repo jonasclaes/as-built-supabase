@@ -13,6 +13,9 @@
 
 	export let form: ActionData;
 
+	let projectForm: HTMLFormElement;
+	let deleteForm: HTMLFormElement;
+
 	let loading = false;
 	let code: string = project?.code ?? '';
 	let name: string = project?.name ?? '';
@@ -49,6 +52,7 @@
 		action="?/update"
 		method="post"
 		use:enhance={handleUpdate}
+		bind:this={projectForm}
 		class="grid grid-cols-1 md:grid-cols-4 gap-3"
 	>
 		<Input
@@ -91,8 +95,22 @@
 				<option value={client.name} />
 			{/each}
 		</datalist>
-
-		<Button disabled={loading} primary block type="submit" buttonClasses="col-span-full">
+	</form>
+	<form
+		action="?/delete"
+		method="post"
+		use:enhance={handleDelete}
+		bind:this={deleteForm}
+		class="grid grid-cols-1 md:grid-cols-4 gap-3"
+	/>
+	<div class="grid grid-cols-3 gap-3">
+		<Button
+			disabled={loading}
+			primary
+			type="submit"
+			buttonClasses=""
+			on:click={() => projectForm.submit()}
+		>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				loading
@@ -100,14 +118,14 @@
 				Update
 			{/if}
 		</Button>
-	</form>
-	<form
-		action="?/delete"
-		method="post"
-		use:enhance={handleDelete}
-		class="grid grid-cols-1 md:grid-cols-4 gap-3"
-	>
-		<Button disabled={loading} accent block type="submit" buttonClasses="col-span-full">
+		<Button href="/" primary buttonClasses="">New revision</Button>
+		<Button
+			disabled={loading}
+			accent
+			type="submit"
+			buttonClasses=""
+			on:click={() => deleteForm.submit()}
+		>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				loading
@@ -115,5 +133,5 @@
 				Delete
 			{/if}
 		</Button>
-	</form>
+	</div>
 </section>
