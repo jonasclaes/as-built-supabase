@@ -103,7 +103,7 @@
 		bind:this={deleteForm}
 		class="grid grid-cols-1 md:grid-cols-4 gap-3"
 	/>
-	<div class="grid grid-cols-3 gap-3">
+	<div class="grid md:grid-cols-3 gap-3">
 		<Button
 			disabled={loading}
 			primary
@@ -118,7 +118,7 @@
 				Save project
 			{/if}
 		</Button>
-		<Button href="/project/{project.id}/revision" primary buttonClasses="">New revision</Button>
+		<Button href="/project/{project.id}/revision" secondary buttonClasses="">New revision</Button>
 		<Button
 			disabled={loading}
 			accent
