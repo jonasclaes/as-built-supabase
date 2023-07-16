@@ -26,5 +26,5 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
 		.order(`code`)
 		.eq('organization', profile?.organization);
 
-	return { session, projects, clients };
+	return { session, projects: projects ?? [], clients: clients ?? [] };
 }) satisfies PageServerLoad;
