@@ -137,7 +137,6 @@
 					<tr>
 						<th>Name</th>
 						<th>Created at</th>
-						<th>Type</th>
 						<th />
 					</tr>
 				</thead>
@@ -149,9 +148,6 @@
 							</td>
 							<td>
 								{new Date(file.created_at).toLocaleString()}
-							</td>
-							<td>
-								{file.metadata.mimetype}
 							</td>
 							<th>
 								<Button
