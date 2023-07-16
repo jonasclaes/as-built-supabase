@@ -113,5 +113,35 @@ export const actions = {
 				});
 			}
 		}
+	},
+	deleteFile: async ({
+		params: { projectId, revisionId },
+		request,
+		locals: { supabase, getSession }
+	}) => {
+		const formData = await request.formData();
+		const name = formData.get('name') as string;
+
+		const session = await getSession();
+
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
+		const { data: profile } = await supabase
+			.from('profiles')
+			.select(`organization`)
+			.eq('id', session.user.id)
+			.single();
+
+		const { error } = await supabase.storage
+			.from('files')
+			.remove([`${profile?.organization}/${projectId}/${revisionId}/${name}`]);
+
+		if (error) {
+			return fail(500, {
+				error
+			});
+		}
 	}
 } satisfies Actions;

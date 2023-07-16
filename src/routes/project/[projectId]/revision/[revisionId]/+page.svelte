@@ -15,9 +15,13 @@
 	let revisionForm: HTMLFormElement;
 	let deleteForm: HTMLFormElement;
 	let fileUploadModal: HTMLDialogElement;
+	let fileDeleteModal: HTMLDialogElement;
+
+	let fileDeleteName: string = '';
 
 	let loading = false;
 	let fileUploadLoading = false;
+	let fileDeleteLoading = false;
 
 	let code = revision.code ?? '';
 
@@ -49,6 +53,24 @@
 
 			await update();
 		};
+	};
+
+	const handleDeleteFile: SubmitFunction = () => {
+		fileDeleteLoading = true;
+		return async ({ update, result }) => {
+			fileDeleteLoading = false;
+
+			if (result.type === 'success') {
+				fileDeleteModal.close();
+			}
+
+			await update({ reset: true });
+		};
+	};
+
+	const openFileDeleteModal = (name: string) => {
+		fileDeleteName = name;
+		fileDeleteModal.showModal();
 	};
 
 	const formatBytes = (bytes: number, decimals = 2) => {
@@ -137,8 +159,9 @@
 					type="file"
 					multiple
 					class="file-input file-input-bordered file-input-primary w-full"
+					disabled={fileUploadLoading}
 				/>
-				<Button primary type="submit">
+				<Button primary type="submit" disabled={fileUploadLoading}>
 					{#if fileUploadLoading}
 						<span class="loading loading-spinner" />
 						Uploading...
@@ -179,12 +202,21 @@
 								</div>
 							</td>
 							<td>
-								<Button
-									href="/project/{project.id}/revision/{revision.id}/file/{file.name}"
-									target="_blank"
-									primary
-									size="xs">Download</Button
-								>
+								<div class="join">
+									<Button
+										href="/project/{project.id}/revision/{revision.id}/file/{file.name}"
+										target="_blank"
+										primary
+										size="xs"
+										buttonClasses="join-item">Download</Button
+									>
+									<Button
+										on:click={() => openFileDeleteModal(file.name)}
+										accent
+										size="xs"
+										buttonClasses="join-item">Delete</Button
+									>
+								</div>
 							</td>
 						</tr>
 					{/each}
@@ -199,4 +231,44 @@
 			> some now?
 		</p>
 	{/if}
+	<dialog class="modal" bind:this={fileDeleteModal}>
+		<form method="dialog" class="modal-box">
+			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+			<h3 class="font-bold text-lg">Delete a file</h3>
+			<p class="py-4">
+				Are you sure you want to delete <span class="font-bold">{fileDeleteName}</span>?
+			</p>
+			<form
+				action="?/deleteFile"
+				method="post"
+				use:enhance={handleDeleteFile}
+				class="flex flex-col gap-3"
+			>
+				<input type="hidden" name="name" bind:value={fileDeleteName} />
+				<div class="grid md:grid-cols-2 gap-3">
+					<Button primary type="submit" disabled={fileDeleteLoading}>
+						{#if fileDeleteLoading}
+							<span class="loading loading-spinner" />
+							Loading
+						{:else}
+							Yes
+						{/if}
+					</Button>
+					<Button
+						secondary
+						type="button"
+						disabled={fileDeleteLoading}
+						on:click={() => {
+							fileDeleteModal.close();
+						}}
+					>
+						No
+					</Button>
+				</div>
+			</form>
+		</form>
+		<form method="dialog" class="modal-backdrop">
+			<button>close</button>
+		</form>
+	</dialog>
 </section>
