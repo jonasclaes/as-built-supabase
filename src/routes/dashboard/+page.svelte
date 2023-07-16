@@ -37,8 +37,8 @@
 			<table class="table table-pin-rows">
 				<thead>
 					<tr>
-						<th>Code</th>
-						<th>Name</th>
+						<th>Project</th>
+						<th>Client</th>
 						<th />
 					</tr>
 				</thead>
@@ -48,15 +48,15 @@
 							<td>
 								<div class="flex items-center">
 									<div>
-										<div class="font-bold">{project.code}</div>
+										<div class="font-bold">{project.name}</div>
 										<div class="text-sm opacity-50">
-											{getClientNameByClientId(project.client)}
+											{project.code}
 										</div>
 									</div>
 								</div>
 							</td>
 							<td>
-								{project.name}
+								{getClientNameByClientId(project.client)}
 							</td>
 							<th>
 								<div class="flex justify-end">
@@ -86,7 +86,7 @@
 			<table class="table table-pin-rows">
 				<thead>
 					<tr>
-						<th>Name</th>
+						<th>Client</th>
 						<th />
 					</tr>
 				</thead>
