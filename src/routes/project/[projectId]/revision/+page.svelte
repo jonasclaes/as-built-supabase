@@ -60,7 +60,7 @@
 			primary
 			type="submit"
 			buttonClasses=""
-			on:click={() => revisionForm.submit()}
+			on:click={() => revisionForm.requestSubmit()}
 		>
 			{#if loading}
 				<span class="loading loading-spinner" />

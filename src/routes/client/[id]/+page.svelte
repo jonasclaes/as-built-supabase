@@ -7,11 +7,13 @@
 	import type { ActionData, PageData, SubmitFunction } from './$types';
 
 	export let data: PageData;
+	export let form: ActionData;
 
 	let { client } = data;
 	$: ({ client } = data);
 
-	export let form: ActionData;
+	let clientForm: HTMLFormElement;
+	let deleteForm: HTMLFormElement;
 
 	let loading = false;
 	let code: string = client.code ?? '';
@@ -48,6 +50,7 @@
 		action="?/update"
 		method="post"
 		use:enhance={handleUpdate}
+		bind:this={clientForm}
 		class="grid grid-cols-1 md:grid-cols-4 gap-3"
 	>
 		<Input
@@ -62,7 +65,7 @@
 		/>
 
 		<Input
-			formControlClasses="col-span-3"
+			formControlClasses="md:col-span-3"
 			name="name"
 			label="Client name"
 			placeholder="Client name"
@@ -72,29 +75,30 @@
 			value={form?.name ?? name}
 			bordered
 		/>
-
-		<Button disabled={loading} primary block type="submit" buttonClasses="col-span-full">
-			{#if loading}
-				<span class="loading loading-spinner" />
-				loading
-			{:else}
-				Update
-			{/if}
-		</Button>
 	</form>
 	<form
 		action="?/delete"
 		method="post"
 		use:enhance={handleDelete}
+		bind:this={deleteForm}
 		class="grid grid-cols-1 md:grid-cols-4 gap-3"
-	>
-		<Button disabled={loading} accent block type="submit" buttonClasses="col-span-full">
+	/>
+	<div class="grid md:grid-cols-2 gap-3">
+		<Button disabled={loading} primary type="submit" on:click={() => clientForm.requestSubmit()}>
 			{#if loading}
 				<span class="loading loading-spinner" />
-				loading
+				Loading
+			{:else}
+				Save client
+			{/if}
+		</Button>
+		<Button disabled={loading} accent type="submit" on:click={() => deleteForm.requestSubmit()}>
+			{#if loading}
+				<span class="loading loading-spinner" />
+				Loading
 			{:else}
 				Delete
 			{/if}
 		</Button>
-	</form>
+	</div>
 </section>

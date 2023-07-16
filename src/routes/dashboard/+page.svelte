@@ -14,12 +14,6 @@
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
-	<div class="flex flex-col items-center pt-2">
-		<div class="indicator">
-			<span class="indicator-item badge badge-primary">BETA</span>
-			<h1 class="text-3xl p-1.5 text-center">AS-BUILT</h1>
-		</div>
-	</div>
 	<div class="stats stats-vertical lg:stats-horizontal shadow bg-base-200">
 		<div class="stat place-items-center">
 			<div class="stat-title">Projects</div>
@@ -31,12 +25,6 @@
 			<div class="stat-title">Clients</div>
 			<div class="stat-value">{clients?.length ?? NaN}</div>
 			<div class="stat-desc">Total amount of clients</div>
-		</div>
-
-		<div class="stat place-items-center">
-			<div class="stat-title">Another statistic</div>
-			<div class="stat-value">1,200</div>
-			<div class="stat-desc">Gone down!</div>
 		</div>
 	</div>
 	<div class="divider" />

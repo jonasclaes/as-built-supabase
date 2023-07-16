@@ -104,13 +104,7 @@
 		class="grid grid-cols-1 md:grid-cols-4 gap-3"
 	/>
 	<div class="grid md:grid-cols-3 gap-3">
-		<Button
-			disabled={loading}
-			primary
-			type="submit"
-			buttonClasses=""
-			on:click={() => projectForm.submit()}
-		>
+		<Button disabled={loading} primary type="submit" on:click={() => projectForm.requestSubmit()}>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				Loading
@@ -118,14 +112,8 @@
 				Save project
 			{/if}
 		</Button>
-		<Button href="/project/{project.id}/revision" secondary buttonClasses="">New revision</Button>
-		<Button
-			disabled={loading}
-			accent
-			type="submit"
-			buttonClasses=""
-			on:click={() => deleteForm.submit()}
-		>
+		<Button href="/project/{project.id}/revision" secondary>New revision</Button>
+		<Button disabled={loading} accent type="submit" on:click={() => deleteForm.requestSubmit()}>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				Loading
