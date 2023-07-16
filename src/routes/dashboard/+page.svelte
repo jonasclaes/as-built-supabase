@@ -59,7 +59,9 @@
 								{project.name}
 							</td>
 							<th>
-								<a href="/project/{project.id}" class="btn btn-ghost btn-xs">Details</a>
+								<div class="flex justify-end">
+									<a href="/project/{project.id}" class="btn btn-ghost btn-xs">Details</a>
+								</div>
 							</th>
 						</tr>
 					{/each}
@@ -100,7 +102,9 @@
 								</div>
 							</td>
 							<th>
-								<a href="/client/{client.id}" class="btn btn-ghost btn-xs">Details</a>
+								<div class="flex justify-end">
+									<a href="/client/{client.id}" class="btn btn-ghost btn-xs">Details</a>
+								</div>
 							</th>
 						</tr>
 					{/each}

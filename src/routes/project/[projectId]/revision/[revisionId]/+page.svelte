@@ -202,7 +202,7 @@
 								</div>
 							</td>
 							<td>
-								<div class="join">
+								<div class="join flex justify-end">
 									<Button
 										href="/project/{project.id}/revision/{revision.id}/file/{file.name}"
 										target="_blank"

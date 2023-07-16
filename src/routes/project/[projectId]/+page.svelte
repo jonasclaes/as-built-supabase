@@ -137,9 +137,12 @@
 								{new Date(revision.created_at).toLocaleString()}
 							</td>
 							<th>
-								<a href="/project/{project.id}/revision/{revision.id}" class="btn btn-ghost btn-xs"
-									>Details</a
-								>
+								<div class="flex justify-end">
+									<a
+										href="/project/{project.id}/revision/{revision.id}"
+										class="btn btn-ghost btn-xs">Details</a
+									>
+								</div>
 							</th>
 						</tr>
 					{/each}
