@@ -73,14 +73,11 @@ export const actions = {
 			});
 		}
 	},
-	delete: async ({ params, locals: { supabase } }) => {
-		const projectId = params.projectId as string;
-
+	delete: async ({ params: { projectId }, locals: { supabase } }) => {
 		const { error } = await supabase.from('projects').delete().eq('id', projectId);
 
 		if (error) {
 			return fail(500, {
-				id: projectId,
 				error
 			});
 		}

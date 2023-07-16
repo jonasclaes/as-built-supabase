@@ -58,5 +58,16 @@ export const actions = {
 				error
 			});
 		}
+	},
+	delete: async ({ params: { projectId, revisionId }, locals: { supabase } }) => {
+		const { error } = await supabase.from('revisions').delete().eq('id', revisionId);
+
+		if (error) {
+			return fail(500, {
+				error
+			});
+		}
+
+		throw redirect(303, `/project/${projectId}`);
 	}
 } satisfies Actions;

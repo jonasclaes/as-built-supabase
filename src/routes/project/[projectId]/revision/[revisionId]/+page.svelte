@@ -13,12 +13,21 @@
 	$: ({ project, revision } = data);
 
 	let revisionForm: HTMLFormElement;
+	let deleteForm: HTMLFormElement;
 
 	let loading = false;
 
 	let code = revision.code ?? '';
 
 	const handleUpdate: SubmitFunction = () => {
+		loading = true;
+		return async ({ update }) => {
+			loading = false;
+			await update({ reset: false });
+		};
+	};
+
+	const handleDelete: SubmitFunction = () => {
 		loading = true;
 		return async ({ update }) => {
 			loading = false;
@@ -56,7 +65,8 @@
 			formControlClasses="col-span-full"
 		/>
 	</form>
-	<div class="grid md:grid-cols-2 gap-3">
+	<form action="?/delete" method="post" use:enhance={handleDelete} bind:this={deleteForm} />
+	<div class="grid md:grid-cols-3 gap-3">
 		<Button
 			disabled={loading}
 			primary
@@ -72,5 +82,13 @@
 			{/if}
 		</Button>
 		<Button href="/project/{project.id}" secondary>Back to project</Button>
+		<Button disabled={loading} accent type="submit" on:click={() => deleteForm.requestSubmit()}>
+			{#if loading}
+				<span class="loading loading-spinner" />
+				Loading
+			{:else}
+				Delete
+			{/if}
+		</Button>
 	</div>
 </section>
