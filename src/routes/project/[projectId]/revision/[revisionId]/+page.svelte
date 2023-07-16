@@ -1,16 +1,18 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 	import { capitalize } from '$lib/capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/Input.svelte';
+	import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
 
 	export let data: PageData;
 	export let form: ActionData;
 
-	let { project, revision } = data;
-	$: ({ project, revision } = data);
+	let { session, project, revision, profile, files } = data;
+	$: ({ session, project, revision, profile, files } = data);
 
 	let revisionForm: HTMLFormElement;
 	let deleteForm: HTMLFormElement;
@@ -18,6 +20,19 @@
 	let loading = false;
 
 	let code = revision.code ?? '';
+
+	let supabase = createSupabaseLoadClient({
+		supabaseUrl: PUBLIC_SUPABASE_URL,
+		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+		event: { fetch },
+		serverSession: session
+	});
+	$: createSupabaseLoadClient({
+		supabaseUrl: PUBLIC_SUPABASE_URL,
+		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+		event: { fetch },
+		serverSession: session
+	});
 
 	const handleUpdate: SubmitFunction = () => {
 		loading = true;
@@ -33,6 +48,29 @@
 			loading = false;
 			await update({ reset: false });
 		};
+	};
+
+	const downloadFile = async (key: string, name: string) => {
+		const { error, data: file } = await supabase.storage.from('files').download(key);
+
+		if (error) {
+			console.error(error);
+			return;
+		}
+
+		if (!file) {
+			console.error('Unknown error');
+			return;
+		}
+
+		// This is an ugly JS-hack in order to download a file from a blob.
+		const url = URL.createObjectURL(file);
+		const link = document.createElement('a');
+		link.download = name;
+		link.href = url;
+		link.click();
+		URL.revokeObjectURL(url);
+		link.remove();
 	};
 </script>
 
@@ -91,4 +129,53 @@
 			{/if}
 		</Button>
 	</div>
+	<h2 class="text-xl">Files</h2>
+	{#if files && files.length > 0}
+		<div class="overflow-x-auto overflow-y-auto">
+			<table class="table table-pin-rows">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Created at</th>
+						<th>Type</th>
+						<th />
+					</tr>
+				</thead>
+				<tbody>
+					{#each files as file}
+						<tr class="hover">
+							<td class="font-bold break-all">
+								{file.name}
+							</td>
+							<td>
+								{new Date(file.created_at).toLocaleString()}
+							</td>
+							<td>
+								{file.metadata.mimetype}
+							</td>
+							<th>
+								<Button
+									type="button"
+									primary
+									size="xs"
+									on:click={() =>
+										downloadFile(
+											`${profile?.organization}/${project.id}/${revision.id}/${file.name}`,
+											file.name
+										)}>Download</Button
+								>
+							</th>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{:else}
+		<p class="text-center text-base-content text-opacity-50">
+			You don't have any files yet. Why don't you <a
+				href="/project/{project.id}/revision/{revision.id}/upload"
+				class="text-primary underline hover:text-primary-focus">upload</a
+			> one now?
+		</p>
+	{/if}
 </section>

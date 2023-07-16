@@ -31,7 +31,17 @@ export const load = (async ({
 		throw error(404, 'Revision not found');
 	}
 
-	return { session, project, revision };
+	const { data: profile } = await supabase
+		.from('profiles')
+		.select(`organization`)
+		.eq('id', session?.user.id)
+		.single();
+
+	const { data: files } = await supabase.storage
+		.from('files')
+		.list(`${profile?.organization}/${project.id}/${revision.id}`);
+
+	return { session, project, revision, profile, files };
 }) satisfies PageServerLoad;
 
 export const actions = {
