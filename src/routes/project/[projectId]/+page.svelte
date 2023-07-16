@@ -96,13 +96,7 @@
 			{/each}
 		</datalist>
 	</form>
-	<form
-		action="?/delete"
-		method="post"
-		use:enhance={handleDelete}
-		bind:this={deleteForm}
-		class="grid grid-cols-1 md:grid-cols-4 gap-3"
-	/>
+	<form action="?/delete" method="post" use:enhance={handleDelete} bind:this={deleteForm} />
 	<div class="grid md:grid-cols-3 gap-3">
 		<Button disabled={loading} primary type="submit" on:click={() => projectForm.requestSubmit()}>
 			{#if loading}
