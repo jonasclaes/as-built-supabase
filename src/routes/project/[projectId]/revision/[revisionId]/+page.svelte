@@ -1,38 +1,25 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 	import { capitalize } from '$lib/capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/Input.svelte';
-	import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
 
 	export let data: PageData;
 	export let form: ActionData;
 
-	let { session, project, revision, profile, files } = data;
-	$: ({ session, project, revision, profile, files } = data);
+	let { project, revision, files } = data;
+	$: ({ project, revision, files } = data);
 
 	let revisionForm: HTMLFormElement;
 	let deleteForm: HTMLFormElement;
+	let fileUploadModal: HTMLDialogElement;
 
 	let loading = false;
+	let fileUploadLoading = false;
 
 	let code = revision.code ?? '';
-
-	let supabase = createSupabaseLoadClient({
-		supabaseUrl: PUBLIC_SUPABASE_URL,
-		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
-		event: { fetch },
-		serverSession: session
-	});
-	$: createSupabaseLoadClient({
-		supabaseUrl: PUBLIC_SUPABASE_URL,
-		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
-		event: { fetch },
-		serverSession: session
-	});
 
 	const handleUpdate: SubmitFunction = () => {
 		loading = true;
@@ -50,27 +37,30 @@
 		};
 	};
 
-	const downloadFile = async (key: string, name: string) => {
-		const { error, data: file } = await supabase.storage.from('files').download(key);
+	const handleUpload: SubmitFunction = () => {
+		fileUploadLoading = true;
 
-		if (error) {
-			console.error(error);
-			return;
-		}
+		return async ({ update, result }) => {
+			fileUploadLoading = false;
 
-		if (!file) {
-			console.error('Unknown error');
-			return;
-		}
+			if (result.type === 'success') {
+				fileUploadModal.close();
+			}
 
-		// This is an ugly JS-hack in order to download a file from a blob.
-		const url = URL.createObjectURL(file);
-		const link = document.createElement('a');
-		link.download = name;
-		link.href = url;
-		link.click();
-		URL.revokeObjectURL(url);
-		link.remove();
+			await update();
+		};
+	};
+
+	const formatBytes = (bytes: number, decimals = 2) => {
+		if (!+bytes) return '0 Bytes';
+
+		const k = 1024;
+		const dm = decimals < 0 ? 0 : decimals;
+		const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+
+		const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+		return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 	};
 </script>
 
@@ -104,7 +94,7 @@
 		/>
 	</form>
 	<form action="?/delete" method="post" use:enhance={handleDelete} bind:this={deleteForm} />
-	<div class="grid md:grid-cols-3 gap-3">
+	<div class="grid md:grid-cols-4 gap-3">
 		<Button
 			disabled={loading}
 			primary
@@ -119,6 +109,7 @@
 				Save revision
 			{/if}
 		</Button>
+		<Button primary type="button" on:click={() => fileUploadModal.showModal()}>Add a file</Button>
 		<Button href="/project/{project.id}" secondary>Back to project</Button>
 		<Button disabled={loading} accent type="submit" on:click={() => deleteForm.requestSubmit()}>
 			{#if loading}
@@ -129,6 +120,38 @@
 			{/if}
 		</Button>
 	</div>
+	<dialog class="modal" bind:this={fileUploadModal}>
+		<form method="dialog" class="modal-box">
+			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+			<h3 class="font-bold text-lg">Add a file</h3>
+			<p class="py-4">You can add files by selecting the input below.</p>
+			<form
+				action="?/uploadFiles"
+				method="post"
+				enctype="multipart/form-data"
+				use:enhance={handleUpload}
+				class="flex flex-col gap-3"
+			>
+				<input
+					name="files"
+					type="file"
+					multiple
+					class="file-input file-input-bordered file-input-primary w-full"
+				/>
+				<Button primary type="submit">
+					{#if fileUploadLoading}
+						<span class="loading loading-spinner" />
+						Uploading...
+					{:else}
+						Upload
+					{/if}
+				</Button>
+			</form>
+		</form>
+		<form method="dialog" class="modal-backdrop">
+			<button>close</button>
+		</form>
+	</dialog>
 	<h2 class="text-xl">Files</h2>
 	{#if files && files.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
@@ -136,31 +159,33 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Created at</th>
 						<th />
 					</tr>
 				</thead>
 				<tbody>
 					{#each files as file}
 						<tr class="hover">
-							<td class="font-bold break-all">
-								{file.name}
+							<td>
+								<div class="flex items-center">
+									<div>
+										<div class="font-bold break-all">{file.name}</div>
+										<div class="text-sm opacity-50">
+											{new Date(file.created_at).toLocaleString()}
+										</div>
+										<div class="text-sm opacity-50">
+											{formatBytes(file.metadata.size)}
+										</div>
+									</div>
+								</div>
 							</td>
 							<td>
-								{new Date(file.created_at).toLocaleString()}
-							</td>
-							<th>
 								<Button
-									type="button"
+									href="/project/{project.id}/revision/{revision.id}/file/{file.name}"
+									target="_blank"
 									primary
-									size="xs"
-									on:click={() =>
-										downloadFile(
-											`${profile?.organization}/${project.id}/${revision.id}/${file.name}`,
-											file.name
-										)}>Download</Button
+									size="xs">Download</Button
 								>
-							</th>
+							</td>
 						</tr>
 					{/each}
 				</tbody>
@@ -168,10 +193,10 @@
 		</div>
 	{:else}
 		<p class="text-center text-base-content text-opacity-50">
-			You don't have any files yet. Why don't you <a
-				href="/project/{project.id}/revision/{revision.id}/upload"
-				class="text-primary underline hover:text-primary-focus">upload</a
-			> one now?
+			You don't have any files yet. Why don't you <button
+				on:click={() => fileUploadModal.showModal()}
+				class="text-primary underline hover:text-primary-focus">upload</button
+			> some now?
 		</p>
 	{/if}
 </section>
