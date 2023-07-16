@@ -79,5 +79,39 @@ export const actions = {
 		}
 
 		throw redirect(303, `/project/${projectId}`);
+	},
+	uploadFiles: async ({
+		params: { projectId, revisionId },
+		request,
+		locals: { supabase, getSession }
+	}) => {
+		const formData = await request.formData();
+		const files = formData.getAll('files') as File[];
+
+		const session = await getSession();
+
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
+		const { data: profile } = await supabase
+			.from('profiles')
+			.select(`organization`)
+			.eq('id', session.user.id)
+			.single();
+
+		for (const file of files) {
+			const { error } = await supabase.storage
+				.from('files')
+				.upload(`${profile?.organization}/${projectId}/${revisionId}/${file.name}`, file, {
+					upsert: true
+				});
+
+			if (error) {
+				return fail(500, {
+					error
+				});
+			}
+		}
 	}
 } satisfies Actions;

@@ -27,6 +27,7 @@
 	export let disabled: boolean | null = null;
 	export let buttonClasses = '';
 	export let href: string | null = null;
+	export let target: HTMLAnchorElement['target'] | null = null;
 
 	let _class = combineClasses(
 		'btn',
@@ -55,7 +56,7 @@
 </script>
 
 {#if href}
-	<a class={_class} {href} role="button" on:click>
+	<a class={_class} {href} {target} role="button" on:click>
 		<slot />
 	</a>
 {:else}
