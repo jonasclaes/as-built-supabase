@@ -1,29 +1,50 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	let { projects, clients } = data;
-	$: ({ projects, clients } = data);
+	let {
+		projects,
+		totalProjects,
+		projectIndex,
+		projectsPerPage,
+		clients,
+		totalClients,
+		clientIndex,
+		clientsPerPage
+	} = data;
+	$: ({
+		projects,
+		totalProjects,
+		projectIndex,
+		projectsPerPage,
+		clients,
+		totalClients,
+		clientIndex,
+		clientsPerPage
+	} = data);
 
-	const getClientNameByClientId = (clientId: string | null): string => {
-		if (!clients || clients.length === 0) return '';
-		if (!clientId) return 'No client assigned';
-		return clients.find((client) => client.id === clientId)?.name ?? 'Client not found';
-	};
+	let projectPages = Math.ceil(totalProjects / projectsPerPage);
+	let clientPages = Math.ceil(totalClients / clientsPerPage);
+
+	let mounted = false;
+	onMount(() => (mounted = true));
+	$: mounted && goto(`/dashboard?projectIndex=${projectIndex}&clientIndex=${clientIndex}`);
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
 	<div class="stats stats-vertical lg:stats-horizontal shadow bg-base-200">
 		<div class="stat place-items-center">
 			<div class="stat-title">Projects</div>
-			<div class="stat-value">{projects?.length ?? NaN}</div>
+			<div class="stat-value">{totalProjects}</div>
 			<div class="stat-desc">Total amount of projects</div>
 		</div>
 
 		<div class="stat place-items-center">
 			<div class="stat-title">Clients</div>
-			<div class="stat-value">{clients?.length ?? NaN}</div>
+			<div class="stat-value">{totalClients}</div>
 			<div class="stat-desc">Total amount of clients</div>
 		</div>
 	</div>
@@ -56,7 +77,7 @@
 								</div>
 							</td>
 							<td>
-								{getClientNameByClientId(project.client)}
+								{project.client?.name ?? 'No client assigned'}
 							</td>
 							<th>
 								<div class="flex justify-end">
@@ -67,6 +88,19 @@
 					{/each}
 				</tbody>
 			</table>
+		</div>
+		<div class="join flex justify-center">
+			{#if projectIndex !== 1}
+				<button class="join-item btn" on:click={() => (projectIndex = 1)}>&lt;&lt;</button>
+				<button class="join-item btn" on:click={() => (projectIndex -= 1)}>&lt;</button>
+			{/if}
+			<button class="join-item btn">Page {projectIndex}</button>
+			{#if projectIndex !== projectPages}
+				<button class="join-item btn" on:click={() => (projectIndex += 1)}>&gt;</button>
+				<button class="join-item btn" on:click={() => (projectIndex = projectPages)}
+					>&gt;&gt;</button
+				>
+			{/if}
 		</div>
 	{:else}
 		<p class="text-center text-base-content text-opacity-50">
@@ -110,6 +144,17 @@
 					{/each}
 				</tbody>
 			</table>
+		</div>
+		<div class="join flex justify-center">
+			{#if clientIndex !== 1}
+				<button class="join-item btn" on:click={() => (clientIndex = 1)}>&lt;&lt;</button>
+				<button class="join-item btn" on:click={() => (clientIndex -= 1)}>&lt;</button>
+			{/if}
+			<button class="join-item btn">Page {clientIndex}</button>
+			{#if clientIndex !== clientPages}
+				<button class="join-item btn" on:click={() => (clientIndex += 1)}>&gt;</button>
+				<button class="join-item btn" on:click={() => (clientIndex = clientPages)}>&gt;&gt;</button>
+			{/if}
 		</div>
 	{:else}
 		<p class="text-center text-base-content text-opacity-50">
