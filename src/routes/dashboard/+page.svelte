@@ -1,37 +1,18 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	let {
-		projects,
-		totalProjects,
-		projectIndex,
-		projectsPerPage,
-		clients,
-		totalClients,
-		clientIndex,
-		clientsPerPage
-	} = data;
-	$: ({
-		projects,
-		totalProjects,
-		projectIndex,
-		projectsPerPage,
-		clients,
-		totalClients,
-		clientIndex,
-		clientsPerPage
-	} = data);
+	let { projects, totalProjects, projectsPerPage, clients, totalClients, clientsPerPage } = data;
+	$: ({ projects, totalProjects, projectsPerPage, clients, totalClients, clientsPerPage } = data);
 
+	let projectIndex = 1;
+	let clientIndex = 1;
 	let projectPages = Math.ceil(totalProjects / projectsPerPage);
 	let clientPages = Math.ceil(totalClients / clientsPerPage);
 
-	let mounted = false;
-	onMount(() => (mounted = true));
-	$: mounted && goto(`/dashboard?projectIndex=${projectIndex}&clientIndex=${clientIndex}`);
+	let projectSearchText = '';
+	let clientSearchText = '';
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
@@ -53,6 +34,15 @@
 		<h2 class="text-3xl">Projects</h2>
 		<a href="/project" class="btn btn-primary">New project</a>
 	</div>
+	<div class="join">
+		<input
+			name="projectSearch"
+			class="input input-bordered join-item w-full"
+			placeholder="Search..."
+			bind:value={projectSearchText}
+		/>
+		<button class="btn join-item">Search</button>
+	</div>
 	{#if projects && projects.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
 			<table class="table table-pin-rows">
@@ -64,7 +54,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each projects as project}
+					{#each projects
+						.filter((project) => project.name
+								?.toLowerCase()
+								.includes(projectSearchText.toLowerCase()))
+						.slice((projectIndex - 1) * projectsPerPage, projectIndex * projectsPerPage) as project}
 						<tr class="hover">
 							<td>
 								<div class="flex items-center">
@@ -115,6 +109,15 @@
 		<h2 class="text-3xl">Clients</h2>
 		<a href="/client" class="btn btn-primary">New client</a>
 	</div>
+	<div class="join">
+		<input
+			name="clientSearch"
+			class="input input-bordered join-item w-full"
+			placeholder="Search..."
+			bind:value={clientSearchText}
+		/>
+		<button class="btn join-item">Search</button>
+	</div>
 	{#if clients && clients.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
 			<table class="table table-pin-rows">
@@ -125,7 +128,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each clients as client}
+					{#each clients
+						.filter((client) => client.name?.toLowerCase().includes(clientSearchText.toLowerCase()))
+						.slice((clientIndex - 1) * clientsPerPage, clientIndex * clientsPerPage) as client}
 						<tr class="hover">
 							<td>
 								<div class="flex items-center">
