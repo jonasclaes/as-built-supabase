@@ -20,9 +20,6 @@ export const load = (async ({ url, locals: { supabase, getSession } }) => {
 		throw redirect(303, '/');
 	}
 
-	const projectIndex = parseInt(url.searchParams.get('projectIndex') ?? '1');
-	const clientIndex = parseInt(url.searchParams.get('clientIndex') ?? '1');
-
 	const { data: profile } = await supabase
 		.from('profiles')
 		.select(`username, full_name, website, organization`)
@@ -33,7 +30,6 @@ export const load = (async ({ url, locals: { supabase, getSession } }) => {
 		.from('projects')
 		.select(`id, code, name, client ( name )`, { count: 'exact' })
 		.order(`code`)
-		.range((projectIndex - 1) * projectsPerPage, projectIndex * projectsPerPage - 1)
 		.eq('organization', profile?.organization)
 		.returns<Project[]>();
 
@@ -41,18 +37,15 @@ export const load = (async ({ url, locals: { supabase, getSession } }) => {
 		.from('clients')
 		.select(`id, code, name`, { count: 'exact' })
 		.order(`code`)
-		.range((clientIndex - 1) * clientsPerPage, clientIndex * clientsPerPage - 1)
 		.eq('organization', profile?.organization);
 
 	return {
 		session,
 		projects: projects ?? [],
 		totalProjects: totalProjects ?? 0,
-		projectIndex,
 		projectsPerPage,
 		clients: clients ?? [],
 		totalClients: totalClients ?? 0,
-		clientIndex,
 		clientsPerPage
 	};
 }) satisfies PageServerLoad;
