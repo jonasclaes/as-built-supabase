@@ -17,7 +17,7 @@
 	let fileUploadModal: HTMLDialogElement;
 	let fileDeleteModal: HTMLDialogElement;
 
-	let fileDeleteName: string = '';
+	let fileDeleteName = '';
 
 	let loading = false;
 	let fileUploadLoading = false;

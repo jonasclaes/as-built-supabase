@@ -11,7 +11,7 @@
 	const navbarItems: NavbarItem[] = [
 		{
 			text: 'Dashboard',
-			href: '/dashboard'
+			href: '/'
 		},
 		{
 			text: 'Account',

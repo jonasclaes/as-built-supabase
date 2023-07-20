@@ -20,6 +20,10 @@
 	}
 
 	.supabase-auth-message {
-		@apply text-center;
+		@apply text-center block mt-4;
+	}
+
+	.supabase-auth-anchor {
+		@apply btn btn-secondary;
 	}
 }

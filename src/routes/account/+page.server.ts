@@ -32,12 +32,16 @@ export const actions = {
 
 		const session = await getSession();
 
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
 		const { error } = await supabase.from('profiles').upsert({
 			id: session?.user.id,
 			full_name: fullName,
 			username,
 			website,
-			updated_at: new Date()
+			updated_at: new Date().toISOString()
 		});
 
 		if (error) {
@@ -54,11 +58,8 @@ export const actions = {
 			website
 		};
 	},
-	signout: async ({ locals: { supabase, getSession } }) => {
-		const session = await getSession();
-		if (session) {
-			await supabase.auth.signOut();
-			throw redirect(303, '/');
-		}
+	signout: async ({ locals: { supabase } }) => {
+		await supabase.auth.signOut();
+		throw redirect(303, '/');
 	}
 };
