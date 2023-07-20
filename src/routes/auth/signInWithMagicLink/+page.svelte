@@ -60,7 +60,7 @@
 					bordered
 				/>
 
-				<Button primary block type="submit" disabled={loading}>Send password reset link</Button>
+				<Button primary block type="submit" disabled={loading}>Sign in with magic link</Button>
 				<Button ghost block disabled={loading} href="/auth/signIn">Sign in</Button>
 			</form>
 		</div>
