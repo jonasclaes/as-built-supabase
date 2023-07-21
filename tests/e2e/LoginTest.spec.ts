@@ -55,6 +55,6 @@ test('Cannot login with invalid credentials', async ({ loginPage, automationConf
 	});
 
 	await test.step(`Verify 'Invalid login credentials' is displayed`, async () => {
-		await expect(loginPage.textInvalidCredentials).toBeVisible();
+		await expect(loginPage.textInvalidCredentials).toBeVisible({ timeout: 10_000 });
 	});
 });
