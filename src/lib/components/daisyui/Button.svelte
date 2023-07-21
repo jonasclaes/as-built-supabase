@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-	import { applyClassIf } from '$lib/applyClassIf';
-	import { combineClasses } from '$lib/combineClasses';
+	import { applyClassIf } from '$lib/ApplyClassIf';
+	import { combineClasses } from '$lib/CombineClasses';
 
 	export let primary = false;
 	export let neutral = false;
