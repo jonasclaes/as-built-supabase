@@ -9,6 +9,10 @@ const config: PlaywrightTestConfig = {
 	},
 	testDir: 'tests',
 	testMatch: /(.+\.)?(test|spec)\.[jt]s/,
+	reporter: [
+		['html', { open: 'never' }],
+		['junit', { outputFile: 'junit-results.xml' }]
+	],
 	projects: [
 		{
 			name: 'chromium',
