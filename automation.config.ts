@@ -1,5 +1,6 @@
-/** @type {import('./tests/BaseTest').AutomationConfig} */
-export const automationConfig = {
+import type { AutomationConfig } from './tests/BaseTest';
+
+export const automationConfig: AutomationConfig = {
 	users: {
 		validUser: {
 			email: 'test-automation-1@jonasclaes.be',
