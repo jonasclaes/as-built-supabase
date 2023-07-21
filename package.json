@@ -17,6 +17,8 @@
 		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",
 		"@playwright/test": "^1.28.1",
+		"@supabase/auth-helpers-sveltekit": "^0.10.1",
+		"@supabase/supabase-js": "^2.26.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
 		"@types/cookie": "^0.5.1",
@@ -38,9 +40,5 @@
 		"vite": "^4.3.6",
 		"vitest": "^0.25.3"
 	},
-	"type": "module",
-	"dependencies": {
-		"@supabase/auth-helpers-sveltekit": "^0.10.1",
-		"@supabase/supabase-js": "^2.26.0"
-	}
+	"type": "module"
 }

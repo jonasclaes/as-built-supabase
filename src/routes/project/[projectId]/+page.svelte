@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { capitalize } from '$lib/capitalize';
+	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/Input.svelte';
@@ -134,7 +134,7 @@
 								{revision.code}
 							</td>
 							<td>
-								{new Date(revision.created_at).toLocaleString()}
+								{new Date(revision.created_at ?? '').toLocaleString()}
 							</td>
 							<th>
 								<div class="flex justify-end">
