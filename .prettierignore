@@ -11,3 +11,18 @@ node_modules
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+
+# Playwright
+/test-results/
+/tests/coverage-report
+.local-browsers/
+/packages/playwright-core/src/generated/*
+drivers/
+playwright-report
+test-results
+/demo/
+/packages/playwright/README.md
+/packages/playwright-core/api.json
+/tests/installation/output/
+/tests/installation/.registry.json
+junit-results.xml

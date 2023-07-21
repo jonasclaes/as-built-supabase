@@ -13,6 +13,9 @@ const config: PlaywrightTestConfig = {
 		['html', { open: 'never' }],
 		['junit', { outputFile: 'junit-results.xml' }]
 	],
+	use: {
+		trace: 'on-first-retry'
+	},
 	projects: [
 		{
 			name: 'chromium',

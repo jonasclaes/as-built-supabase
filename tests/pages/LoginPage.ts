@@ -25,12 +25,10 @@ export class LoginPage extends BasePage {
 	}
 
 	public async enterEmail(email: string) {
-		await this.inputEmail.click();
 		await this.inputEmail.fill(email);
 	}
 
 	public async enterPassword(password: string) {
-		await this.inputPassword.click();
 		await this.inputPassword.fill(password);
 	}
 

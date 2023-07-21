@@ -1,6 +1,6 @@
 import type { BrowserContext, Page } from '@playwright/test';
 
-export class BasePage {
+export abstract class BasePage {
 	public readonly page: Page;
 	public readonly context: BrowserContext;
 

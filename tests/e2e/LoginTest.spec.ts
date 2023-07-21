@@ -1,6 +1,11 @@
 import { expect } from '@playwright/test';
 import { test } from '../BaseTest';
 
+test.describe.configure({
+	mode: 'parallel',
+	retries: 3
+});
+
 test('Page loads', async ({ loginPage }) => {
 	await test.step(`Navigate to login page`, async () => {
 		await loginPage.navigateTo();
@@ -15,7 +20,12 @@ test('Page loads', async ({ loginPage }) => {
 	});
 });
 
-test('Can login with valid credentials', async ({ page, loginPage, automationConfig }) => {
+test('Can login with valid credentials', async ({
+	page,
+	loginPage,
+	dashboardPage,
+	automationConfig
+}) => {
 	await test.step(`Navigate to login page`, async () => {
 		await loginPage.navigateTo();
 	});
@@ -33,6 +43,8 @@ test('Can login with valid credentials', async ({ page, loginPage, automationCon
 	});
 
 	await test.step(`Verify dashboard page is displayed`, async () => {
+		await expect(dashboardPage.textProjectsHeader).toBeVisible();
+		await expect(dashboardPage.textClientsHeader).toBeVisible();
 		await expect(page).toHaveURL('/');
 	});
 });
@@ -55,6 +67,6 @@ test('Cannot login with invalid credentials', async ({ loginPage, automationConf
 	});
 
 	await test.step(`Verify 'Invalid login credentials' is displayed`, async () => {
-		await expect(loginPage.textInvalidCredentials).toBeVisible({ timeout: 10_000 });
+		await expect(loginPage.textInvalidCredentials).toBeVisible();
 	});
 });
