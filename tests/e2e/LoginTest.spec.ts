@@ -22,24 +22,13 @@ test('Page loads', async ({ loginPage }) => {
 
 test('Can login with valid credentials', async ({
 	page,
-	loginPage,
 	dashboardPage,
+	loginFlow,
 	automationConfig
 }) => {
-	await test.step(`Navigate to login page`, async () => {
-		await loginPage.navigateTo();
-	});
-
-	await test.step(`Enter a valid email`, async () => {
-		await loginPage.enterEmail(automationConfig.users.validUser.email);
-	});
-
-	await test.step(`Enter a valid password`, async () => {
-		await loginPage.enterPassword(automationConfig.users.validUser.password);
-	});
-
-	await test.step(`Click sign in button`, async () => {
-		await loginPage.clickSignIn();
+	await test.step(`Try logging in with a valid user`, async () => {
+		const user = automationConfig.users.validUser;
+		await loginFlow.login(user.email, user.password);
 	});
 
 	await test.step(`Verify dashboard page is displayed`, async () => {
@@ -49,21 +38,14 @@ test('Can login with valid credentials', async ({
 	});
 });
 
-test('Cannot login with invalid credentials', async ({ loginPage, automationConfig }) => {
-	await test.step(`Navigate to login page`, async () => {
-		await loginPage.navigateTo();
-	});
-
-	await test.step(`Enter a valid email`, async () => {
-		await loginPage.enterEmail(automationConfig.users.invalidUser.email);
-	});
-
-	await test.step(`Enter a valid password`, async () => {
-		await loginPage.enterPassword(automationConfig.users.invalidUser.password);
-	});
-
-	await test.step(`Click sign in button`, async () => {
-		await loginPage.clickSignIn();
+test('Cannot login with invalid credentials', async ({
+	loginPage,
+	loginFlow,
+	automationConfig
+}) => {
+	await test.step(`Try logging in with an invalid user`, async () => {
+		const user = automationConfig.users.invalidUser;
+		await loginFlow.login(user.email, user.password);
 	});
 
 	await test.step(`Verify 'Invalid login credentials' is displayed`, async () => {

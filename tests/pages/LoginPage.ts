@@ -24,6 +24,10 @@ export class LoginPage extends BasePage {
 		await this.page.goto('/auth/signIn');
 	}
 
+	public async waitFor() {
+		await this.page.waitForURL('/auth/signIn')
+	}
+
 	public async enterEmail(email: string) {
 		await this.inputEmail.fill(email);
 	}

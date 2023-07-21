@@ -50,7 +50,7 @@
 	</div>
 	{#if projects && projects.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
-			<table class="table table-pin-rows">
+			<table class="table table-pin-rows" data-testid="projectsTable">
 				<thead>
 					<tr>
 						<th>Project</th>
@@ -125,7 +125,7 @@
 	</div>
 	{#if clients && clients.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
-			<table class="table table-pin-rows">
+			<table class="table table-pin-rows" data-testid="clientsTable">
 				<thead>
 					<tr>
 						<th>Client</th>

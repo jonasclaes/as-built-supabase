@@ -1,7 +1,10 @@
 import { test as base, type Page } from '@playwright/test';
 import { automationConfig } from '../automation.config';
+import { LoginFlow } from './flows/LoginFlow';
+import { ProjectCreateFlow } from './flows/ProjectCreateFlow';
 import { DashboardPage } from './pages/DashboardPage';
 import { LoginPage } from './pages/LoginPage';
+import { ProjectCreatePage } from './pages/ProjectCreatePage';
 
 export type AutomationConfig = {
 	users: {
@@ -16,8 +19,16 @@ export type User = {
 };
 
 export const test = base.extend<{
+	// Pages
 	loginPage: LoginPage;
 	dashboardPage: DashboardPage;
+	projectCreatePage: ProjectCreatePage;
+
+	// Flows
+	loginFlow: LoginFlow;
+	projectCreateFlow: ProjectCreateFlow
+
+	// Config
 	automationConfig: AutomationConfig;
 }>({
 	loginPage: async ({ page, context }, use) => {
@@ -25,6 +36,15 @@ export const test = base.extend<{
 	},
 	dashboardPage: async ({ page, context }, use) => {
 		await use(new DashboardPage(page, context));
+	},
+	projectCreatePage: async ({ page, context }, use) => {
+		await use(new ProjectCreatePage(page, context));
+	},
+	loginFlow: async ({ loginPage, context }, use) => {
+		await use(new LoginFlow(loginPage, context));
+	},
+	projectCreateFlow: async ({ projectCreatePage, context }, use) => {
+		await use(new ProjectCreateFlow(projectCreatePage, context));
 	},
 	automationConfig
 });
