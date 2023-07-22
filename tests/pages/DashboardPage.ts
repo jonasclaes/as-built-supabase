@@ -23,7 +23,7 @@ export class DashboardPage extends NavBarPage {
 		this.inputClientSearch = page.locator('input[name="clientSearch"]');
 		this.buttonProjectSearch = page.getByRole('button', { name: 'Search' }).nth(0);
 		this.buttonClientSearch = page.getByRole('button', { name: 'Search' }).nth(1);
-		this.tableProjects = page.getByTestId('projectsTable')
+		this.tableProjects = page.getByTestId('projectsTable');
 	}
 
 	public async navigateTo() {
@@ -31,7 +31,7 @@ export class DashboardPage extends NavBarPage {
 	}
 
 	public async waitFor() {
-		await this.page.waitForURL('/')
+		await this.page.waitForURL('/');
 	}
 
 	public async clickNewProject() {
@@ -40,14 +40,14 @@ export class DashboardPage extends NavBarPage {
 
 	public async getAmountOfProjects(): Promise<number> {
 		if (await this.tableProjects.isHidden()) return 0;
-		return await this.tableProjects.locator('tbody').locator('tr').count()
+		return await this.tableProjects.locator('tbody').locator('tr').count();
 	}
 
 	public async deleteAllProjects() {
-		while (await this.getAmountOfProjects() > 0) {
-			await this.tableProjects.getByRole('link', { name: 'Details' }).first().click()
+		while ((await this.getAmountOfProjects()) > 0) {
+			await this.tableProjects.getByRole('link', { name: 'Details' }).first().click();
 			await this.page.getByRole('button', { name: 'Delete' }).click();
-			await this.page.waitForURL('/')
+			await this.page.waitForURL('/');
 		}
 	}
 }

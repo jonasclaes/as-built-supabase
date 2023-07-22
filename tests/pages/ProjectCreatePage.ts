@@ -21,21 +21,21 @@ export class ProjectCreatePage extends NavBarPage {
 	}
 
 	public async waitFor() {
-		await this.page.waitForURL('/project')
+		await this.page.waitForURL('/project');
 	}
 
 	public async enterProjectCode(code: string) {
-		await this.inputProjectCode.fill(code)
+		await this.inputProjectCode.fill(code);
 		await expect(this.inputProjectCode).toHaveValue(code);
 	}
 
 	public async enterProjectName(name: string) {
-		await this.inputProjectName.fill(name)
+		await this.inputProjectName.fill(name);
 		await expect(this.inputProjectName).toHaveValue(name);
 	}
 
 	public async enterClientName(clientName: string) {
-		await this.inputClientName.fill(clientName)
+		await this.inputClientName.fill(clientName);
 		await expect(this.inputClientName).toHaveValue(clientName);
 	}
 

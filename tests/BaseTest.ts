@@ -26,7 +26,7 @@ export const test = base.extend<{
 
 	// Flows
 	loginFlow: LoginFlow;
-	projectCreateFlow: ProjectCreateFlow
+	projectCreateFlow: ProjectCreateFlow;
 
 	// Config
 	automationConfig: AutomationConfig;
