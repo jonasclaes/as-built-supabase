@@ -1,7 +1,9 @@
 import { test as base, type Page } from '@playwright/test';
 import { automationConfig } from '../automation.config';
+import { ClientCreateFlow } from './flows/ClientCreateFlow';
 import { LoginFlow } from './flows/LoginFlow';
 import { ProjectCreateFlow } from './flows/ProjectCreateFlow';
+import { ClientCreatePage } from './pages/ClientCreatePage';
 import { DashboardPage } from './pages/DashboardPage';
 import { LoginPage } from './pages/LoginPage';
 import { ProjectCreatePage } from './pages/ProjectCreatePage';
@@ -23,10 +25,12 @@ export const test = base.extend<{
 	loginPage: LoginPage;
 	dashboardPage: DashboardPage;
 	projectCreatePage: ProjectCreatePage;
+	clientCreatePage: ClientCreatePage;
 
 	// Flows
 	loginFlow: LoginFlow;
 	projectCreateFlow: ProjectCreateFlow;
+	clientCreateFlow: ClientCreateFlow;
 
 	// Config
 	automationConfig: AutomationConfig;
@@ -40,11 +44,17 @@ export const test = base.extend<{
 	projectCreatePage: async ({ page, context }, use) => {
 		await use(new ProjectCreatePage(page, context));
 	},
+	clientCreatePage: async ({ page, context }, use) => {
+		await use(new ClientCreatePage(page, context));
+	},
 	loginFlow: async ({ loginPage, context }, use) => {
 		await use(new LoginFlow(loginPage, context));
 	},
 	projectCreateFlow: async ({ projectCreatePage, context }, use) => {
 		await use(new ProjectCreateFlow(projectCreatePage, context));
+	},
+	clientCreateFlow: async ({ clientCreatePage, context }, use) => {
+		await use(new ClientCreateFlow(clientCreatePage, context));
 	},
 	automationConfig
 });

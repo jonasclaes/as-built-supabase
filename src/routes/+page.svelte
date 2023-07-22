@@ -22,13 +22,13 @@
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
 	<div class="stats stats-vertical lg:stats-horizontal shadow bg-base-200">
-		<div class="stat place-items-center">
+		<div class="stat place-items-center" data-testid="statTotalProjects">
 			<div class="stat-title">Projects</div>
 			<div class="stat-value">{totalProjects}</div>
 			<div class="stat-desc">Total amount of projects</div>
 		</div>
 
-		<div class="stat place-items-center">
+		<div class="stat place-items-center" data-testid="statTotalClients">
 			<div class="stat-title">Clients</div>
 			<div class="stat-value">{totalClients}</div>
 			<div class="stat-desc">Total amount of clients</div>
