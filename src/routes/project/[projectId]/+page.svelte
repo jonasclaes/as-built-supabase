@@ -8,8 +8,8 @@
 
 	export let data: PageData;
 
-	let { project, client, clients, revisions } = data;
-	$: ({ project, client, clients, revisions } = data);
+	let { project, clients } = data;
+	$: ({ project, clients } = data);
 
 	export let form: ActionData;
 
@@ -19,7 +19,7 @@
 	let loading = false;
 	let code: string = project.code ?? '';
 	let name: string = project.name ?? '';
-	let clientName: string = client?.name ?? '';
+	let clientName: string = project.clients?.name ?? '';
 
 	const handleUpdate: SubmitFunction = () => {
 		loading = true;
@@ -117,7 +117,7 @@
 		</Button>
 	</div>
 	<h2 class="text-xl">Revisions</h2>
-	{#if revisions && revisions.length > 0}
+	{#if project.revisions && project.revisions.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
 			<table class="table table-pin-rows">
 				<thead>
@@ -128,7 +128,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each revisions as revision}
+					{#each project.revisions as revision}
 						<tr class="hover">
 							<td class="font-bold">
 								{revision.code}

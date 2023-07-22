@@ -101,4 +101,45 @@
 			{/if}
 		</Button>
 	</div>
+	<h2 class="text-xl">Projects</h2>
+	{#if client.projects && client.projects.length > 0}
+		<div class="overflow-x-auto overflow-y-auto">
+			<table class="table table-pin-rows">
+				<thead>
+					<tr>
+						<th>Code</th>
+						<th />
+					</tr>
+				</thead>
+				<tbody>
+					{#each client.projects as project}
+						<tr class="hover">
+							<td class="font-bold">
+								<div class="flex items-center">
+									<div>
+										<div class="font-bold">{project.name}</div>
+										<div class="text-sm opacity-50">
+											{project.code}
+										</div>
+									</div>
+								</div>
+							</td>
+							<th>
+								<div class="flex justify-end">
+									<a href="/project/{project.id}" class="btn btn-ghost btn-xs">Details</a>
+								</div>
+							</th>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{:else}
+		<p class="text-center text-base-content text-opacity-50">
+			You don't have any projects yet. Why don't you <a
+				href="/project"
+				class="text-primary underline hover:text-primary-focus">create</a
+			> one now?
+		</p>
+	{/if}
 </section>

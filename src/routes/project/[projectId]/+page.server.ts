@@ -10,7 +10,7 @@ export const load = (async ({ params: { projectId }, locals: { supabase, getSess
 
 	const { data: project } = await supabase
 		.from('projects')
-		.select(`id, code, name, client`)
+		.select(`id, code, name, clients ( name ), revisions ( id, created_at, code )`)
 		.eq('id', projectId)
 		.single();
 
@@ -18,21 +18,9 @@ export const load = (async ({ params: { projectId }, locals: { supabase, getSess
 		throw error(404, 'Project not found');
 	}
 
-	const { data: client } = await supabase
-		.from('clients')
-		.select(`name`)
-		.eq('id', project.client)
-		.single();
-
 	const { data: clients } = await supabase.from('clients').select(`id, code, name`).order('name');
 
-	const { data: revisions } = await supabase
-		.from('revisions')
-		.select(`id, created_at, code`)
-		.order('created_at', { ascending: false })
-		.eq('project', projectId);
-
-	return { session, project, client, clients: clients ?? [], revisions: revisions ?? [] };
+	return { session, project, clients: clients ?? [] };
 }) satisfies PageServerLoad;
 
 export const actions = {

@@ -13,7 +13,7 @@ export const load = (async ({
 
 	const { data: project } = await supabase
 		.from('projects')
-		.select(`id, code, name, client`)
+		.select(`id, code, name`)
 		.eq('id', projectId)
 		.single();
 
