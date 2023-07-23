@@ -28,8 +28,8 @@ export class DashboardPage extends NavBarPage {
 		this.buttonClientSearch = page.getByRole('button', { name: 'Search' }).nth(1);
 		this.tableProjects = page.getByTestId('projectsTable');
 		this.tableClients = page.getByTestId('clientsTable');
-		this.divStatTotalProjects = page.getByTestId('statTotalProjects')
-		this.divStatTotalClients = page.getByTestId('statTotalClients')
+		this.divStatTotalProjects = page.getByTestId('statTotalProjects');
+		this.divStatTotalClients = page.getByTestId('statTotalClients');
 	}
 
 	public async navigateTo() {
