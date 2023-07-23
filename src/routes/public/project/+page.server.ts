@@ -1,5 +1,5 @@
 import { error, redirect } from '@sveltejs/kit';
-import jwt, { JsonWebTokenError } from 'jsonwebtoken';
+import { JsonWebTokenError, verify } from 'jsonwebtoken';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ url, cookies }) => {
@@ -19,7 +19,7 @@ export const load = (async ({ url, cookies }) => {
 	const token = cookies.get('signature');
 
 	try {
-		const payload = jwt.verify(token ?? '', 'testymctestface');
+		const payload = verify(token ?? '', 'testymctestface');
 
 		return {
 			token,
