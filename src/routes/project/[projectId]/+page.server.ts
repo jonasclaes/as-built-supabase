@@ -1,5 +1,5 @@
 import { error, fail, redirect } from '@sveltejs/kit';
-import { sign } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ params: { projectId }, locals: { supabase, getSession } }) => {
@@ -98,7 +98,7 @@ export const actions = {
 		};
 
 		// TODO: Change the secret to an env secret. Do NOT put this code into production like this.
-		const token = sign(payload, 'testymctestface');
+		const token = jwt.sign(payload, 'testymctestface');
 
 		const signedLink = `${url.origin}/public/project?signature=${token}`;
 
