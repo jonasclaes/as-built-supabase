@@ -10,7 +10,9 @@
 			"ms-playwright.playwright",
 			"github.vscode-github-actions",
 			"svelte.svelte-vscode",
-			"bradlc.vscode-tailwindcss"
+			"bradlc.vscode-tailwindcss",
+			"bungcip.better-toml",
+			"GitHub.vscode-pull-request-github"
 		]
 	}
 }
