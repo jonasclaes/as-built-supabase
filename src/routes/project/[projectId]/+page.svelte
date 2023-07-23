@@ -15,11 +15,14 @@
 
 	let projectForm: HTMLFormElement;
 	let deleteForm: HTMLFormElement;
+	let generateSignedLinkModal: HTMLDialogElement;
 
 	let loading = false;
 	let code: string = project.code ?? '';
 	let name: string = project.name ?? '';
 	let clientName: string = project.clients?.name ?? '';
+
+	let generateSignedLinkLoading = false;
 
 	const handleUpdate: SubmitFunction = () => {
 		loading = true;
@@ -35,6 +38,21 @@
 			loading = false;
 			await update({ reset: false });
 		};
+	};
+
+	const handleGenerateSignedLink: SubmitFunction = () => {
+		generateSignedLinkLoading = true;
+		return async ({ update }) => {
+			generateSignedLinkLoading = false;
+			await update({ reset: false });
+		};
+	};
+
+	const handleCopyGeneratedSignedLinkToClipboard = async () => {
+		if (navigator.clipboard) {
+			await navigator.clipboard.writeText(form?.signedLink ?? '');
+			confirm('Link copied to clipboard');
+		}
 	};
 </script>
 
@@ -97,8 +115,8 @@
 		</datalist>
 	</form>
 	<form action="?/delete" method="post" use:enhance={handleDelete} bind:this={deleteForm} />
-	<div class="grid md:grid-cols-3 gap-3">
-		<Button disabled={loading} primary type="submit" on:click={() => projectForm.requestSubmit()}>
+	<div class="grid md:grid-cols-4 gap-3">
+		<Button disabled={loading} primary type="button" on:click={() => projectForm.requestSubmit()}>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				Loading
@@ -106,8 +124,11 @@
 				Save project
 			{/if}
 		</Button>
-		<Button href="/project/{project.id}/revision" secondary>New revision</Button>
-		<Button disabled={loading} accent type="submit" on:click={() => deleteForm.requestSubmit()}>
+		<Button href="/project/{project.id}/revision" type="button" secondary>New revision</Button>
+		<Button secondary type="button" on:click={() => generateSignedLinkModal.showModal()}
+			>Generate signed link</Button
+		>
+		<Button disabled={loading} accent type="button" on:click={() => deleteForm.requestSubmit()}>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				Loading
@@ -116,6 +137,37 @@
 			{/if}
 		</Button>
 	</div>
+	<dialog class="modal" bind:this={generateSignedLinkModal}>
+		<form method="dialog" class="modal-box">
+			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+			<h3 class="font-bold text-lg">Generate signed link</h3>
+			<p class="py-4">Press the button below to generate a signed link and QR-code.</p>
+			<form
+				action="?/generateSignedLink"
+				method="post"
+				use:enhance={handleGenerateSignedLink}
+				class="flex flex-col gap-3"
+			>
+				{#if !generateSignedLinkLoading && form?.signedLink}
+					<Input name="token" value={form?.signedLink} bordered disabled={true} />
+					<Button primary type="button" on:click={handleCopyGeneratedSignedLinkToClipboard}>
+						Copy to clipboard
+					</Button>
+				{/if}
+				<Button primary type="submit" disabled={generateSignedLinkLoading}>
+					{#if generateSignedLinkLoading}
+						<span class="loading loading-spinner" />
+						Generating...
+					{:else}
+						Generate
+					{/if}
+				</Button>
+			</form>
+		</form>
+		<form method="dialog" class="modal-backdrop">
+			<button>close</button>
+		</form>
+	</dialog>
 	<h2 class="text-xl">Revisions</h2>
 	{#if project.revisions && project.revisions.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
