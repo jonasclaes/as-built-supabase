@@ -1,4 +1,6 @@
+import { SIGNED_URL_JWT_SECRET } from '$env/static/private';
 import { error, fail, redirect } from '@sveltejs/kit';
+import * as jose from 'jose';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ params: { projectId }, locals: { supabase, getSession } }) => {
@@ -61,7 +63,13 @@ export const actions = {
 			});
 		}
 	},
-	delete: async ({ params: { projectId }, locals: { supabase } }) => {
+	delete: async ({ params: { projectId }, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
 		const { error } = await supabase.from('projects').delete().eq('id', projectId);
 
 		if (error) {
@@ -71,5 +79,36 @@ export const actions = {
 		}
 
 		throw redirect(303, `/`);
+	},
+	generateSignedLink: async ({ params: { projectId }, url, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+
+		if (!session) {
+			throw redirect(303, '/');
+		}
+
+		const { data: profile } = await supabase
+			.from('profiles')
+			.select(`organization`)
+			.eq('id', session.user.id)
+			.single();
+
+		const payload: Record<string, unknown> = {
+			organization: profile?.organization,
+			project: projectId
+		};
+
+		const token = await new jose.SignJWT(payload)
+			.setProtectedHeader({ alg: 'HS256' })
+			.setIssuedAt()
+			.sign(new TextEncoder().encode(SIGNED_URL_JWT_SECRET));
+
+		const signedLink = `${url.origin}/public/project?signature=${token}`;
+
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+
+		return {
+			signedLink
+		};
 	}
 } satisfies Actions;
