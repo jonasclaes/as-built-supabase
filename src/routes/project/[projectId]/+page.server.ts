@@ -1,6 +1,6 @@
 import { SIGNED_URL_JWT_SECRET } from '$env/static/private';
 import { error, fail, redirect } from '@sveltejs/kit';
-import jwt from 'jsonwebtoken';
+import * as jose from 'jose';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ params: { projectId }, locals: { supabase, getSession } }) => {
@@ -98,8 +98,10 @@ export const actions = {
 			project: projectId
 		};
 
-		// TODO: Change the secret to an env secret. Do NOT put this code into production like this.
-		const token = jwt.sign(payload, SIGNED_URL_JWT_SECRET);
+		const token = await new jose.SignJWT(payload)
+			.setProtectedHeader({ alg: 'HS256' })
+			.setIssuedAt()
+			.sign(new TextEncoder().encode(SIGNED_URL_JWT_SECRET));
 
 		const signedLink = `${url.origin}/public/project?signature=${token}`;
 

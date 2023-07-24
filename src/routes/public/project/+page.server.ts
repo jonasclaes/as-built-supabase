@@ -1,6 +1,6 @@
 import { SIGNED_URL_JWT_SECRET } from '$env/static/private';
 import { error, redirect } from '@sveltejs/kit';
-import jwt from 'jsonwebtoken';
+import * as jose from 'jose';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ url, cookies }) => {
@@ -22,19 +22,19 @@ export const load = (async ({ url, cookies }) => {
 	}
 
 	try {
-		const payload = jwt.verify(token ?? '', SIGNED_URL_JWT_SECRET);
+		const { payload } = await jose.jwtVerify(
+			token,
+			new TextEncoder().encode(SIGNED_URL_JWT_SECRET)
+		);
 
 		return {
 			token,
 			payload
 		};
 	} catch (err) {
-		if (err instanceof jwt.JsonWebTokenError) {
+		if (err instanceof Error && 'code' in err && err.code == 'ERR_JWS_SIGNATURE_VERIFICATION_FAILED') {
 			throw error(400, 'Signature verification error. Is the signature invalid?');
 		}
 	}
 
-	return {
-		token
-	};
 }) satisfies PageServerLoad;
