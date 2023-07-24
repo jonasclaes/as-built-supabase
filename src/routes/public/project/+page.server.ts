@@ -1,3 +1,4 @@
+import { SIGNED_URL_JWT_SECRET } from '$env/static/private';
 import { error, redirect } from '@sveltejs/kit';
 import jwt from 'jsonwebtoken';
 import type { PageServerLoad } from './$types';
@@ -6,8 +7,6 @@ export const load = (async ({ url, cookies }) => {
 	const signature = url.searchParams.get('signature');
 
 	if (signature) {
-		console.log(`Found a signature in the URL: ${signature}`);
-
 		cookies.set('signature', signature, {
 			httpOnly: true,
 			secure: true
@@ -18,8 +17,12 @@ export const load = (async ({ url, cookies }) => {
 
 	const token = cookies.get('signature');
 
+	if (!token) {
+		throw error(400, 'Signature missing from cookie storage. Did you open a valid link?');
+	}
+
 	try {
-		const payload = jwt.verify(token ?? '', 'testymctestface');
+		const payload = jwt.verify(token ?? '', SIGNED_URL_JWT_SECRET);
 
 		return {
 			token,

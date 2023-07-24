@@ -23,6 +23,7 @@ jobs:
           cat <<EOF > .env
           PUBLIC_SUPABASE_URL=$PUBLIC_SUPABASE_URL
           PUBLIC_SUPABASE_ANON_KEY=$PUBLIC_SUPABASE_ANON_KEY
+          SIGNED_URL_JWT_SECRET=$SIGNED_URL_JWT_SECRET
           EOF
 
           echo "cat .env"
