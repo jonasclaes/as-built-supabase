@@ -1,17 +1,27 @@
 {
-  "folders": [
-    {
-      "name": "project-root",
-      "path": "./"
-    },
-    {
-      "name": "supabase-functions",
-      "path": "supabase/functions"
-    }
-  ],
-  "settings": {
-    "files.exclude": {
-      "supabase/functions/": true
-    }
-  }
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.fixAll": true,
+			"source.organizeImports": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"extensions": {
+		"recommendations": [
+			"github.vscode-github-actions",
+			"tamasfe.even-better-toml",
+			"github.vscode-pull-request-github",
+			"ms-playwright.playwright",
+			"csstools.postcss",
+			"esbenp.prettier-vscode",
+			"svelte.svelte-vscode",
+			"bradlc.vscode-tailwindcss"
+		]
+	}
 }

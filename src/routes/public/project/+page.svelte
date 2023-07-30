@@ -3,14 +3,14 @@
 
 	export let data: PageData;
 
-	let { token, payload, project, organization } = data;
-	$: ({ token, payload, project, organization } = data);
+	let { token, payload, public_token } = data;
+	$: ({ token, payload, public_token } = data);
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
 	<div>
-		<h1 class="text-3xl">{project.name}</h1>
-		<p class="text-base-content text-opacity-50">{organization.name}</p>
+		<h1 class="text-3xl">{public_token.projects?.name}</h1>
+		<p class="text-base-content text-opacity-50">{public_token.organizations?.name}</p>
 	</div>
 	<p>Signature:</p>
 	<code class="break-all">{token}</code>

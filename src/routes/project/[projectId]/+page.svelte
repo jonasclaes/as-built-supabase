@@ -23,6 +23,9 @@
 	let clientName: string = project.clients?.name ?? '';
 
 	let generateSignedLinkLoading = false;
+	let generateSignedLinkModalStep = 1;
+
+	let publicTokenDeleteLoading = false;
 
 	const handleUpdate: SubmitFunction = () => {
 		loading = true;
@@ -40,11 +43,17 @@
 		};
 	};
 
+	const handleOpenSignedLinkModal = () => {
+		generateSignedLinkModalStep = 1;
+		generateSignedLinkModal.showModal();
+	};
+
 	const handleGenerateSignedLink: SubmitFunction = () => {
 		generateSignedLinkLoading = true;
 		return async ({ update }) => {
+			await update({ reset: true });
+			generateSignedLinkModalStep = 2;
 			generateSignedLinkLoading = false;
-			await update({ reset: false });
 		};
 	};
 
@@ -53,6 +62,14 @@
 			await navigator.clipboard.writeText(form?.signedLink ?? '');
 			confirm('Link copied to clipboard');
 		}
+	};
+
+	const handleRevokePublicToken: SubmitFunction = () => {
+		publicTokenDeleteLoading = true;
+		return async ({ update }) => {
+			await update({ reset: false });
+			publicTokenDeleteLoading = false;
+		};
 	};
 </script>
 
@@ -125,7 +142,7 @@
 			{/if}
 		</Button>
 		<Button href="/project/{project.id}/revision" type="button" secondary>New revision</Button>
-		<Button secondary type="button" on:click={() => generateSignedLinkModal.showModal()}
+		<Button secondary type="button" on:click={handleOpenSignedLinkModal}
 			>Generate signed link</Button
 		>
 		<Button disabled={loading} accent type="button" on:click={() => deleteForm.requestSubmit()}>
@@ -140,28 +157,42 @@
 	<dialog class="modal" bind:this={generateSignedLinkModal}>
 		<form method="dialog" class="modal-box">
 			<button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-			<h3 class="font-bold text-lg">Generate signed link</h3>
-			<p class="py-4">Press the button below to generate a signed link and QR-code.</p>
+			<h3 class="font-bold text-lg pb-2">Generate signed link</h3>
+			{#if form?.signedLink == null}
+				<p class="pb-2">Press the button below to generate a signed link and QR-code.</p>
+			{/if}
 			<form
 				action="?/generateSignedLink"
 				method="post"
 				use:enhance={handleGenerateSignedLink}
 				class="flex flex-col gap-3"
 			>
-				{#if !generateSignedLinkLoading && form?.signedLink}
-					<Input name="token" value={form?.signedLink} bordered disabled={true} />
+				{#if generateSignedLinkModalStep == 1}
+					<Input
+						label="Description"
+						placeholder="Unknown signed link"
+						helpText="Enter a description for the signed link here. (optional)"
+						name="description"
+						value={form?.description ?? ''}
+						bordered
+						disabled={generateSignedLinkLoading}
+					/>
+					<Button primary type="submit" disabled={generateSignedLinkLoading}>
+						{#if generateSignedLinkLoading}
+							<span class="loading loading-spinner" />
+							Generating...
+						{:else}
+							Generate
+						{/if}
+					</Button>
+				{/if}
+
+				{#if generateSignedLinkModalStep == 2}
+					<Input name="signedLink" value={form?.signedLink ?? ''} bordered disabled={true} />
 					<Button primary type="button" on:click={handleCopyGeneratedSignedLinkToClipboard}>
 						Copy to clipboard
 					</Button>
 				{/if}
-				<Button primary type="submit" disabled={generateSignedLinkLoading}>
-					{#if generateSignedLinkLoading}
-						<span class="loading loading-spinner" />
-						Generating...
-					{:else}
-						Generate
-					{/if}
-				</Button>
 			</form>
 		</form>
 		<form method="dialog" class="modal-backdrop">
@@ -206,6 +237,58 @@
 			You don't have any revisions yet. Why don't you <a
 				href="/project/{project.id}/revision"
 				class="text-primary underline hover:text-primary-focus">create</a
+			> one now?
+		</p>
+	{/if}
+	<h2 class="text-xl">Signed links</h2>
+	{#if project.public_tokens && project.public_tokens.length > 0}
+		<div class="overflow-x-auto overflow-y-auto">
+			<table class="table table-pin-rows">
+				<thead>
+					<tr>
+						<th>Description</th>
+						<th>Created at</th>
+						<th />
+					</tr>
+				</thead>
+				<tbody>
+					{#each project.public_tokens as public_token}
+						<tr class="hover">
+							<td class="font-bold">
+								{public_token.description ?? 'No description provided'}
+							</td>
+							<td>
+								{new Date(public_token.created_at ?? '').toLocaleString()}
+							</td>
+							<th>
+								<div class="flex justify-end">
+									<form
+										action="?/revokePublicToken"
+										method="post"
+										use:enhance={handleRevokePublicToken}
+									>
+										<Input name="id" type="hidden" value={public_token.id} />
+										<Button size="xs" error disabled={publicTokenDeleteLoading}>
+											{#if publicTokenDeleteLoading}
+												<span class="loading loading-spinner" />
+												Revoking...
+											{:else}
+												Revoke
+											{/if}</Button
+										>
+									</form>
+								</div>
+							</th>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{:else}
+		<p class="text-center text-base-content text-opacity-50">
+			You don't have any signed links yet. Why don't you <button
+				on:click={handleOpenSignedLinkModal}
+				class="text-primary underline hover:text-primary-focus">create</button
 			> one now?
 		</p>
 	{/if}

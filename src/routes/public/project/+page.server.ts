@@ -1,5 +1,6 @@
 import { SIGNED_URL_JWT_SECRET, SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
 import { PUBLIC_SUPABASE_URL } from '$env/static/public';
+import type { PublicProjectJWTPayload } from '$lib/jwt/PublicProjectJWTPayload';
 import { createClient } from '@supabase/supabase-js';
 import { error, redirect } from '@sveltejs/kit';
 import * as jose from 'jose';
@@ -24,7 +25,7 @@ export const load = (async ({ url, cookies }) => {
 		throw error(400, 'Signature missing from cookie storage. Did you open a valid link?');
 	}
 
-	const payload = await decryptJwtToken(token);
+	const payload: PublicProjectJWTPayload | undefined = await decryptJwtToken(token);
 
 	if (!payload) {
 		throw error(400, 'Signature error. Is the signature invalid?');
@@ -36,31 +37,26 @@ export const load = (async ({ url, cookies }) => {
 		}
 	});
 
-	const { data: organization } = await supabase
-		.from('organizations')
-		.select(`id, name`)
-		.eq('id', payload.organization)
+	const { data: public_token } = await supabase
+		.from('public_tokens')
+		.select(`id, is_revoked, organizations ( name ), projects ( name )`)
+		.eq('id', payload.sub)
+		.eq('organization', payload.organization)
+		.eq('project', payload.project)
 		.single();
 
-	if (!organization) {
-		throw error(404, 'Organization that owns this token could not be found.');
+	if (!public_token) {
+		throw error(404, 'This token could not be found.');
 	}
 
-	const { data: project } = await supabase
-		.from('projects')
-		.select(`id, name`)
-		.eq('id', payload.project)
-		.single();
-
-	if (!project) {
-		throw error(404, 'Project that owns this token could not be found.');
+	if (public_token.is_revoked) {
+		throw error(401, 'This token has been revoked.');
 	}
 
 	return {
 		token,
 		payload,
-		organization,
-		project
+		public_token
 	};
 }) satisfies PageServerLoad;
 

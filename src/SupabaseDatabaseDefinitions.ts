@@ -157,6 +157,46 @@ export interface Database {
 					}
 				];
 			};
+			public_tokens: {
+				Row: {
+					created_at: string | null;
+					description: string | null;
+					id: string;
+					is_revoked: boolean;
+					organization: string;
+					project: string;
+				};
+				Insert: {
+					created_at?: string | null;
+					description?: string | null;
+					id?: string;
+					is_revoked?: boolean;
+					organization: string;
+					project: string;
+				};
+				Update: {
+					created_at?: string | null;
+					description?: string | null;
+					id?: string;
+					is_revoked?: boolean;
+					organization?: string;
+					project?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'public_tokens_organization_fkey';
+						columns: ['organization'];
+						referencedRelation: 'organizations';
+						referencedColumns: ['id'];
+					},
+					{
+						foreignKeyName: 'public_tokens_project_fkey';
+						columns: ['project'];
+						referencedRelation: 'projects';
+						referencedColumns: ['id'];
+					}
+				];
+			};
 			revisions: {
 				Row: {
 					code: string;
