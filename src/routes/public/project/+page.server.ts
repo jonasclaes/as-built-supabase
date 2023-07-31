@@ -37,13 +37,19 @@ export const load = (async ({ url, cookies }) => {
 		}
 	});
 
-	const { data: public_token } = await supabase
+	const { error: public_token_error, data: public_token } = await supabase
 		.from('public_tokens')
-		.select(`id, is_revoked, organizations ( name ), projects ( name )`)
+		.select(
+			`id, is_revoked, organizations ( name ), projects ( code, name, revisions ( id, created_at, code ) )`
+		)
 		.eq('id', payload.sub)
 		.eq('organization', payload.organization)
 		.eq('project', payload.project)
 		.single();
+
+	if (public_token_error) {
+		throw error(500, public_token_error);
+	}
 
 	if (!public_token) {
 		throw error(404, 'This token could not be found.');
@@ -53,10 +59,17 @@ export const load = (async ({ url, cookies }) => {
 		throw error(401, 'This token has been revoked.');
 	}
 
+	if (!public_token.organizations) {
+		throw error(404, 'Organization could not be found.');
+	}
+
+	if (!public_token.projects) {
+		throw error(404, 'Project could not be found.');
+	}
+
 	return {
-		token,
-		payload,
-		public_token
+		project: public_token.projects,
+		organization: public_token.organizations
 	};
 }) satisfies PageServerLoad;
 
