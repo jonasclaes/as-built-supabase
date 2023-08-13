@@ -30,9 +30,12 @@
 			await update({ reset: false });
 			loading = false;
 
-			console.log(result);
-
 			if (result.type === 'failure') {
+				addToast({
+					type: 'error',
+					message: "Oops! We couldn't create your revision proposal. Please try again."
+				});
+
 				if (result.data?.missing === 'fullName' || result.data?.missing === 'email') {
 					step = 2;
 					return;
