@@ -1,66 +1,85 @@
 <script lang="ts" context="module">
-	export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
+	export type ButtonSize = '' | 'xs' | 'sm' | 'md' | 'lg';
+	export type ButtonStyle =
+		| ''
+		| 'ghost'
+		| 'link'
+		| 'outline'
+		| 'glass'
+		| 'wide'
+		| 'block'
+		| 'circle'
+		| 'square';
+	export type ButtonColor =
+		| ''
+		| 'neutral'
+		| 'primary'
+		| 'secondary'
+		| 'accent'
+		| 'info'
+		| 'success'
+		| 'warning'
+		| 'error';
 </script>
 
 <script lang="ts">
-	import { applyClassIf } from '$lib/ApplyClassIf';
 	import { combineClasses } from '$lib/CombineClasses';
+	import type { HTMLButtonAttributes } from 'svelte/elements';
 
-	export let primary = false;
-	export let neutral = false;
-	export let secondary = false;
-	export let accent = false;
-	export let ghost = false;
-	export let link = false;
-	export let info = false;
-	export let success = false;
-	export let warning = false;
-	export let error = false;
-	export let block = false;
-	export let wide = false;
-	export let outline = false;
-	export let size: ButtonSize | null = null;
-	export let glass = false;
-	export let square = false;
-	export let circle = false;
-	export let type: HTMLButtonElement['type'] | null = null;
-	export let disabled: boolean | null = null;
-	export let buttonClasses = '';
-	export let href: string | null = null;
-	export let target: HTMLAnchorElement['target'] | null = null;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	interface $$Props extends HTMLButtonAttributes {
+		size?: ButtonSize;
+		style?: ButtonStyle;
+		color?: ButtonColor;
+		class?: string;
+		buttonRef?: HTMLButtonElement;
+	}
 
-	let _class = combineClasses(
-		'btn',
-		buttonClasses,
-		applyClassIf(size === 'xs', 'btn-xs'),
-		applyClassIf(size === 'sm', 'btn-sm'),
-		applyClassIf(size === 'md', 'btn-md'),
-		applyClassIf(size === 'lg', 'btn-lg'),
-		applyClassIf(neutral, 'btn-neutral'),
-		applyClassIf(primary, 'btn-primary'),
-		applyClassIf(secondary, 'btn-secondary'),
-		applyClassIf(accent, 'btn-accent'),
-		applyClassIf(ghost, 'btn-ghost'),
-		applyClassIf(link, 'btn-link'),
-		applyClassIf(info, 'btn-info'),
-		applyClassIf(success, 'btn-success'),
-		applyClassIf(warning, 'btn-warning'),
-		applyClassIf(error, 'btn-error'),
-		applyClassIf(block, 'btn-block'),
-		applyClassIf(wide, 'btn-wide'),
-		applyClassIf(outline, 'btn-outline'),
-		applyClassIf(glass, 'glass'),
-		applyClassIf(square, 'btn-square'),
-		applyClassIf(circle, 'btn-circle')
-	);
+	const SIZE_MAPS: Record<ButtonSize, string> = {
+		'': '',
+		xs: 'input-xs',
+		sm: 'input-sm',
+		md: 'input-md',
+		lg: 'input-lg'
+	};
+
+	const STYLE_MAPS: Record<ButtonStyle, string> = {
+		'': '',
+		ghost: 'btn-ghost',
+		link: 'btn-link',
+		outline: 'btn-outline',
+		glass: 'btn-glass',
+		wide: 'btn-wide',
+		block: 'btn-block',
+		circle: 'btn-circle',
+		square: 'btn-square'
+	};
+
+	const COLOR_MAPS: Record<ButtonColor, string> = {
+		'': '',
+		neutral: 'btn-neutral',
+		primary: 'btn-primary',
+		secondary: 'btn-secondary',
+		accent: 'btn-accent',
+		info: 'btn-info',
+		success: 'btn-success',
+		warning: 'btn-warning',
+		error: 'btn-error'
+	};
+
+	export let size: ButtonSize = '';
+	export let style: ButtonStyle = '';
+	export let color: ButtonColor = '';
+	export let _class = '';
+	export { _class as class };
+	export let buttonRef: HTMLButtonElement = $$props['buttonRef'] ?? null;
 </script>
 
-{#if href}
-	<a class={_class} {href} {target} role="button" on:click>
-		<slot />
-	</a>
-{:else}
-	<button class={_class} {type} {disabled} on:click>
-		<slot />
-	</button>
-{/if}
+<button
+	class={combineClasses('btn', SIZE_MAPS[size], STYLE_MAPS[style], COLOR_MAPS[color], _class)}
+	bind:this={buttonRef}
+	on:click
+	{...$$restProps}
+>
+	<slot />
+</button>

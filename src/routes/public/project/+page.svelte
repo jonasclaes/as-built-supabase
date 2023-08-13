@@ -1,18 +1,11 @@
 <script lang="ts">
-	import CreateRevisionProposalModal from '$lib/components/CreateRevisionProposalModal.svelte';
-	import Button from '$lib/components/daisyui/Button.svelte';
+	import Button from '$lib/components/daisyui/LegacyButton.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
 	let { project, organization } = data;
 	$: ({ project, organization } = data);
-
-	let createRevisionProposalModal: CreateRevisionProposalModal;
-
-	const handleOpenCreateRevisionProposal = () => {
-		createRevisionProposalModal.open();
-	};
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
@@ -21,9 +14,7 @@
 		<p class="text-base-content text-opacity-50">{project.code}</p>
 	</div>
 	<div class="grid md:grid-cols-1 gap-3">
-		<Button primary type="button" on:click={handleOpenCreateRevisionProposal}
-			>Create revision proposal</Button
-		>
+		<Button primary type="button">Create revision proposal</Button>
 	</div>
 	<h2 class="text-xl">Revisions</h2>
 	{#if project.revisions && project.revisions.length > 0}
@@ -63,5 +54,4 @@
 			one.
 		</p>
 	{/if}
-	<CreateRevisionProposalModal bind:this={createRevisionProposalModal} />
 </section>

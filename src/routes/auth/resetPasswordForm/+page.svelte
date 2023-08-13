@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/Button.svelte';
+	import Button from '$lib/components/daisyui/LegacyButton.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
 	import type { ActionData, SubmitFunction } from './$types';
 
