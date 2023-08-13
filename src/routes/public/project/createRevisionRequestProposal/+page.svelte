@@ -30,19 +30,29 @@
 			await update({ reset: false });
 			loading = false;
 
-			if (result.type === 'failure') {
+			if (result.type === 'failure' && result.data) {
+				if ('error' in result.data) {
+					addToast({
+						type: 'error',
+						message: `Oops! ${result.data.error}`
+					});
+					return;
+				}
+
 				addToast({
 					type: 'error',
 					message: "Oops! We couldn't create your revision proposal. Please try again."
 				});
 
-				if (result.data?.missing === 'fullName' || result.data?.missing === 'email') {
-					step = 2;
-					return;
-				}
-				if (result.data?.missing === 'title' || result.data?.missing === 'description') {
-					step = 3;
-					return;
+				if ('missing' in result.data) {
+					if (result.data.missing === 'fullName' || result.data.missing === 'email') {
+						step = 2;
+						return;
+					}
+					if (result.data.missing === 'title' || result.data.missing === 'description') {
+						step = 3;
+						return;
+					}
 				}
 				return;
 			}

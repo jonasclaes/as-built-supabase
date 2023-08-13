@@ -197,6 +197,43 @@ export interface Database {
 					}
 				];
 			};
+			revision_request_proposals: {
+				Row: {
+					created_at: string | null;
+					description: string;
+					external_email: string;
+					external_full_name: string | null;
+					id: string;
+					project: string;
+					title: string;
+				};
+				Insert: {
+					created_at?: string | null;
+					description: string;
+					external_email: string;
+					external_full_name?: string | null;
+					id?: string;
+					project: string;
+					title: string;
+				};
+				Update: {
+					created_at?: string | null;
+					description?: string;
+					external_email?: string;
+					external_full_name?: string | null;
+					id?: string;
+					project?: string;
+					title?: string;
+				};
+				Relationships: [
+					{
+						foreignKeyName: 'revision_request_proposals_project_fkey';
+						columns: ['project'];
+						referencedRelation: 'projects';
+						referencedColumns: ['id'];
+					}
+				];
+			};
 			revisions: {
 				Row: {
 					code: string;

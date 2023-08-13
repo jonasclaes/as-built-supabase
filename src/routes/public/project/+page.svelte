@@ -14,7 +14,9 @@
 		<p class="text-base-content text-opacity-50">{project.code}</p>
 	</div>
 	<div class="grid md:grid-cols-1 gap-3">
-		<Button primary type="button">Create revision proposal</Button>
+		<Button primary type="button" href="/public/project/createRevisionRequestProposal"
+			>Create revision proposal</Button
+		>
 	</div>
 	<h2 class="text-xl">Revisions</h2>
 	{#if project.revisions && project.revisions.length > 0}

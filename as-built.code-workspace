@@ -10,7 +10,16 @@
 			"source.fixAll": true,
 			"source.organizeImports": true
 		},
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"server": "localhost",
+				"driver": "PostgreSQL",
+				"name": "localhost",
+				"connectString": "postgresql://postgres:postgres@localhost:54322/postgres"
+			}
+		]
 	},
 	"extensions": {
 		"recommendations": [

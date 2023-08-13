@@ -2101,10 +2101,10 @@ sucrase@^3.32.0:
     pirates "^4.0.1"
     ts-interface-checker "^0.1.9"
 
-supabase@^1.82.2:
-  version "1.82.2"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.82.2.tgz#b96277bde42ecd760670aa9e35c8147a81d976b7"
-  integrity sha512-ZixBcuUP0IleNvKGXtyfM1Xyah/6koZTNn66fGAyzOFZDGhr91cgtmUn+rrLOChm0XIxNCmPi+8SzHry5zqD2w==
+supabase@^1.83.7:
+  version "1.83.7"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.83.7.tgz#e9f4e2e1899d6e920e69fff16226b88474f69b2c"
+  integrity sha512-3YWwnJxtraDwKYnMFo+uElv4X7nbgZYS++b85ueGRsaAR73E+n5U31rBH34xyw+ob0rm9MPvVbMADqC8RbvFVQ==
   dependencies:
     bin-links "^4.0.1"
     node-fetch "^3.2.10"
