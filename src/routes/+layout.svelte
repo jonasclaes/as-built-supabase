@@ -1,10 +1,15 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
 	import Header from '$lib/components/Header.svelte';
+	import Alert from '$lib/components/daisyui/Alert.svelte';
+	import Toast from '$lib/components/daisyui/Toast.svelte';
+	import { toasts, type ToastDto } from '$lib/stores/toasts';
 	import { onMount } from 'svelte';
+	import { fly, slide } from 'svelte/transition';
 	import '../app.css';
 
 	export let data;
+	let _toasts: ToastDto[] = [];
 
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
@@ -13,14 +18,19 @@
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange((event, _session) => {
-			console.log(event);
-
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
 		});
 
-		return () => subscription.unsubscribe();
+		const toastUnsubscriber = toasts.subscribe((value) => {
+			_toasts = value;
+		});
+
+		return () => {
+			toastUnsubscriber();
+			subscription.unsubscribe();
+		};
 	});
 </script>
 
@@ -36,4 +46,11 @@
 			<slot />
 		</main>
 	{/if}
+	<Toast class="z-50">
+		{#each _toasts as toast (toast.id)}
+			<div in:slide out:fly>
+				<Alert type={toast.type ?? ''}>{toast.message}</Alert>
+			</div>
+		{/each}
+	</Toast>
 </div>
