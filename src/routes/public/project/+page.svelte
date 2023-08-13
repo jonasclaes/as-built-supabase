@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Button from '$lib/components/daisyui/LegacyButton.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -11,6 +12,11 @@
 	<div>
 		<h1 class="text-3xl">{project.name} by {organization.name}</h1>
 		<p class="text-base-content text-opacity-50">{project.code}</p>
+	</div>
+	<div class="grid md:grid-cols-1 gap-3">
+		<Button primary type="button" href="/public/project/createRevisionRequestProposal"
+			>Create revision proposal</Button
+		>
 	</div>
 	<h2 class="text-xl">Revisions</h2>
 	{#if project.revisions && project.revisions.length > 0}

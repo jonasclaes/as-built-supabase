@@ -259,6 +259,15 @@
   optionalDependencies:
     fsevents "2.3.2"
 
+"@plunk/node@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@plunk/node/-/node-2.0.0.tgz#e017411cdf2925ec7f145606d83e40439416b706"
+  integrity sha512-53lgots3fWGAo1QdS18BdEpJl7A29O1F9rYVn/7DfJ07SpJ1ZlzUeeWGVrWGL7PRRZb4a9Tw7Tt8Wnw0Xorhjg==
+  dependencies:
+    native-fetch "^4.0.2"
+    tslib "^2.4.0"
+    undici "^5.22.1"
+
 "@polka/url@^1.0.0-next.20":
   version "1.0.0-next.21"
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
@@ -1626,6 +1635,11 @@ nanoid@^3.3.6:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.6.tgz#443380c856d6e9f9824267d960b4236ad583ea4c"
   integrity sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==
 
+native-fetch@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/native-fetch/-/native-fetch-4.0.2.tgz#75c8a44c5f3bb021713e5e24f2846750883e49af"
+  integrity sha512-4QcVlKFtv2EYVS5MBgsGX5+NWKtbDbIECdUXDBGDMAZXq3Jkv9zf+y8iS7Ub8fEdga3GpYeazp9gauNqXHJOCg==
+
 natural-compare-lite@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare-lite/-/natural-compare-lite-1.4.0.tgz#17b09581988979fddafe0201e931ba933c96cbb4"
@@ -2087,10 +2101,10 @@ sucrase@^3.32.0:
     pirates "^4.0.1"
     ts-interface-checker "^0.1.9"
 
-supabase@^1.82.2:
-  version "1.82.2"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.82.2.tgz#b96277bde42ecd760670aa9e35c8147a81d976b7"
-  integrity sha512-ZixBcuUP0IleNvKGXtyfM1Xyah/6koZTNn66fGAyzOFZDGhr91cgtmUn+rrLOChm0XIxNCmPi+8SzHry5zqD2w==
+supabase@^1.83.7:
+  version "1.83.7"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.83.7.tgz#e9f4e2e1899d6e920e69fff16226b88474f69b2c"
+  integrity sha512-3YWwnJxtraDwKYnMFo+uElv4X7nbgZYS++b85ueGRsaAR73E+n5U31rBH34xyw+ob0rm9MPvVbMADqC8RbvFVQ==
   dependencies:
     bin-links "^4.0.1"
     node-fetch "^3.2.10"
@@ -2269,7 +2283,7 @@ tslib@^1.8.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.4.1:
+tslib@^2.4.0, tslib@^2.4.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.1.tgz#fd8c9a0ff42590b25703c0acb3de3d3f4ede0410"
   integrity sha512-t0hLfiEKfMUoqhG+U1oid7Pva4bbDPHYfJNiB7BiIjRkj1pyC++4N3huJfqY6aRH6VTB0rvtzQwjM4K6qpfOig==
@@ -2319,6 +2333,13 @@ typescript@^5.0.0, typescript@^5.0.3:
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
   integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
+
+undici@^5.22.1:
+  version "5.23.0"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.23.0.tgz#e7bdb0ed42cebe7b7aca87ced53e6eaafb8f8ca0"
+  integrity sha512-1D7w+fvRsqlQ9GscLBwcAJinqcZGHUKjbOmXdlE/v8BvEGXjeWAax+341q44EuTcHXXnfyKNbKRq4Lg7OzhMmg==
+  dependencies:
+    busboy "^1.6.0"
 
 undici@~5.22.0:
   version "5.22.1"

@@ -1,26 +1,32 @@
 <script lang="ts" context="module">
-	export type AlertType = 'info' | 'success' | 'warning' | 'error';
+	export type AlertType = '' | 'info' | 'success' | 'warning' | 'error';
 </script>
 
 <script lang="ts">
-	import { applyClassIf } from '$lib/ApplyClassIf';
 	import { combineClasses } from '$lib/CombineClasses';
+	import type { HTMLBaseAttributes } from 'svelte/elements';
 
-	export let type: AlertType | null = null;
-	export let alertClasses = '';
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	interface $$Props extends HTMLBaseAttributes {
+		type?: AlertType;
+		class?: string;
+	}
+
+	let TYPE_MAPS: Record<AlertType, string> = {
+		'': '',
+		info: 'alert-info',
+		success: 'alert-success',
+		warning: 'alert-warning',
+		error: 'alert-error'
+	};
+
+	export let type: AlertType = '';
+	let _class = '';
+	export { _class as class };
 </script>
 
-<div
-	class={combineClasses(
-		'alert',
-		applyClassIf(type === 'info', 'alert-info'),
-		applyClassIf(type === 'success', 'alert-success'),
-		applyClassIf(type === 'warning', 'alert-warning'),
-		applyClassIf(type === 'error', 'alert-error'),
-		alertClasses
-	)}
->
-	{#if type === null}
+<div class={combineClasses('alert', TYPE_MAPS[type], _class)} {...$$restProps}>
+	{#if type === ''}
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			fill="none"

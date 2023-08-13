@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/Button.svelte';
+	import Button from '$lib/components/daisyui/LegacyButton.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
 
@@ -31,7 +31,7 @@
 		<p class="text-base-content text-opacity-50">{project.code} {project.name}</p>
 	</div>
 	{#if form?.error}
-		<Alert type="error" alertClasses="col-span-full">
+		<Alert type="error" class="col-span-full">
 			<span>Error! {capitalize(form.error.message)}</span>
 		</Alert>
 	{/if}

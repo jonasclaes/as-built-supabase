@@ -1,12 +1,6 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
-	webServer: {
-		command: 'yarn build && yarn preview',
-		port: 4173,
-		reuseExistingServer: !process.env.CI,
-		timeout: 120 * 1000
-	},
 	testDir: 'tests',
 	testMatch: /(.+\.)?(test|spec)\.[jt]s/,
 	reporter: [
@@ -14,7 +8,9 @@ const config: PlaywrightTestConfig = {
 		['junit', { outputFile: 'junit-results.xml' }]
 	],
 	use: {
-		trace: 'on-first-retry'
+		trace: 'on-first-retry',
+		baseURL: process.env.BASE_URL || 'http://localhost:5173',
+		serviceWorkers: 'block'
 	},
 	projects: [
 		{
