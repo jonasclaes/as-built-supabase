@@ -157,7 +157,7 @@ export const actions = {
 			.setIssuedAt()
 			.sign(new TextEncoder().encode(SIGNED_URL_JWT_SECRET));
 
-		const signedLink = `${url.origin}/public/project?signature=${token}`;
+		const signedLink = `${url.origin}/public/project/${projectId}?signature=${token}`;
 
 		await new Promise((resolve) => setTimeout(resolve, 100));
 

@@ -4,6 +4,7 @@
 	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Button from '$lib/components/daisyui/LegacyButton.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
+	import { addToast } from '$lib/stores/toasts';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
 
 	export let data: PageData;
@@ -60,7 +61,10 @@
 	const handleCopyGeneratedSignedLinkToClipboard = async () => {
 		if (navigator.clipboard) {
 			await navigator.clipboard.writeText(form?.signedLink ?? '');
-			confirm('Link copied to clipboard');
+			addToast({
+				type: 'success',
+				message: 'Copied signed link to clipboard'
+			});
 		}
 	};
 

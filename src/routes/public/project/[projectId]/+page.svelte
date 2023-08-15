@@ -14,7 +14,10 @@
 		<p class="text-base-content text-opacity-50">{project.code}</p>
 	</div>
 	<div class="grid md:grid-cols-1 gap-3">
-		<Button primary type="button" href="/public/project/createRevisionRequestProposal"
+		<Button
+			primary
+			type="button"
+			href={`/public/project/${project.id}/createRevisionRequestProposal`}
 			>Create revision proposal</Button
 		>
 	</div>
