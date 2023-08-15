@@ -9,6 +9,7 @@ export class ClientCreateFlow {
 
 	public async createClient(code: string, name: string) {
 		await this.clientCreatePage.navigateTo();
+		await this.clientCreatePage.waitFor();
 		await this.clientCreatePage.waitForInteractive();
 		await this.clientCreatePage.enterClientCode(code);
 		await this.clientCreatePage.enterClientName(name);

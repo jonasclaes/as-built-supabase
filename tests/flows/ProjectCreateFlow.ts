@@ -9,6 +9,7 @@ export class ProjectCreateFlow {
 
 	public async createProject(code: string, name: string, clientName: string) {
 		await this.projectCreatePage.navigateTo();
+		await this.projectCreatePage.waitFor();
 		await this.projectCreatePage.waitForInteractive();
 		await this.projectCreatePage.enterProjectCode(code);
 		await this.projectCreatePage.enterProjectName(name);

@@ -20,6 +20,7 @@ export class ClientCreatePage extends NavBarPage {
 
 	public async waitFor() {
 		await this.page.waitForURL('/client');
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	public async waitForInteractive() {

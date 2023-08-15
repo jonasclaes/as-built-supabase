@@ -38,6 +38,7 @@ export class DashboardPage extends NavBarPage {
 
 	public async waitFor() {
 		await this.page.waitForURL('/');
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	public async clickNewProject() {

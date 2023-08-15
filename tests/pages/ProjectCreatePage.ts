@@ -22,6 +22,7 @@ export class ProjectCreatePage extends NavBarPage {
 
 	public async waitFor() {
 		await this.page.waitForURL('/project');
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	public async waitForInteractive() {
