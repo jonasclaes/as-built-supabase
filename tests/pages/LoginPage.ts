@@ -41,12 +41,14 @@ export class LoginPage extends BasePage {
 	}
 
 	public async enterEmail(email: string) {
-		await this.inputEmail.fill(email);
+		await expect(this.inputEmail).toBeEditable();
+		await this.inputEmail.type(email);
 		await expect(this.inputEmail).toHaveValue(email);
 	}
 
 	public async enterPassword(password: string) {
-		await this.inputPassword.fill(password);
+		await expect(this.inputPassword).toBeEditable();
+		await this.inputPassword.type(password);
 		await expect(this.inputPassword).toHaveValue(password);
 	}
 
