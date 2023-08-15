@@ -17,17 +17,22 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
 		.eq('id', session.user.id)
 		.single();
 
-	const { data: projects, count: totalProjects } = await supabase
+	const projectsPromise = supabase
 		.from('projects')
 		.select(`id, code, name, clients ( name )`, { count: 'exact' })
 		.order(`code`)
 		.eq('organization', profile?.organization);
 
-	const { data: clients, count: totalClients } = await supabase
+	const clientsPromise = supabase
 		.from('clients')
 		.select(`id, code, name`, { count: 'exact' })
 		.order(`code`)
 		.eq('organization', profile?.organization);
+
+	const [projectsResponse, clientsResponse] = await Promise.all([projectsPromise, clientsPromise]);
+
+	const { data: projects, count: totalProjects } = projectsResponse;
+	const { data: clients, count: totalClients } = clientsResponse;
 
 	return {
 		session,

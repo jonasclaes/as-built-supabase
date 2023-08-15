@@ -40,7 +40,7 @@ export const actions = {
 				code,
 				name,
 				client: client?.id ?? null,
-				organization: profile?.organization
+				organization: profile?.organization ?? ''
 			})
 			.select(`id`)
 			.single();
