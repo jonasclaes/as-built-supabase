@@ -1,4 +1,4 @@
-import type { Locator, Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class LoginPage extends BasePage {
@@ -42,13 +42,18 @@ export class LoginPage extends BasePage {
 
 	public async enterEmail(email: string) {
 		await this.inputEmail.fill(email);
+		await expect(this.inputEmail).toHaveValue(email);
 	}
 
 	public async enterPassword(password: string) {
 		await this.inputPassword.fill(password);
+		await expect(this.inputPassword).toHaveValue(password);
 	}
 
 	public async clickSignIn() {
-		await this.buttonSignIn.click();
+		await expect(this.buttonSignIn).toBeEnabled();
+		await this.buttonSignIn.click({
+			delay: 100
+		});
 	}
 }
