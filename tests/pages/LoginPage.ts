@@ -26,6 +26,7 @@ export class LoginPage extends BasePage {
 
 	public async waitFor() {
 		await this.page.waitForURL('/auth/signIn');
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	public async waitForInteractive() {
@@ -42,13 +43,13 @@ export class LoginPage extends BasePage {
 
 	public async enterEmail(email: string) {
 		await expect(this.inputEmail).toBeEditable();
-		await this.inputEmail.type(email);
+		await this.inputEmail.fill(email);
 		await expect(this.inputEmail).toHaveValue(email);
 	}
 
 	public async enterPassword(password: string) {
 		await expect(this.inputPassword).toBeEditable();
-		await this.inputPassword.type(password);
+		await this.inputPassword.fill(password);
 		await expect(this.inputPassword).toHaveValue(password);
 	}
 

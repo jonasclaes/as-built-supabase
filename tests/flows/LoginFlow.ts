@@ -9,6 +9,7 @@ export class LoginFlow {
 
 	public async login(email: string, password: string) {
 		await this.loginPage.navigateTo();
+		await this.loginPage.waitFor();
 		await this.loginPage.waitForInteractive();
 		await this.loginPage.enterEmail(email);
 		await this.loginPage.enterPassword(password);
