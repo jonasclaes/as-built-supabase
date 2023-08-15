@@ -1,4 +1,4 @@
-import type { BrowserContext, Locator, Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class LoginPage extends BasePage {
@@ -9,8 +9,8 @@ export class LoginPage extends BasePage {
 	public readonly buttonSignIn: Locator;
 	public readonly textInvalidCredentials: Locator;
 
-	constructor(page: Page, context: BrowserContext) {
-		super(page, context);
+	constructor(page: Page) {
+		super(page);
 
 		this.textAsBuiltHeader = page.getByRole('heading', { name: 'AS-BUILT' });
 		this.textSignInHeader = page.getByRole('heading', { name: 'Sign in' });
@@ -26,6 +26,18 @@ export class LoginPage extends BasePage {
 
 	public async waitFor() {
 		await this.page.waitForURL('/auth/signIn');
+	}
+
+	public async waitForInteractive() {
+		await this.inputEmail.waitFor({
+			state: 'visible'
+		});
+		await this.inputPassword.waitFor({
+			state: 'visible'
+		});
+		await this.buttonSignIn.waitFor({
+			state: 'visible'
+		});
 	}
 
 	public async enterEmail(email: string) {

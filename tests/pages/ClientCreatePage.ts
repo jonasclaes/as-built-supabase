@@ -1,4 +1,4 @@
-import { expect, type BrowserContext, type Locator, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
 import { NavBarPage } from './NavBarPage';
 
 export class ClientCreatePage extends NavBarPage {
@@ -6,8 +6,8 @@ export class ClientCreatePage extends NavBarPage {
 	public readonly inputClientName: Locator;
 	public readonly buttonCreate: Locator;
 
-	constructor(page: Page, context: BrowserContext) {
-		super(page, context);
+	constructor(page: Page) {
+		super(page);
 
 		this.inputClientCode = page.getByPlaceholder('Client code');
 		this.inputClientName = page.getByPlaceholder('Client name');
@@ -20,6 +20,18 @@ export class ClientCreatePage extends NavBarPage {
 
 	public async waitFor() {
 		await this.page.waitForURL('/client');
+	}
+
+	public async waitForInteractive() {
+		await this.inputClientCode.waitFor({
+			state: 'visible'
+		});
+		await this.inputClientName.waitFor({
+			state: 'visible'
+		});
+		await this.buttonCreate.waitFor({
+			state: 'visible'
+		});
 	}
 
 	public async enterClientCode(code: string) {

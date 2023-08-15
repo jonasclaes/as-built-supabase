@@ -1,4 +1,4 @@
-import type { BrowserContext, Locator, Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { NavBarPage } from './NavBarPage';
 
 export class DashboardPage extends NavBarPage {
@@ -15,8 +15,8 @@ export class DashboardPage extends NavBarPage {
 	public readonly divStatTotalProjects: Locator;
 	public readonly divStatTotalClients: Locator;
 
-	constructor(page: Page, context: BrowserContext) {
-		super(page, context);
+	constructor(page: Page) {
+		super(page);
 
 		this.textProjectsHeader = page.getByRole('heading', { name: 'Projects' });
 		this.textClientsHeader = page.getByRole('heading', { name: 'Clients' });

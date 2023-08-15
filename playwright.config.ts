@@ -7,6 +7,7 @@ const config: PlaywrightTestConfig = {
 		['html', { open: 'never' }],
 		['junit', { outputFile: 'junit-results.xml' }]
 	],
+	workers: 1,
 	use: {
 		trace: 'on-first-retry',
 		baseURL: process.env.BASE_URL || 'http://localhost:5173',

@@ -1,11 +1,9 @@
-import type { BrowserContext, Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 export abstract class BasePage {
 	public readonly page: Page;
-	public readonly context: BrowserContext;
 
-	constructor(page: Page, context: BrowserContext) {
+	constructor(page: Page) {
 		this.page = page;
-		this.context = context;
 	}
 }

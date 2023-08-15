@@ -1,4 +1,4 @@
-import type { BrowserContext, Locator, Page } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export abstract class NavBarPage extends BasePage {
@@ -6,8 +6,8 @@ export abstract class NavBarPage extends BasePage {
 	public readonly buttonDashboard: Locator;
 	public readonly buttonAccount: Locator;
 
-	constructor(page: Page, context: BrowserContext) {
-		super(page, context);
+	constructor(page: Page) {
+		super(page);
 
 		this.textAsBuiltHeader = page.getByRole('link', { name: 'AS-BUILT' });
 		this.buttonDashboard = page

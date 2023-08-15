@@ -35,26 +35,26 @@ export const test = base.extend<{
 	// Config
 	automationConfig: AutomationConfig;
 }>({
-	loginPage: async ({ page, context }, use) => {
-		await use(new LoginPage(page, context));
+	loginPage: async ({ page }, use) => {
+		await use(new LoginPage(page));
 	},
-	dashboardPage: async ({ page, context }, use) => {
-		await use(new DashboardPage(page, context));
+	dashboardPage: async ({ page }, use) => {
+		await use(new DashboardPage(page));
 	},
-	projectCreatePage: async ({ page, context }, use) => {
-		await use(new ProjectCreatePage(page, context));
+	projectCreatePage: async ({ page }, use) => {
+		await use(new ProjectCreatePage(page));
 	},
-	clientCreatePage: async ({ page, context }, use) => {
-		await use(new ClientCreatePage(page, context));
+	clientCreatePage: async ({ page }, use) => {
+		await use(new ClientCreatePage(page));
 	},
-	loginFlow: async ({ loginPage, context }, use) => {
-		await use(new LoginFlow(loginPage, context));
+	loginFlow: async ({ loginPage }, use) => {
+		await use(new LoginFlow(loginPage));
 	},
-	projectCreateFlow: async ({ projectCreatePage, context }, use) => {
-		await use(new ProjectCreateFlow(projectCreatePage, context));
+	projectCreateFlow: async ({ projectCreatePage }, use) => {
+		await use(new ProjectCreateFlow(projectCreatePage));
 	},
-	clientCreateFlow: async ({ clientCreatePage, context }, use) => {
-		await use(new ClientCreateFlow(clientCreatePage, context));
+	clientCreateFlow: async ({ clientCreatePage }, use) => {
+		await use(new ClientCreateFlow(clientCreatePage));
 	},
 	automationConfig
 });
