@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import Footer from './Footer.svelte';
 
 	let drawerOpen = false;
@@ -8,16 +9,38 @@
 		href: string;
 	}
 
-	const navbarItems: NavbarItem[] = [
-		{
-			text: 'Dashboard',
-			href: '/'
-		},
-		{
-			text: 'Account',
-			href: '/account'
-		}
-	];
+	let navbarItems: NavbarItem[] = [];
+
+	if ($page.url.pathname.startsWith('/public')) {
+		navbarItems = [
+			{
+				text: 'Project',
+				href: `/public/project/${$page.data.project?.id ?? ''}`
+			},
+			{
+				text: 'Create revision proposal',
+				href: `/public/project/${$page.data.project?.id ?? ''}/createRevisionProposal`
+			}
+		];
+	} else if ($page.data.session) {
+		navbarItems = [
+			{
+				text: 'Dashboard',
+				href: '/'
+			},
+			{
+				text: 'Account',
+				href: '/account'
+			}
+		];
+	} else {
+		navbarItems = [
+			{
+				text: 'Login',
+				href: '/login'
+			}
+		];
+	}
 </script>
 
 <header>

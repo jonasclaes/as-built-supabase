@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
+	import { formatBytes } from '$lib/Formatters';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Button from '$lib/components/daisyui/LegacyButton.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
@@ -71,18 +72,6 @@
 	const openFileDeleteModal = (name: string) => {
 		fileDeleteName = name;
 		fileDeleteModal.showModal();
-	};
-
-	const formatBytes = (bytes: number, decimals = 2) => {
-		if (!+bytes) return '0 Bytes';
-
-		const k = 1024;
-		const dm = decimals < 0 ? 0 : decimals;
-		const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-
-		const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-		return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 	};
 </script>
 
@@ -175,7 +164,7 @@
 			<button>close</button>
 		</form>
 	</dialog>
-	<h2 class="text-xl">Files</h2>
+	<h2 class="text-2xl">Files</h2>
 	{#if files && files.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
 			<table class="table table-pin-rows">

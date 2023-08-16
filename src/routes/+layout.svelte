@@ -3,13 +3,12 @@
 	import Header from '$lib/components/Header.svelte';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Toast from '$lib/components/daisyui/Toast.svelte';
-	import { toasts, type ToastDto } from '$lib/stores/toasts';
+	import { toasts } from '$lib/stores/toasts';
 	import { onMount } from 'svelte';
 	import { fly, slide } from 'svelte/transition';
 	import '../app.css';
 
 	export let data;
-	let _toasts: ToastDto[] = [];
 
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
@@ -23,31 +22,20 @@
 			}
 		});
 
-		const toastUnsubscriber = toasts.subscribe((value) => {
-			_toasts = value;
-		});
-
 		return () => {
-			toastUnsubscriber();
 			subscription.unsubscribe();
 		};
 	});
 </script>
 
 <div>
-	{#if session}
-		<Header>
-			<main class="grow">
-				<slot />
-			</main>
-		</Header>
-	{:else}
-		<main>
+	<Header>
+		<main class="grow">
 			<slot />
 		</main>
-	{/if}
-	<Toast class="z-50">
-		{#each _toasts as toast (toast.id)}
+	</Header>
+	<Toast>
+		{#each $toasts as toast (toast.id)}
 			<div in:slide out:fly>
 				<Alert type={toast.type ?? ''}>{toast.message}</Alert>
 			</div>

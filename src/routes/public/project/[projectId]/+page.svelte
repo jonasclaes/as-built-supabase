@@ -14,14 +14,11 @@
 		<p class="text-base-content text-opacity-50">{project.code}</p>
 	</div>
 	<div class="grid md:grid-cols-1 gap-3">
-		<Button
-			primary
-			type="button"
-			href={`/public/project/${project.id}/createRevisionRequestProposal`}
+		<Button primary type="button" href="/public/project/{project.id}/createRevisionProposal"
 			>Create revision proposal</Button
 		>
 	</div>
-	<h2 class="text-xl">Revisions</h2>
+	<h2 class="text-2xl">Revisions</h2>
 	{#if project.revisions && project.revisions.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
 			<table class="table table-pin-rows">
@@ -43,8 +40,9 @@
 							</td>
 							<th>
 								<div class="flex justify-end">
-									<a href="/public/project/revision/{revision.id}" class="btn btn-ghost btn-xs"
-										>Details</a
+									<a
+										href="/public/project/{project.id}/revision/{revision.id}"
+										class="btn btn-ghost btn-xs">Details</a
 									>
 								</div>
 							</th>
