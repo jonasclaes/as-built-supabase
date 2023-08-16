@@ -4,7 +4,9 @@ import type { PageServerLoad } from './$types';
 export const load = (async ({ params: { projectId }, locals: { supabaseAdmin } }) => {
 	const { error: projectError, data: projectData } = await supabaseAdmin
 		.from('projects')
-		.select(`id, code, name, organizations ( id, name ), revisions ( id, code, created_at )`)
+		.select(
+			`id, code, name, organizations ( id, name ), revisions ( id, code, created_at ), revision_request_proposals ( id, created_at, title, description )`
+		)
 		.eq('id', projectId)
 		.single();
 
@@ -17,7 +19,9 @@ export const load = (async ({ params: { projectId }, locals: { supabaseAdmin } }
 	}
 
 	return {
+		organization: projectData.organizations,
 		project: projectData,
-		organization: projectData.organizations
+		revisions: projectData.revisions,
+		revisionProposals: projectData.revision_request_proposals
 	};
 }) satisfies PageServerLoad;
