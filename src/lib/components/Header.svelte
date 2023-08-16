@@ -13,7 +13,7 @@
 	let navbarItems: NavbarItem[] = [];
 
 	$: if ($page.url.pathname.startsWith('/public')) {
-		baseUrl = '/public';
+		baseUrl = `/public/project/${$page.data.project?.id ?? ''}`;
 		navbarItems = [
 			{
 				text: 'Project',
