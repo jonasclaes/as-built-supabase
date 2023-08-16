@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Button from '$lib/components/daisyui/LegacyButton.svelte';
+	import Link from '$lib/components/daisyui/Link.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -14,8 +14,8 @@
 		<p class="text-base-content text-opacity-50">{project.code}</p>
 	</div>
 	<div class="grid md:grid-cols-1 gap-3">
-		<Button primary type="button" href="/public/project/{project.id}/createRevisionProposal"
-			>Create revision proposal</Button
+		<Link color="primary" href="/public/project/{project.id}/createRevisionProposal"
+			>Create revision proposal</Link
 		>
 	</div>
 	<h2 class="text-2xl">Revisions</h2>
@@ -40,9 +40,10 @@
 							</td>
 							<th>
 								<div class="flex justify-end">
-									<a
+									<Link
 										href="/public/project/{project.id}/revision/{revision.id}"
-										class="btn btn-ghost btn-xs">Details</a
+										style="ghost"
+										size="xs">Details</Link
 									>
 								</div>
 							</th>

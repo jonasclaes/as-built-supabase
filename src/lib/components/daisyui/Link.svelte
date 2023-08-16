@@ -38,10 +38,10 @@
 
 	const SIZE_MAPS: Record<AnchorSize, string> = {
 		'': '',
-		xs: 'input-xs',
-		sm: 'input-sm',
-		md: 'input-md',
-		lg: 'input-lg'
+		xs: 'btn-xs',
+		sm: 'btn-sm',
+		md: 'btn-md',
+		lg: 'btn-lg'
 	};
 
 	const STYLE_MAPS: Record<AnchorStyle, string> = {
