@@ -5,8 +5,6 @@ export const GET: RequestHandler = async ({
 	params: { projectId, revisionId, fileName },
 	locals: { supabaseAdmin }
 }) => {
-	console.log('reached download');
-
 	const { error: projectError, data: projectData } = await supabaseAdmin
 		.from('projects')
 		.select(`id, code, name, organizations ( id, name ), revisions ( id, code, created_at )`)
@@ -30,8 +28,6 @@ export const GET: RequestHandler = async ({
 	if (storageError || !storageResponse) {
 		throw error(404, 'File not found');
 	}
-
-	console.log('reached download');
 
 	throw redirect(303, storageResponse.signedUrl);
 };
