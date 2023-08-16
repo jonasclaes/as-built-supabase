@@ -4,8 +4,8 @@
 
 	export let data: PageData;
 
-	let { project, organization } = data;
-	$: ({ project, organization } = data);
+	let { organization, project, revisions, revisionProposals } = data;
+	$: ({ organization, project, revisions, revisionProposals } = data);
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
@@ -19,7 +19,7 @@
 		>
 	</div>
 	<h2 class="text-2xl">Revisions</h2>
-	{#if project.revisions && project.revisions.length > 0}
+	{#if revisions && revisions.length > 0}
 		<div class="overflow-x-auto overflow-y-auto">
 			<table class="table table-pin-rows">
 				<thead>
@@ -30,7 +30,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each project.revisions as revision}
+					{#each revisions as revision}
 						<tr class="hover">
 							<td class="font-bold">
 								{revision.code}
@@ -42,6 +42,46 @@
 								<div class="flex justify-end">
 									<Link
 										href="/public/project/{project.id}/revision/{revision.id}"
+										style="ghost"
+										size="xs">Details</Link
+									>
+								</div>
+							</th>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	{:else}
+		<p class="text-center text-base-content text-opacity-50">
+			This project does not have any revisions yet. Ask the owner of this project to create at least
+			one.
+		</p>
+	{/if}
+	<h2 class="text-2xl">Revision proposals</h2>
+	{#if revisionProposals && revisionProposals.length > 0}
+		<div class="overflow-x-auto overflow-y-auto">
+			<table class="table table-pin-rows">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Created at</th>
+						<th />
+					</tr>
+				</thead>
+				<tbody>
+					{#each revisionProposals as revisionProposal}
+						<tr class="hover">
+							<td class="font-bold">
+								{revisionProposal.title}
+							</td>
+							<td>
+								{new Date(revisionProposal.created_at ?? '').toLocaleString()}
+							</td>
+							<th>
+								<div class="flex justify-end">
+									<Link
+										href="/public/project/{project.id}/revisionProposal/{revisionProposal.id}"
 										style="ghost"
 										size="xs">Details</Link
 									>
