@@ -9,9 +9,11 @@
 		href: string;
 	}
 
+	let baseUrl = '';
 	let navbarItems: NavbarItem[] = [];
 
-	if ($page.url.pathname.startsWith('/public')) {
+	$: if ($page.url.pathname.startsWith('/public')) {
+		baseUrl = '/public';
 		navbarItems = [
 			{
 				text: 'Project',
@@ -23,6 +25,7 @@
 			}
 		];
 	} else if ($page.data.session) {
+		baseUrl = '/';
 		navbarItems = [
 			{
 				text: 'Dashboard',
@@ -34,10 +37,11 @@
 			}
 		];
 	} else {
+		baseUrl = '/auth/signIn';
 		navbarItems = [
 			{
 				text: 'Login',
-				href: '/login'
+				href: '/auth/signIn'
 			}
 		];
 	}
@@ -67,7 +71,7 @@
 					</div>
 				</div>
 				<div class="navbar-center">
-					<a href="/" class="btn btn-ghost normal-case text-xl font-bold">AS-BUILT</a>
+					<a href={baseUrl} class="btn btn-ghost normal-case text-xl font-bold">AS-BUILT</a>
 				</div>
 				<div class="navbar-end">
 					<div class="flex-none hidden lg:block">
