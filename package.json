@@ -10,9 +10,12 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write .",
-		"supabase": "supabase"
+		"lint": "prettier --ignore-unknown --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --ignore-unknown --plugin-search-dir . --write .",
+		"supabase": "supabase",
+		"postinstall": "husky install",
+		"prepack": "pinst --disable",
+		"postpack": "pinst --enable"
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.10",
@@ -31,7 +34,10 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"husky": "^8.0.0",
 		"jose": "^4.14.4",
+		"lint-staged": "^14.0.0",
+		"pinst": "^3.0.0",
 		"postcss": "^8.4.24",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
@@ -44,5 +50,11 @@
 		"vite": "^4.3.6",
 		"vitest": "^0.25.3"
 	},
-	"type": "module"
+	"type": "module",
+	"lint-staged": {
+		"**/*": [
+			"yarn format",
+			"yarn lint"
+		]
+	}
 }
