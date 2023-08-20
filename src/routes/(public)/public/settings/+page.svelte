@@ -2,7 +2,7 @@
 	import FormControl from '$lib/components/daisyui/FormControl.svelte';
 	import FormInputLabel from '$lib/components/daisyui/FormInputLabel.svelte';
 	import FormSelect from '$lib/components/daisyui/FormSelect.svelte';
-	import { themeStore } from '$lib/stores/themeStore';
+	import { availableThemes, themeStore } from '$lib/stores/themeStore';
 </script>
 
 <svelte:head>
@@ -17,8 +17,9 @@
 		<FormControl>
 			<FormInputLabel for="theme">Theme</FormInputLabel>
 			<FormSelect id="theme" style="bordered" bind:value={$themeStore}>
-				<option value="corporate">Light</option>
-				<option value="business">Dark</option>
+				{#each availableThemes as theme}
+					<option value={theme.value}>{theme.name}</option>
+				{/each}
 			</FormSelect>
 		</FormControl>
 	</div>

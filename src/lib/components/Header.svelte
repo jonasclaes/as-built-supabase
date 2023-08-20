@@ -5,7 +5,7 @@
 </script>
 
 <header>
-	<div class="navbar bg-base-300">
+	<div class="navbar bg-base-200">
 		<div class="navbar-start">
 			<div class="flex-none lg:hidden">
 				<button class="btn btn-square btn-ghost" on:click={() => ($navbarStore.open = true)}>
