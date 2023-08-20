@@ -9,7 +9,7 @@ export interface ToastDto {
 	type: AlertType;
 }
 
-export const toasts = writable<ToastDto[]>([]);
+export const toastStore = writable<ToastDto[]>([]);
 
 export const addToast = (toast: Omit<ToastDto, 'id'>) => {
 	const toastDto = {
@@ -17,14 +17,14 @@ export const addToast = (toast: Omit<ToastDto, 'id'>) => {
 		...toast
 	};
 
-	toasts.update((toasts) => [...toasts, toastDto]);
+	toastStore.update((toasts) => [...toasts, toastDto]);
 	setTimeout(() => removeToast(toastDto), 5000);
 };
 
 export const removeToast = (toast: ToastDto) => {
-	toasts.update((toasts) => toasts.filter((t) => t !== toast));
+	toastStore.update((toasts) => toasts.filter((t) => t !== toast));
 };
 
 export const clearToasts = () => {
-	toasts.set([]);
+	toastStore.set([]);
 };
