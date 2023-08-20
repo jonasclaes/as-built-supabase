@@ -6,6 +6,7 @@ export interface PublicDto {
 		fullName: string;
 		email: string;
 	};
+	projectId?: string;
 }
 
 const storedPublicStore = browser ? JSON.parse(localStorage.getItem('publicStore') || '{}') : {};

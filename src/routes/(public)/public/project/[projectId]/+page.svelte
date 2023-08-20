@@ -1,11 +1,14 @@
 <script lang="ts">
 	import Link from '$lib/components/daisyui/Link.svelte';
+	import { publicStore } from '$lib/stores/publicStore';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
 
 	let { organization, project, revisions, revisionProposals } = data;
 	$: ({ organization, project, revisions, revisionProposals } = data);
+
+	$publicStore.projectId = project.id;
 </script>
 
 <section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">

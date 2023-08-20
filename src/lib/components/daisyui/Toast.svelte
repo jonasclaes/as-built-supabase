@@ -37,6 +37,7 @@
 <div
 	class={combineClasses(
 		'toast',
+		'z-50',
 		HORIZONTAL_LOCATION_MAPS[horizontalLocation],
 		VERTICAL_LOCATION_MAPS[verticalLocation],
 		_class
