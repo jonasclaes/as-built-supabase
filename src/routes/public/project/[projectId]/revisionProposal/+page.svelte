@@ -10,6 +10,7 @@
 	import FormTextAreaInput from '$lib/components/daisyui/FormTextAreaInput.svelte';
 	import Step from '$lib/components/daisyui/Step.svelte';
 	import Steps from '$lib/components/daisyui/Steps.svelte';
+	import { publicStore } from '$lib/stores/publicStore';
 	import { addToast } from '$lib/stores/toasts';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
 
@@ -23,6 +24,9 @@
 
 	let loading = false;
 	let step: CreateRevisionProposalStep = 1;
+
+	let fullName = $publicStore.externalUser?.fullName ?? form?.fullName ?? '';
+	let email = $publicStore.externalUser?.email ?? form?.email ?? '';
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
@@ -56,6 +60,14 @@
 				}
 				return;
 			}
+
+			$publicStore = {
+				...$publicStore,
+				externalUser: {
+					fullName,
+					email
+				}
+			};
 
 			addToast({
 				type: 'success',
@@ -98,7 +110,7 @@
 					required
 					style="bordered"
 					color={form?.missing === 'fullName' ? 'error' : undefined}
-					value={form?.fullName ?? ''}
+					bind:value={fullName}
 				/>
 				<FormInputHelpText for="fullName">
 					Please enter your full name here, so we can identify who made this proposal.
@@ -114,7 +126,7 @@
 					required
 					style="bordered"
 					color={form?.missing === 'email' ? 'error' : undefined}
-					value={form?.email ?? ''}
+					bind:value={email}
 				/>
 				<FormInputHelpText for="email">
 					Please enter your email address here, so we can contact you if we have any questions and

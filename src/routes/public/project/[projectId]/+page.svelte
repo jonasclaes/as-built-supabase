@@ -14,7 +14,7 @@
 		<p class="text-base-content text-opacity-50">{project.code}</p>
 	</div>
 	<div class="grid md:grid-cols-1 gap-3">
-		<Link color="primary" href="/public/project/{project.id}/createRevisionProposal"
+		<Link color="primary" href="/public/project/{project.id}/revisionProposal"
 			>Create revision proposal</Link
 		>
 	</div>

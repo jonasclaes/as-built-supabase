@@ -1,4 +1,4 @@
-import { EmailStrategyFactory, EmailStrategyFeatureFlag } from '$lib/email/EmailStrategyFactory';
+import { EmailStrategyFactory } from '$lib/email/EmailStrategyFactory';
 import { error, fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -93,26 +93,18 @@ export const actions = {
 		}
 
 		try {
-			const emailStrategy = EmailStrategyFactory.getEmailStrategy(EmailStrategyFeatureFlag.PLUNK);
+			const emailStrategy = EmailStrategyFactory.getEmailStrategy();
 			await emailStrategy.sendEvent('new-revision-request-proposal', email, {
-				title: {
-					persist: false,
-					value: title
-				},
-				description: {
-					persist: false,
-					value: description
-				},
-				url: {
-					persist: false,
-					value: url.origin
-				}
+				title,
+				description,
+				url: url.origin
 			});
 		} catch (err) {
 			await supabaseAdmin
 				.from('revision_request_proposals')
 				.delete()
 				.match({ id: revision_proposal.id });
+
 			return fail(400, {
 				fullName,
 				email,
@@ -122,6 +114,6 @@ export const actions = {
 			});
 		}
 
-		throw redirect(303, `/public/project`);
+		throw redirect(303, `/public/project/${projectId}`);
 	}
 } satisfies Actions;
