@@ -149,7 +149,7 @@
 		<Button secondary type="button" on:click={handleOpenSignedLinkModal}
 			>Generate signed link</Button
 		>
-		<Button disabled={loading} accent type="button" on:click={() => deleteForm.requestSubmit()}>
+		<Button disabled={loading} error type="button" on:click={() => deleteForm.requestSubmit()}>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				Loading

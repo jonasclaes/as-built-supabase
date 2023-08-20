@@ -92,7 +92,7 @@
 				Save client
 			{/if}
 		</Button>
-		<Button disabled={loading} accent type="submit" on:click={() => deleteForm.requestSubmit()}>
+		<Button disabled={loading} error type="submit" on:click={() => deleteForm.requestSubmit()}>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				Loading

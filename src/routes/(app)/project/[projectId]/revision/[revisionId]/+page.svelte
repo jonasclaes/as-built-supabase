@@ -120,9 +120,9 @@
 				Save revision
 			{/if}
 		</Button>
-		<Button primary type="button" on:click={() => fileUploadModal.showModal()}>Add a file</Button>
+		<Button secondary type="button" on:click={() => fileUploadModal.showModal()}>Add a file</Button>
 		<Button href="/project/{project.id}" secondary>Back to project</Button>
-		<Button disabled={loading} accent type="submit" on:click={() => deleteForm.requestSubmit()}>
+		<Button disabled={loading} error type="submit" on:click={() => deleteForm.requestSubmit()}>
 			{#if loading}
 				<span class="loading loading-spinner" />
 				Loading
@@ -201,7 +201,7 @@
 									>
 									<Button
 										on:click={() => openFileDeleteModal(file.name)}
-										accent
+										error
 										size="xs"
 										buttonClasses="join-item">Delete</Button
 									>

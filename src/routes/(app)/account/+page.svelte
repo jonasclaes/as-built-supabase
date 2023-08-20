@@ -137,7 +137,7 @@
 
 	<form action="?/signout" method="post" use:enhance={handleSignOut} class="grid grid-cols-1 gap-3">
 		<div>
-			<button disabled={loading} class="btn btn-block btn-secondary">Sign Out</button>
+			<button disabled={loading} class="btn btn-block btn-accent">Sign Out</button>
 		</div>
 	</form>
 </div>
