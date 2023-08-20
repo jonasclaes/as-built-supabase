@@ -86,7 +86,10 @@
 			path: `/public/project/${project.id}`
 		},
 		{
-			name: 'Revision proposal',
+			name: 'Revision proposal'
+		},
+		{
+			name: 'New',
 			path: `/public/project/${project.id}/revisionProposal`
 		}
 	];
