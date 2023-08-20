@@ -3,9 +3,6 @@
 	import FormInputLabel from '$lib/components/daisyui/FormInputLabel.svelte';
 	import FormSelect from '$lib/components/daisyui/FormSelect.svelte';
 	import { themeStore } from '$lib/stores/themeStore';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
 </script>
 
 <svelte:head>
