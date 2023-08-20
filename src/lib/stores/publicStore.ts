@@ -8,12 +8,9 @@ export interface PublicDto {
 	};
 }
 
-export const publicStore = writable<PublicDto>({});
+const storedPublicStore = browser ? JSON.parse(localStorage.getItem('publicStore') || '{}') : {};
+export const publicStore = writable<PublicDto>(storedPublicStore);
 
-if (browser) {
-	publicStore.set(JSON.parse(localStorage.getItem('publicStore') || '{}'));
-
-	publicStore.subscribe((publicDto) => {
-		localStorage.setItem('publicStore', JSON.stringify(publicDto));
-	});
-}
+publicStore.subscribe((publicDto) => {
+	if (browser) localStorage.setItem('publicStore', JSON.stringify(publicDto));
+});
