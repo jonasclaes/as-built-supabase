@@ -82,6 +82,7 @@ export interface Database {
 					full_name: string | null;
 					id: string;
 					organization: string | null;
+					theme: string;
 					updated_at: string | null;
 					username: string | null;
 					website: string | null;
@@ -90,6 +91,7 @@ export interface Database {
 					full_name?: string | null;
 					id: string;
 					organization?: string | null;
+					theme?: string;
 					updated_at?: string | null;
 					username?: string | null;
 					website?: string | null;
@@ -98,6 +100,7 @@ export interface Database {
 					full_name?: string | null;
 					id?: string;
 					organization?: string | null;
+					theme?: string;
 					updated_at?: string | null;
 					username?: string | null;
 					website?: string | null;
@@ -385,7 +388,7 @@ export interface Database {
 						columns: ['bucket_id'];
 						referencedRelation: 'buckets';
 						referencedColumns: ['id'];
-					},
+},
 					{
 						foreignKeyName: 'objects_owner_fkey';
 						columns: ['owner'];

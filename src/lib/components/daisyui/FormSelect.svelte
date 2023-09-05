@@ -21,7 +21,7 @@
 		size?: SelectSize;
 		style?: SelectStyle;
 		color?: SelectColor;
-		value?: unknown;
+		value?: unknown | undefined;
 		class?: string;
 		selectRef?: HTMLSelectElement;
 	}
@@ -54,7 +54,7 @@
 	export let size: SelectSize = '';
 	export let style: SelectStyle = '';
 	export let color: SelectColor = '';
-	export let value: unknown;
+	export let value: unknown | undefined = undefined;
 	export let _class = '';
 	export { _class as class };
 	export let selectRef: HTMLSelectElement = $$props['selectRef'] ?? null;
@@ -69,6 +69,7 @@
 		COLOR_MAPS[color],
 		_class
 	)}
+	on:change
 	bind:value
 	bind:this={selectRef}
 	{...$$restProps}

@@ -104,4 +104,29 @@ const decryptJwtToken = async (token: string) => {
 	}
 };
 
-export const handle: Handle = sequence(supabase, publicProjectAuth);
+const returnDefaultTheme: Handle = async ({ event, resolve }) => {
+	return resolve(event, {
+		transformPageChunk: async ({ html }) => html.replace('%theme%', 'corporate')
+	});
+};
+
+export const theme: Handle = async ({ event, resolve }) => {
+	const session = await event.locals.getSession();
+
+	if (!session || !session.user.id) return await returnDefaultTheme({ event, resolve });
+
+	const { error, data } = await event.locals.supabase
+		.from('profiles')
+		.select('theme')
+		.eq('id', session.user.id)
+		.single();
+
+	if (error) return await returnDefaultTheme({ event, resolve });
+	if (!data) return await returnDefaultTheme({ event, resolve });
+
+	return resolve(event, {
+		transformPageChunk: async ({ html }) => html.replace('%theme%', data.theme)
+	});
+};
+
+export const handle: Handle = sequence(supabase, publicProjectAuth, theme);

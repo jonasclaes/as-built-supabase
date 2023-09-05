@@ -2,7 +2,6 @@
 	import { invalidate } from '$app/navigation';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
 	import Toast from '$lib/components/daisyui/Toast.svelte';
-	import '$lib/stores/themeStore';
 	import { toastStore } from '$lib/stores/toasts';
 	import { onMount } from 'svelte';
 	import { fly, slide } from 'svelte/transition';
