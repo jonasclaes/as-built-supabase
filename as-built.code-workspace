@@ -23,14 +23,14 @@
 	},
 	"extensions": {
 		"recommendations": [
-			"github.vscode-github-actions",
-			"tamasfe.even-better-toml",
-			"github.vscode-pull-request-github",
-			"ms-playwright.playwright",
+			"bradlc.vscode-tailwindcss",
 			"csstools.postcss",
 			"esbenp.prettier-vscode",
+			"github.vscode-github-actions",
+			"github.vscode-pull-request-github",
+			"ms-playwright.playwright",
 			"svelte.svelte-vscode",
-			"bradlc.vscode-tailwindcss"
+			"tamasfe.even-better-toml",
 		]
 	}
 }

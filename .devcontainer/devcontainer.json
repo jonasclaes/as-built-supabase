@@ -7,14 +7,29 @@
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"ghcr.io/devcontainers-contrib/features/supabase-cli:1": {}
+		"ghcr.io/devcontainers-contrib/features/supabase-cli:1": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "yarn install"
+	"postCreateCommand": "yarn install",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bradlc.vscode-tailwindcss",
+				"csstools.postcss",
+				"esbenp.prettier-vscode",
+				"github.vscode-github-actions",
+				"github.vscode-pull-request-github",
+				"ms-playwright.playwright",
+				"svelte.svelte-vscode",
+				"tamasfe.even-better-toml"
+			]
+		}
+	}
 
 	// Configure tool-specific properties.
 	// "customizations": {},
