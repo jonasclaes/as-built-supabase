@@ -38,14 +38,18 @@
 	<Drawer id="navbar" bind:open={$navbarStore.open}>
 		<Header />
 		<main class="grow">
-			<section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
-				<Breadcrumbs>
-					{#each $breadcrumbStore as breadcrumb}
-						<Breadcrumb href={breadcrumb.path}>{breadcrumb.name}</Breadcrumb>
-					{/each}
-				</Breadcrumbs>
+			{#if $page.error}
 				<slot />
-			</section>
+			{:else}
+				<section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
+					<Breadcrumbs>
+						{#each $breadcrumbStore as breadcrumb}
+							<Breadcrumb href={breadcrumb.path}>{breadcrumb.name}</Breadcrumb>
+						{/each}
+					</Breadcrumbs>
+					<slot />
+				</section>
+			{/if}
 		</main>
 		<Footer />
 
