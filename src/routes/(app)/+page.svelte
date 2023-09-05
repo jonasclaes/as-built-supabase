@@ -115,7 +115,7 @@
 		> one now?
 	</p>
 {/if}
-<div class="divider" />
+<Divider />
 <div class="flex flex-col md:flex-row gap-3 justify-between">
 	<h2 class="text-3xl">Clients</h2>
 	<a href="/client" class="btn btn-primary">New client</a>
