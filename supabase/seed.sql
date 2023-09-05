@@ -88,20 +88,22 @@ project_id_2 := gen_random_uuid();
 INSERT INTO "public"."organizations" (id, name)
 VALUES (organization_id_1, 'Supabase 1'),
   (organization_id_2, 'Supabase 2');
-INSERT INTO "public"."profiles" (id, username, full_name, website, organization)
+INSERT INTO "public"."profiles" (id, username, full_name, website, organization, theme)
 VALUES (
     user_id_1,
     'test1',
     'Test User 1',
     'https://supabase.io',
-    organization_id_1
+    organization_id_1,
+    'corporate'
   ),
   (
     user_id_2,
     'test2',
     'Test User 2',
     'https://supabase.io',
-    organization_id_2
+    organization_id_2,
+    'corporate'
   );
 INSERT INTO "public"."clients" (id, code, name, organization)
 VALUES (
