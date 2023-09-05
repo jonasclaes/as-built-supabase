@@ -1,4 +1,7 @@
 <script lang="ts">
+	import Divider from '$lib/components/daisyui/Divider.svelte';
+	import Stat from '$lib/components/daisyui/Stat.svelte';
+	import Stats from '$lib/components/daisyui/Stats.svelte';
 	import { breadcrumbStore } from '$lib/stores/breadcrumbStore';
 	import type { PageData } from './$types';
 
@@ -23,20 +26,23 @@
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<div class="stats stats-vertical lg:stats-horizontal shadow bg-base-200">
-	<div class="stat place-items-center" data-testid="statTotalProjects">
-		<div class="stat-title">Projects</div>
-		<div class="stat-value">{totalProjects}</div>
-		<div class="stat-desc">Total amount of projects</div>
-	</div>
-
-	<div class="stat place-items-center" data-testid="statTotalClients">
-		<div class="stat-title">Clients</div>
-		<div class="stat-value">{totalClients}</div>
-		<div class="stat-desc">Total amount of clients</div>
-	</div>
-</div>
-<div class="divider" />
+<Stats class="lg:stats-horizontal shadow bg-base-200">
+	<Stat
+		title="Projects"
+		value={totalProjects.toString()}
+		description="Total amount of projects"
+		class="place-items-center"
+		data-testid="statTotalProjects"
+	/>
+	<Stat
+		title="Clients"
+		value={totalClients.toString()}
+		description="Total amount of clients"
+		class="place-items-center"
+		data-testid="statTotalClients"
+	/>
+</Stats>
+<Divider />
 <div class="flex flex-col md:flex-row gap-3 justify-between">
 	<h2 class="text-3xl">Projects</h2>
 	<a href="/project" class="btn btn-primary">New project</a>
