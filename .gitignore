@@ -26,3 +26,4 @@ test-results
 /tests/installation/output/
 /tests/installation/.registry.json
 junit-results.xml
+/playwright/.cache/
