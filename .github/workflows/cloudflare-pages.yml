@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +22,7 @@ jobs:
         env:
           CF_PAGES: 1
           PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
-          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_KEY }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SIGNED_URL_JWT_SECRET: ${{ secrets.SIGNED_URL_JWT_SECRET }}
           EMAIL_STRATEGY: ${{ env.EMAIL_STRATEGY }}
@@ -32,21 +31,22 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: build-svelte-kit
+          name: build
           path: .svelte-kit
 
   publish:
-    timeout-minutes: 60
     permissions:
       contents: read
       deployments: write
     runs-on: ubuntu-latest
+    needs:
+      - build
     steps:
       - uses: actions/checkout@v3
 
       - uses: actions/download-artifact@v3
         with:
-          name: build-svelte-kit
+          name: build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1.5.0
