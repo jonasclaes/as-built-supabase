@@ -1,3 +1,4 @@
+import { building } from '$app/environment';
 import { SIGNED_URL_JWT_SECRET, SUPABASE_SERVICE_ROLE_KEY } from '$env/static/private';
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 import type { PublicProjectJWTPayload } from '$lib/jwt/PublicProjectJWTPayload';
@@ -7,6 +8,8 @@ import { sequence } from '@sveltejs/kit/hooks';
 import * as jose from 'jose';
 
 export const supabase: Handle = async ({ event, resolve }) => {
+	if (building) return resolve(event);
+
 	event.locals.supabase = createSupabaseServerClient({
 		supabaseUrl: PUBLIC_SUPABASE_URL,
 		supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
@@ -31,6 +34,8 @@ export const supabase: Handle = async ({ event, resolve }) => {
 };
 
 export const publicProjectAuth: Handle = async ({ event, resolve }) => {
+	if (building) return resolve(event);
+
 	if (event.url.pathname.startsWith('/public/project')) {
 		const signature = event.url.searchParams.get('signature');
 
@@ -111,6 +116,8 @@ const returnDefaultTheme: Handle = async ({ event, resolve }) => {
 };
 
 export const theme: Handle = async ({ event, resolve }) => {
+	if (building) return resolve(event);
+
 	const session = await event.locals.getSession();
 
 	if (!session || !session.user.id) return await returnDefaultTheme({ event, resolve });
