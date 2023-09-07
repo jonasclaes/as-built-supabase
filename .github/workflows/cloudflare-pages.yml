@@ -23,7 +23,7 @@ jobs:
         env:
           CF_PAGES: 1
           PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
-          PUBLIC_SUPABASE_KEY: ${{ secrets.PUBLIC_SUPABASE_KEY }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SIGNED_URL_JWT_SECRET: ${{ secrets.SIGNED_URL_JWT_SECRET }}
           EMAIL_STRATEGY: ${{ env.EMAIL_STRATEGY }}
