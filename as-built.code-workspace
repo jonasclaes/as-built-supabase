@@ -26,11 +26,12 @@
 			"bradlc.vscode-tailwindcss",
 			"csstools.postcss",
 			"esbenp.prettier-vscode",
+			"github.copilot",
 			"github.vscode-github-actions",
 			"github.vscode-pull-request-github",
 			"ms-playwright.playwright",
 			"svelte.svelte-vscode",
-			"tamasfe.even-better-toml",
+			"tamasfe.even-better-toml"
 		]
 	}
 }
