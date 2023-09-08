@@ -26,11 +26,16 @@
 				"tamasfe.even-better-toml"
 			]
 		}
-	}
+	},
 
 	// Configure tool-specific properties.
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
+
+	"containerEnv": {
+		"DISPLAY": "${localEnv:DISPLAY}"
+	},
+	"runArgs": ["--volume=/tmp/.X11-unix:/tmp/.X11-unix"]
 }
