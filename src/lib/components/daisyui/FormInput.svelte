@@ -25,7 +25,6 @@
 		color?: InputColor;
 		class?: string;
 		value?: string;
-		inputRef?: HTMLInputElement;
 	}
 
 	const SIZE_MAPS: Record<InputSize, string> = {
@@ -60,7 +59,6 @@
 	export let _class = '';
 	export { _class as class };
 	export let value: string = $$props['value'] ?? '';
-	export let inputRef: HTMLInputElement = $$props['inputRef'] ?? null;
 </script>
 
 {#if type === 'text'}
@@ -75,7 +73,7 @@
 			_class
 		)}
 		bind:value
-		bind:this={inputRef}
+		on:input
 		{...$$restProps}
 	/>
 {:else if type === 'email'}
@@ -90,6 +88,7 @@
 			_class
 		)}
 		bind:value
+		on:input
 		{...$$restProps}
 	/>
 {:else if type === 'password'}
@@ -104,6 +103,7 @@
 			_class
 		)}
 		bind:value
+		on:input
 		{...$$restProps}
 	/>
 {/if}
