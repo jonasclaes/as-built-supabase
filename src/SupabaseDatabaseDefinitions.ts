@@ -388,7 +388,7 @@ export interface Database {
 						columns: ['bucket_id'];
 						referencedRelation: 'buckets';
 						referencedColumns: ['id'];
-},
+					},
 					{
 						foreignKeyName: 'objects_owner_fkey';
 						columns: ['owner'];
