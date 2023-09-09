@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
+	import { page } from '$app/stores';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import HeaderSide from '$lib/components/HeaderSide.svelte';
@@ -54,14 +55,18 @@
 <Drawer id="navbar" bind:open={$navbarStore.open}>
 	<Header />
 	<main class="grow">
-		<section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
-			<Breadcrumbs>
-				{#each $breadcrumbStore as breadcrumb}
-					<Breadcrumb href={breadcrumb.path}>{breadcrumb.name}</Breadcrumb>
-				{/each}
-			</Breadcrumbs>
+		{#if $page.error}
 			<slot />
-		</section>
+		{:else}
+			<section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
+				<Breadcrumbs>
+					{#each $breadcrumbStore as breadcrumb}
+						<Breadcrumb href={breadcrumb.path}>{breadcrumb.name}</Breadcrumb>
+					{/each}
+				</Breadcrumbs>
+				<slot />
+			</section>
+		{/if}
 	</main>
 	<Footer />
 
