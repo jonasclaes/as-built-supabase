@@ -91,7 +91,7 @@ test.describe('Button', () => {
 	test('Ghost', async ({ mount }) => {
 		const component = await mount(Button, {
 			props: {
-				style: 'ghost'
+				styles: ['ghost']
 			}
 		});
 
@@ -101,7 +101,7 @@ test.describe('Button', () => {
 	test('Link', async ({ mount }) => {
 		const component = await mount(Button, {
 			props: {
-				style: 'link'
+				styles: ['link']
 			}
 		});
 
@@ -111,7 +111,7 @@ test.describe('Button', () => {
 	test('Outline', async ({ mount }) => {
 		const component = await mount(Button, {
 			props: {
-				style: 'outline'
+				styles: ['outline']
 			}
 		});
 
@@ -121,7 +121,7 @@ test.describe('Button', () => {
 	test('Glass', async ({ mount }) => {
 		const component = await mount(Button, {
 			props: {
-				style: 'glass'
+				styles: ['glass']
 			}
 		});
 
@@ -131,7 +131,7 @@ test.describe('Button', () => {
 	test('Wide', async ({ mount }) => {
 		const component = await mount(Button, {
 			props: {
-				style: 'wide'
+				styles: ['wide']
 			}
 		});
 
@@ -141,7 +141,7 @@ test.describe('Button', () => {
 	test('Block', async ({ mount }) => {
 		const component = await mount(Button, {
 			props: {
-				style: 'block'
+				styles: ['block']
 			}
 		});
 
@@ -151,7 +151,7 @@ test.describe('Button', () => {
 	test('Circle', async ({ mount }) => {
 		const component = await mount(Button, {
 			props: {
-				style: 'circle'
+				styles: ['circle']
 			}
 		});
 
@@ -161,7 +161,7 @@ test.describe('Button', () => {
 	test('Square', async ({ mount }) => {
 		const component = await mount(Button, {
 			props: {
-				style: 'square'
+				styles: ['square']
 			}
 		});
 

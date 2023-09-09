@@ -29,7 +29,7 @@
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	interface $$Props extends HTMLButtonAttributes {
 		size?: ButtonSize;
-		style?: ButtonStyle;
+		styles?: ButtonStyle[];
 		color?: ButtonColor;
 		class?: string;
 		buttonRef?: HTMLButtonElement;
@@ -68,7 +68,7 @@
 	};
 
 	export let size: ButtonSize = '';
-	export let style: ButtonStyle = '';
+	export let styles: ButtonStyle[] = [];
 	export let color: ButtonColor = '';
 	export let _class = '';
 	export { _class as class };
@@ -76,7 +76,13 @@
 </script>
 
 <button
-	class={combineClasses('btn', SIZE_MAPS[size], STYLE_MAPS[style], COLOR_MAPS[color], _class)}
+	class={combineClasses(
+		'btn',
+		SIZE_MAPS[size],
+		...styles.map((style) => STYLE_MAPS[style]),
+		COLOR_MAPS[color],
+		_class
+	)}
 	bind:this={buttonRef}
 	on:click
 	{...$$restProps}
