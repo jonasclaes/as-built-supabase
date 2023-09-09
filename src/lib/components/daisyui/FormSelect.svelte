@@ -23,7 +23,6 @@
 		color?: SelectColor;
 		value?: unknown | undefined;
 		class?: string;
-		selectRef?: HTMLSelectElement;
 	}
 
 	const SIZE_MAPS: Record<SelectSize, string> = {
@@ -57,7 +56,6 @@
 	export let value: unknown | undefined = undefined;
 	export let _class = '';
 	export { _class as class };
-	export let selectRef: HTMLSelectElement = $$props['selectRef'] ?? null;
 </script>
 
 <select
@@ -71,7 +69,6 @@
 	)}
 	on:change
 	bind:value
-	bind:this={selectRef}
 	{...$$restProps}
 >
 	<slot />
