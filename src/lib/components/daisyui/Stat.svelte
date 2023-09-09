@@ -4,14 +4,12 @@
 	export let title: string | null = null;
 	export let value: string | null = null;
 	export let description: string | null = null;
-	export let figure = false;
-	export let actions = false;
 	export let _class = '';
 	export { _class as class };
 </script>
 
 <div class={combineClasses('stat', _class)} {...$$restProps}>
-	{#if figure}
+	{#if $$slots.figure}
 		<div class="stat-figure text-secondary">
 			<slot name="figure" />
 		</div>
@@ -25,7 +23,7 @@
 	{#if description}
 		<div class="stat-desc">{description}</div>
 	{/if}
-	{#if actions}
+	{#if $$slots.actions}
 		<div class="stat-actions">
 			<slot name="actions" />
 		</div>

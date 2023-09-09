@@ -37,9 +37,6 @@ test.describe('Stat', () => {
 		const component = await mount(Stat, {
 			slots: {
 				figure: 'Figure'
-			},
-			props: {
-				figure: true
 			}
 		});
 
@@ -84,9 +81,6 @@ test.describe('Stat', () => {
 		const component = await mount(Stat, {
 			slots: {
 				actions: 'Actions'
-			},
-			props: {
-				actions: true
 			}
 		});
 
