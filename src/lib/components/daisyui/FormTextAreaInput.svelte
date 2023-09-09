@@ -62,13 +62,14 @@
 
 <textarea
 	class={combineClasses(
-		'input',
+		'textarea',
 		'w-full',
 		SIZE_MAPS[size],
 		STYLE_MAPS[style],
 		COLOR_MAPS[color],
 		_class
 	)}
+	on:input
 	bind:this={textAreaRef}
 	bind:value
 	{...$$restProps}
