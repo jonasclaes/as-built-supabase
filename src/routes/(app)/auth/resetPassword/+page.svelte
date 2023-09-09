@@ -2,8 +2,9 @@
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/LegacyButton.svelte';
+	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
+	import Link from '$lib/components/daisyui/Link.svelte';
 	import type { ActionData, SubmitFunction } from './$types';
 
 	export let form: ActionData;
@@ -60,8 +61,10 @@
 					bordered
 				/>
 
-				<Button primary block type="submit" disabled={loading}>Send password reset link</Button>
-				<Button ghost block disabled={loading} href="/auth/signIn">Sign in</Button>
+				<Button color="primary" styles={['block']} disabled={loading} type="submit"
+					>Send password reset link</Button
+				>
+				<Link styles={['block', 'ghost']} href="/auth/signIn">Sign in</Link>
 			</form>
 		</div>
 	</div>

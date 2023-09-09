@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/LegacyButton.svelte';
+	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
 	import { breadcrumbStore } from '$lib/stores/breadcrumbStore';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
@@ -88,7 +88,7 @@
 		{/each}
 	</datalist>
 
-	<Button disabled={loading} primary block type="submit" buttonClasses="col-span-full">
+	<Button disabled={loading} color="primary" styles={['block']} type="submit" class="col-span-full">
 		{#if loading}
 			<span class="loading loading-spinner" />
 			loading

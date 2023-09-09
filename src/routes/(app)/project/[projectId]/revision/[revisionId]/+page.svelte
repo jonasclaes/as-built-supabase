@@ -3,8 +3,9 @@
 	import { capitalize } from '$lib/Capitalize';
 	import { formatBytes } from '$lib/Formatters';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/LegacyButton.svelte';
+	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
+	import Link from '$lib/components/daisyui/Link.svelte';
 	import { breadcrumbStore } from '$lib/stores/breadcrumbStore';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
 
@@ -116,9 +117,8 @@
 <div class="grid md:grid-cols-3 gap-3">
 	<Button
 		disabled={loading}
-		primary
+		color="primary"
 		type="submit"
-		buttonClasses=""
 		on:click={() => revisionForm.requestSubmit()}
 	>
 		{#if loading}
@@ -128,8 +128,15 @@
 			Save revision
 		{/if}
 	</Button>
-	<Button secondary type="button" on:click={() => fileUploadModal.showModal()}>Add a file</Button>
-	<Button disabled={loading} error type="submit" on:click={() => deleteForm.requestSubmit()}>
+	<Button color="secondary" type="button" on:click={() => fileUploadModal.showModal()}
+		>Add a file</Button
+	>
+	<Button
+		disabled={loading}
+		color="error"
+		type="submit"
+		on:click={() => deleteForm.requestSubmit()}
+	>
 		{#if loading}
 			<span class="loading loading-spinner" />
 			Loading
@@ -157,7 +164,7 @@
 				class="file-input file-input-bordered file-input-primary w-full"
 				disabled={fileUploadLoading}
 			/>
-			<Button primary type="submit" disabled={fileUploadLoading}>
+			<Button color="primary" type="submit" disabled={fileUploadLoading}>
 				{#if fileUploadLoading}
 					<span class="loading loading-spinner" />
 					Uploading...
@@ -199,18 +206,18 @@
 						</td>
 						<td>
 							<div class="join flex justify-end">
-								<Button
+								<Link
 									href="/project/{project.id}/revision/{revision.id}/file/{file.name}"
 									target="_blank"
-									primary
+									color="primary"
 									size="xs"
-									buttonClasses="join-item">Download</Button
+									class="join-item">Download</Link
 								>
 								<Button
 									on:click={() => openFileDeleteModal(file.name)}
-									error
+									color="error"
 									size="xs"
-									buttonClasses="join-item">Delete</Button
+									class="join-item">Delete</Button
 								>
 							</div>
 						</td>
@@ -242,7 +249,7 @@
 		>
 			<input type="hidden" name="name" bind:value={fileDeleteName} />
 			<div class="grid md:grid-cols-2 gap-3">
-				<Button primary type="submit" disabled={fileDeleteLoading}>
+				<Button color="primary" type="submit" disabled={fileDeleteLoading}>
 					{#if fileDeleteLoading}
 						<span class="loading loading-spinner" />
 						Loading
@@ -251,7 +258,7 @@
 					{/if}
 				</Button>
 				<Button
-					secondary
+					color="secondary"
 					type="button"
 					disabled={fileDeleteLoading}
 					on:click={() => {

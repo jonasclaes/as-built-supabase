@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/LegacyButton.svelte';
+	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
 	import { breadcrumbStore } from '$lib/stores/breadcrumbStore';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
@@ -90,7 +90,12 @@
 	class="grid grid-cols-1 md:grid-cols-4 gap-3"
 />
 <div class="grid md:grid-cols-2 gap-3">
-	<Button disabled={loading} primary type="submit" on:click={() => clientForm.requestSubmit()}>
+	<Button
+		disabled={loading}
+		color="primary"
+		type="submit"
+		on:click={() => clientForm.requestSubmit()}
+	>
 		{#if loading}
 			<span class="loading loading-spinner" />
 			Loading
@@ -98,7 +103,12 @@
 			Save client
 		{/if}
 	</Button>
-	<Button disabled={loading} error type="submit" on:click={() => deleteForm.requestSubmit()}>
+	<Button
+		disabled={loading}
+		color="error"
+		type="submit"
+		on:click={() => deleteForm.requestSubmit()}
+	>
 		{#if loading}
 			<span class="loading loading-spinner" />
 			Loading

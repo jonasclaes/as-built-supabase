@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/LegacyButton.svelte';
+	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
 	import { breadcrumbStore } from '$lib/stores/breadcrumbStore';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
@@ -65,9 +65,8 @@
 <div class="grid grid-cols-1 gap-3">
 	<Button
 		disabled={loading}
-		primary
+		color="primary"
 		type="submit"
-		buttonClasses=""
 		on:click={() => revisionForm.requestSubmit()}
 	>
 		{#if loading}

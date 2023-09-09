@@ -2,8 +2,9 @@
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/LegacyButton.svelte';
+	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
+	import Link from '$lib/components/daisyui/Link.svelte';
 	import { breadcrumbStore } from '$lib/stores/breadcrumbStore';
 	import { addToast } from '$lib/stores/toasts';
 	import type { ActionData, PageData, SubmitFunction } from './$types';
@@ -143,7 +144,12 @@
 </form>
 <form action="?/delete" method="post" use:enhance={handleDelete} bind:this={deleteForm} />
 <div class="grid md:grid-cols-4 gap-3">
-	<Button disabled={loading} primary type="button" on:click={() => projectForm.requestSubmit()}>
+	<Button
+		disabled={loading}
+		color="primary"
+		type="button"
+		on:click={() => projectForm.requestSubmit()}
+	>
 		{#if loading}
 			<span class="loading loading-spinner" />
 			Loading
@@ -151,9 +157,16 @@
 			Save project
 		{/if}
 	</Button>
-	<Button href="/project/{project.id}/revision" type="button" secondary>New revision</Button>
-	<Button secondary type="button" on:click={handleOpenSignedLinkModal}>Generate signed link</Button>
-	<Button disabled={loading} error type="button" on:click={() => deleteForm.requestSubmit()}>
+	<Link href="/project/{project.id}/revision" color="secondary">New revision</Link>
+	<Button color="secondary" type="button" on:click={handleOpenSignedLinkModal}
+		>Generate signed link</Button
+	>
+	<Button
+		disabled={loading}
+		color="error"
+		type="button"
+		on:click={() => deleteForm.requestSubmit()}
+	>
 		{#if loading}
 			<span class="loading loading-spinner" />
 			Loading
@@ -185,7 +198,7 @@
 					bordered
 					disabled={generateSignedLinkLoading}
 				/>
-				<Button primary type="submit" disabled={generateSignedLinkLoading}>
+				<Button color="primary" type="submit" disabled={generateSignedLinkLoading}>
 					{#if generateSignedLinkLoading}
 						<span class="loading loading-spinner" />
 						Generating...
@@ -197,7 +210,7 @@
 
 			{#if generateSignedLinkModalStep == 2}
 				<Input name="signedLink" value={form?.signedLink ?? ''} bordered disabled={true} />
-				<Button primary type="button" on:click={handleCopyGeneratedSignedLinkToClipboard}>
+				<Button color="primary" type="button" on:click={handleCopyGeneratedSignedLinkToClipboard}>
 					Copy to clipboard
 				</Button>
 			{/if}
@@ -275,7 +288,7 @@
 									use:enhance={handleRevokePublicToken}
 								>
 									<Input name="id" type="hidden" value={public_token.id} />
-									<Button size="xs" error disabled={publicTokenDeleteLoading}>
+									<Button size="xs" color="error" disabled={publicTokenDeleteLoading}>
 										{#if publicTokenDeleteLoading}
 											<span class="loading loading-spinner" />
 											Revoking...

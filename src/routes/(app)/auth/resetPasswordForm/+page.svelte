@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { capitalize } from '$lib/Capitalize';
 	import Alert from '$lib/components/daisyui/Alert.svelte';
-	import Button from '$lib/components/daisyui/LegacyButton.svelte';
+	import Button from '$lib/components/daisyui/Button.svelte';
 	import Input from '$lib/components/daisyui/LegacyInput.svelte';
 	import type { ActionData, SubmitFunction } from './$types';
 
@@ -55,7 +55,9 @@
 					bordered
 				/>
 
-				<Button primary block type="submit" disabled={loading}>Change password</Button>
+				<Button color="primary" styles={['block']} disabled={loading} type="submit">
+					Change password
+				</Button>
 			</form>
 		</div>
 	</div>

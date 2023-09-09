@@ -30,7 +30,7 @@
 	interface $$Props extends HTMLAnchorAttributes {
 		href: string;
 		size?: AnchorSize;
-		style?: AnchorStyle;
+		styles?: AnchorStyle[];
 		color?: AnchorColor;
 		class?: string;
 		anchorRef?: HTMLAnchorElement;
@@ -70,7 +70,7 @@
 
 	export let href: string;
 	export let size: AnchorSize = '';
-	export let style: AnchorStyle = '';
+	export let styles: AnchorStyle[] = [];
 	export let color: AnchorColor = '';
 	export let _class = '';
 	export { _class as class };
@@ -79,7 +79,13 @@
 
 <a
 	{href}
-	class={combineClasses('btn', SIZE_MAPS[size], STYLE_MAPS[style], COLOR_MAPS[color], _class)}
+	class={combineClasses(
+		'btn',
+		SIZE_MAPS[size],
+		...styles.map((style) => STYLE_MAPS[style]),
+		COLOR_MAPS[color],
+		_class
+	)}
 	bind:this={anchorRef}
 	{...$$restProps}
 >
