@@ -1,7 +1,7 @@
 import DrawerBase from '$lib/components/daisyui/DrawerBase.svelte';
 import { expect, test } from '@playwright/experimental-ct-svelte';
 
-test.describe('Divider', () => {
+test.describe('DrawerBase', () => {
 	test('Default', async ({ mount }) => {
 		const component = await mount(DrawerBase, {
 			props: {
