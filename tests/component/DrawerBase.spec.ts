@@ -36,4 +36,24 @@ test.describe('Divider', () => {
 
 		await expect(component).toHaveClass('drawer drawer-end');
 	});
+
+	test('Default slot', async ({ mount }) => {
+		const component = await mount(DrawerBase, {
+			slots: {
+				default: 'Default slot'
+			}
+		});
+
+		await expect(component).toHaveText('Default slot');
+	});
+
+	test('Side slot', async ({ mount }) => {
+		const component = await mount(DrawerBase, {
+			slots: {
+				side: 'Side slot'
+			}
+		});
+
+		await expect(component).toHaveText('Side slot');
+	});
 });
