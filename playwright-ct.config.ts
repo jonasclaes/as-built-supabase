@@ -49,7 +49,7 @@ export default defineConfig({
 	/* Configure projects for major browsers */
 	projects: [
 		{
-			name: 'chromium',
+			name: 'Desktop Chromium',
 			use: { ...devices['Desktop Chrome'] }
 		}
 	]
