@@ -28,7 +28,7 @@
 </script>
 
 <div class={combineClasses('drawer', POSITION_MAPS[position], _class)} {...$$restProps}>
-	<input id={`drawer-${id}`} type="checkbox" class="drawer-toggle" bind:checked={open} />
+	<input id={`drawer-${id}`} type="checkbox" class="drawer-toggle" bind:checked={open} on:change />
 	<slot />
 	<slot name="side" />
 </div>
