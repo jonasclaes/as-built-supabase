@@ -42,7 +42,7 @@
 				<slot />
 			{:else}
 				<section class="flex flex-col gap-3 w-full max-w-2xl mx-auto p-3">
-					<Breadcrumbs>
+					<Breadcrumbs class="w-screen">
 						{#each $breadcrumbStore as breadcrumb}
 							<Breadcrumb href={breadcrumb.path}>{breadcrumb.name}</Breadcrumb>
 						{/each}
