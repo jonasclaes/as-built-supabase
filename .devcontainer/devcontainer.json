@@ -23,7 +23,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "yarn install",
+	"postCreateCommand": "yarn install && npx playwright install --with-deps",
 	"customizations": {
 		"vscode": {
 			"extensions": [
